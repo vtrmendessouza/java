@@ -16,7 +16,6 @@ https://www.w3schools.com/java/ref_string_trim.asp
 https://www.w3schools.com/java/ref_string_indexof.asp
 https://www.w3schools.com/java/ref_string_lastindexof.asp
 */
-package desafio;
 import java.util.Scanner;
 public class Desafio00 {
 
@@ -29,9 +28,9 @@ public class Desafio00 {
         System.out.print("Digite o data: ");
         data = teclado.nextLine();
         
-        dia = //faça a chamada da funcao;
-        mes = //faça a chamada da funcao;
-        ano = //faça a chamada da funcao;
+        dia =//faça a chamada da funcao;
+        mes =//faça a chamada da funcao;
+        ano =//faça a chamada da funcao;
        
         anoEhBissexto = (ano % 4 == 0) && ((ano % 100 != 0) || (ano % 400 == 0));
 
@@ -59,19 +58,19 @@ public class Desafio00 {
     }
 
     static int obterDia(String data){
-        int dia;
+        int dia = 0;////
 
         return dia;
     }
 
     static int obterMes(String data){
-        int mes;
+        int mes = 0;////
         
         return mes;
     }
 
     static int obterAno(String data){
-        int ano;
+        int ano = 0;////
         
         return ano;
     }

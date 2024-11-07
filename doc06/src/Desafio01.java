@@ -12,7 +12,6 @@ dos - forma plural de "do", como em "André dos Santos".
 das - forma plural de "da", como em "Lúcia das Dores".
 Dica: Faça o debug de linha a linha do código para entender o seu funcionamento antes de tentar realizar modificações.
 */
-package desafio;
 import java.util.Scanner;
 public class Desafio01 {
 
@@ -40,6 +39,6 @@ public class Desafio01 {
             posicaoAnterior = posicaoAtual + 1;
 
         } while (posicaoAtual <  tamanhoNome);
-
+        teclado.close();
     }
 }

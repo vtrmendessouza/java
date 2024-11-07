@@ -8,7 +8,6 @@ onde MS. é a abreviação de Miss ou Senhora/Senhorita em português
 O algoritmo abaixo, lê o nome completo do usuário e o sexo e você precisa exibir o nome no formato americano conforme o exemplo anterior.
 Dica: Faça o debug de linha a linha do código para entender o seu funcionamento antes de tentar realizar modificações.
 */
-package desafio;
 import java.util.Scanner;
 public class Desafio02 {
 
@@ -18,7 +17,7 @@ public class Desafio02 {
             char sexo;
             int posicaoAtual = 0;
             int posicaoAnterior = 0;
-            int tamanhoNome;
+            int tamanhoNome = 0;
             
             System.out.print("Digite o nome: ");
             nome = teclado.nextLine();

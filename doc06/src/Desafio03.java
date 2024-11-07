@@ -14,7 +14,6 @@ A senha possui: 1 dígitos.
 A senha não possui partes do nome.
 Dica: Faça o debug de linha a linha do código para entender o seu funcionamento antes de tentar realizar modificações.
 */
-package desafio;
 import java.util.Scanner;
 public class Desafio03 {
 
