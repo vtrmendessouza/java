@@ -28,9 +28,9 @@ public class Desafio00 {
         System.out.print("Digite o data: ");
         data = teclado.nextLine();
         
-        dia =//faça a chamada da funcao;
-        mes =//faça a chamada da funcao;
-        ano =//faça a chamada da funcao;
+        dia = 0;//faça a chamada da funcao;
+        mes = 0;//faça a chamada da funcao;
+        ano = 0;//faça a chamada da funcao;
        
         anoEhBissexto = (ano % 4 == 0) && ((ano % 100 != 0) || (ano % 400 == 0));
 
