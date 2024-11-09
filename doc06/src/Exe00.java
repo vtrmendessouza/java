@@ -17,9 +17,8 @@ https://www.w3schools.com/java/ref_string_indexof.asp
 https://www.w3schools.com/java/ref_string_lastindexof.asp
 */
 import java.util.Scanner;
-public class Desafio00 {
-
-    public static void main(String[] args) {
+public class Exe00 {
+    public static void main(String[] args) throws Exception {
         Scanner teclado = new Scanner(System.in);
         String data;
         int dia, mes, ano;

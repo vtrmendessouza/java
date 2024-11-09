@@ -1,7 +1,15 @@
+/*
+Depois que implementar o item anterior, 
+tente criar um contador para contar quantas vezes 
+o usuário ganhou e quantas vezes o computador ganhou. 
+Quando o usuário responder que não deseja mais jogar, 
+apresente a quantidade de vitórias de cada, 
+com a quantidade de vitórias e o % de vitórias. 
+*/
 import java.util.Scanner;
 import java.util.Random;
-public class Desafio05 {
-    public static void main(String[] args) {
+public class Exe05 {
+    public static void main(String[] args) throws Exception {
         Scanner teclado = new Scanner(System.in);
         Random random = new Random();
         

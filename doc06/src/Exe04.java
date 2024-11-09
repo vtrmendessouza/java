@@ -1,6 +1,6 @@
 import java.util.Scanner;
-public class Desafio04 {
-    public static void main(String[] args) {
+public class Exe04 {
+    public static void main(String[] args) throws Exception {
             Scanner teclado = new Scanner(System.in);
 
             int vidasRestantes = 6;

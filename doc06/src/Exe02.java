@@ -9,9 +9,8 @@ O algoritmo abaixo, lê o nome completo do usuário e o sexo e você precisa exi
 Dica: Faça o debug de linha a linha do código para entender o seu funcionamento antes de tentar realizar modificações.
 */
 import java.util.Scanner;
-public class Desafio02 {
-
-    public static void main(String[] args) {
+public class Exe02 {
+    public static void main(String[] args) throws Exception {
         Scanner teclado = new Scanner(System.in);
             String nome, primeiroNome, sobrenome;
             char sexo;

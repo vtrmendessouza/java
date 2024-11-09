@@ -13,9 +13,8 @@ das - forma plural de "da", como em "Lúcia das Dores".
 Dica: Faça o debug de linha a linha do código para entender o seu funcionamento antes de tentar realizar modificações.
 */
 import java.util.Scanner;
-public class Desafio01 {
-
-    public static void main(String[] args) {
+public class Exe01 {
+    public static void main(String[] args) throws Exception {
         String nome;
         Scanner teclado = new Scanner(System.in);
         int posicaoAtual = 0;

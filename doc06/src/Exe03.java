@@ -15,9 +15,8 @@ A senha não possui partes do nome.
 Dica: Faça o debug de linha a linha do código para entender o seu funcionamento antes de tentar realizar modificações.
 */
 import java.util.Scanner;
-public class Desafio03 {
-
-    public static void main(String[] args) {
+public class Exe03 {
+    public static void main(String[] args) throws Exception {
         Scanner teclado = new Scanner(System.in);
 
         int qtdeMaiusculas, qtdeDigitos, qtdeEspeciais;
