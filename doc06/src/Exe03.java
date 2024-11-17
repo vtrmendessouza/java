@@ -1,9 +1,12 @@
 /*
 Exercício Desafio 03: 25/10/2024
-Atualmente muitos sistemas forçam o usuário a escolher uma senha que seja complexa o suficiente, para que outras pessoas não consiguam descobrir a senha por tentativa e erro.
+Atualmente muitos sistemas forçam o usuário a escolher uma senha que seja complexa o suficiente, 
+para que outras pessoas não consiguam descobrir a senha por tentativa e erro.
 Você iniciará a construção de um sistema de validação de requisitos obrigatórios de senha.
-Inicialmente o seu trabalho é identificar a quantidade de caracteres maiúsculos, caracteres especiais e dígitos, além de descobrir se a senha do usuário possui partes do nome.
-Altere o código para para que o programa consiga identificar a qtde de caracteres especiais, a quantidade de dígitos e se a senha possui partes do nome.
+Inicialmente o seu trabalho é identificar a quantidade de caracteres maiúsculos, 
+caracteres especiais e dígitos, além de descobrir se a senha do usuário possui partes do nome.
+Altere o código para para que o programa consiga identificar a qtde de caracteres especiais, 
+a quantidade de dígitos e se a senha possui partes do nome.
 Ex:  Se a senha do usuário for rogerio123 o sistema deve retornar:
 A senha possui: 0 caracteres maiúsculos.
 A senha possui: 3 caracteres dígitos.
@@ -30,15 +33,12 @@ public class Exe03 {
         senha = teclado.nextLine();
 
         qtdeMaiusculas = identificaQtdeMaiusculas(senha);
-
         System.out.println("A senha possui: " + qtdeMaiusculas + " caractere(s) maiúsculos.");
 
         qtdeDigitos = identificaQtdeDigitos(senha);
-
         System.out.println("A senha possui: " + qtdeDigitos + " dígito(s).");
         
         qtdeEspeciais = identificaQtdeEspeciais(senha);
-
         System.out.println("A senha possui: " + qtdeEspeciais + " caractere(s) especiais.");
 
         temPartesDoNome = identificaSeSenhaTemPartesNome(senha, nome);
@@ -48,37 +48,10 @@ public class Exe03 {
         } else {
             System.out.println("A senha não possui partes do nome do usuário.");
         }
-
         teclado.close();
     }
-
-    static int identificaQtdeEspeciais(String senha){
-        int qtde = 0;
-
-        //escreva o seu codigo aqui
-
-        return qtde;
-    }
-
-    static int identificaQtdeDigitos(String senha){
-        int qtde = 0;
-
-        //escreva o seu codigo aqui
-
-        return qtde;
-    }
-
-    static boolean identificaSeSenhaTemPartesNome(String senha, String nome){
-        boolean temPartesNome = false;
-
-        //escreva sei codigo aqui
-
-        return temPartesNome;
-    }
-
     static int identificaQtdeMaiusculas(String senha){
-        int qtde = 0;
-        int posicao = 0;
+        int qtde = 0, posicao = 0;
         char caractere;
 
         do{
@@ -87,8 +60,51 @@ public class Exe03 {
                 qtde++;
             }
             posicao++;
-        } while(posicao < senha.length());
-
+        }
+        while(posicao < senha.length());
         return qtde;
+    }
+    static int identificaQtdeDigitos(String senha){
+        int qtde = 0, posicao = 0;
+        char caractere;
+
+        do{
+            caractere = senha.charAt(posicao);
+            if (caractere >= 48 && caractere <= 57){
+                qtde++;
+            }
+            posicao++;
+        }
+        while(posicao < senha.length());
+        return qtde;
+    }
+    static int identificaQtdeEspeciais(String senha){
+        int qtde = 0, posicao = 0;
+        char caractere;
+
+        do{
+            caractere = senha.charAt(posicao);
+            if (caractere >= 33 && caractere <= 47){
+                qtde++;
+            }
+            posicao++;
+        }
+        while(posicao < senha.length());
+        return qtde;
+    }
+    static boolean identificaSeSenhaTemPartesNome(String senha, String nome){
+        boolean temPartesNome = false;
+        char caractereNome, caractereSenha;
+
+        for(int i = 0; i < nome.length(); i++){
+            caractereNome = nome.charAt(i);
+            for(int j = 0; j < senha.length(); j++){
+                caractereSenha = senha.charAt(j);
+                if (caractereNome == caractereSenha){
+                    temPartesNome = true;
+                }
+            }
+        }
+        return temPartesNome;
     }
 }

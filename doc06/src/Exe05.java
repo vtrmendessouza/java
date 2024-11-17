@@ -1,10 +1,8 @@
 /*
 Depois que implementar o item anterior, 
-tente criar um contador para contar quantas vezes 
-o usuário ganhou e quantas vezes o computador ganhou. 
+tente criar um contador para contar quantas vezes o usuário ganhou e quantas vezes o computador ganhou. 
 Quando o usuário responder que não deseja mais jogar, 
-apresente a quantidade de vitórias de cada, 
-com a quantidade de vitórias e o % de vitórias. 
+apresente a quantidade de vitórias de cada e o % de vitórias.
 */
 import java.util.Scanner;
 import java.util.Random;
@@ -18,6 +16,9 @@ public class Exe05 {
         int escolhaJogador;
         String resultado;
         int repetir = 0;
+
+        float vitoriaComputador = 0, vitoriaUsuario = 0, percentualComputador = 0, percentualUsuario = 0;
+
         do{
             numeroSorteado = random.nextInt(1,90);
 
@@ -45,30 +46,51 @@ public class Exe05 {
 
             escolhaJogador = teclado.nextInt();
 
-            if (escolhaComputador == 1 && escolhaJogador == 2) 
+            if (escolhaComputador == 1 && escolhaJogador == 2){
                 resultado = "Computador ganhou";
-            else if (escolhaComputador == 2 && escolhaJogador == 1)
+                vitoriaComputador ++;
+            }
+            else if (escolhaComputador == 2 && escolhaJogador == 1){
                 resultado = "Você ganhou";
-                else if (escolhaComputador == 3 && escolhaJogador == 2) 
-                resultado = "Você ganhou";
-            else if (escolhaComputador == 2 && escolhaJogador == 3)
+                vitoriaUsuario ++;
+            }
+                else if (escolhaComputador == 3 && escolhaJogador == 2){
+                    resultado = "Você ganhou";
+                    vitoriaUsuario ++;
+                } 
+            else if (escolhaComputador == 2 && escolhaJogador == 3){
                 resultado = "Computador ganhou";
-            else if (escolhaComputador == 1 && escolhaJogador == 3) 
+                vitoriaComputador ++;
+            }
+            else if (escolhaComputador == 1 && escolhaJogador == 3){
                 resultado = "Você ganhou";
-            else if (escolhaComputador == 3 && escolhaJogador == 1)
+                vitoriaUsuario ++;
+            }
+            else if (escolhaComputador == 3 && escolhaJogador == 1){
                 resultado = "Computador ganhou";
-            else 
+                vitoriaComputador ++;
+            }
+            else{
                 resultado = "Empate";
+            }
 
             System.out.println("\nComputador escolheu: " + devolveEscolha(escolhaComputador));
             System.out.println("Usuário escolheu: " + devolveEscolha(escolhaJogador));
-
             System.out.println("\nResultado: " + resultado);
-
             System.out.println("\nDigite 1 para repetir ou 0 para encerrar: ");
             repetir = teclado.nextInt();
+
         }
         while(repetir == 1);
+        
+        percentualComputador = vitoriaComputador / (vitoriaComputador + vitoriaUsuario) * 100;
+        percentualUsuario = 100 - percentualComputador;
+
+        System.out.printf("Vitórias do computador: %.0f\n", vitoriaComputador);
+        System.out.printf("Percentual de vitórias do computador: %.2f%%\n", percentualComputador);
+        System.out.printf("Vitórias do usuário: %.0f\n", vitoriaUsuario);
+        System.out.printf("Percentual de vitórias do usuário: %.2f%%\n", percentualUsuario);
+
         teclado.close();
     }
     static String devolveEscolha(int escolha){

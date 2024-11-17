@@ -33,50 +33,84 @@ No término da execução o algoritmo deve aprensentar a quantidade de notas res
 e qual o valor total disponível na máquina.
 */
 import java.util.Scanner;
-public class Exe06 {
-    public static void main(String[] args) throws Exception {
+import java.util.InputMismatchException;
+public class Exe06{
+    public static void main(String[] args)throws Exception{
         Scanner scanner = new Scanner(System.in);
-
-        // Solicitar o valor do saque
-        System.out.print("Digite o valor que deseja sacar: R$ ");
-        int valorSaque = scanner.nextInt();
-
-        // Variáveis para a quantidade de cada nota
-        int nota100 = 0, nota50 = 0, nota20 = 0, nota10 = 0, nota5 = 0;
-
-        // Laço do-while para processar o saque
-        do {
-            if (valorSaque >= 100) {
-                nota100++;
-                valorSaque -= 100;
-            } else if (valorSaque >= 50) {
-                nota50++;
-                valorSaque -= 50;
-            } else if (valorSaque >= 20) {
-                nota20++;
-                valorSaque -= 20;
-            } else if (valorSaque >= 10) {
-                nota10++;
-                valorSaque -= 10;
-            } else if (valorSaque >= 5) {
-                nota5++;
-                valorSaque -= 5;
+        int valorSaque = 0, nota200 = 0, nota100 = 0, nota50 = 0, nota20 = 0, nota10 = 0, nota5 = 0, nota2 = 0;
+        String resposta = "";
+        boolean flag = true;
+        
+        System.out.println("Bem vindo!");
+        //sacar novamente
+        do{
+            if(resposta.equals("s")){
+                System.out.println("Bem vindo novamente!");
+                valorSaque = 0;
             }
-        } while (valorSaque > 0); // Continua enquanto houver valor a ser sacado
+            //alterar saque
+            do{
+                //try catch
+                do{
+                    if(valorSaque != 0){
+                        System.out.printf("Escolha um valor diferente de: R$ %d\n", valorSaque);
+                    }
+                    System.out.print("Digite o valor que deseja sacar: R$ ");
 
-        // Exibir o resultado
-        System.out.println("Notas a serem fornecidas:");
-        if (nota100 > 0) System.out.println(nota100 + " nota(s) de R$ 100");
-        if (nota50 > 0) System.out.println(nota50 + " nota(s) de R$ 50");
-        if (nota20 > 0) System.out.println(nota20 + " nota(s) de R$ 20");
-        if (nota10 > 0) System.out.println(nota10 + " nota(s) de R$ 10");
-        if (nota5 > 0) System.out.println(nota5 + " nota(s) de R$ 5");
+                    try{
+                        valorSaque = scanner.nextInt();
+                        scanner.nextLine();
+                        flag = false;
+                    }
+                    catch(InputMismatchException varInputMismatchException){
+                        System.out.println("Dado incorreto.");
+                        scanner.nextLine();
+                    }
+                //try catch
+                }while (flag);
+                
+                nota200 = valorSaque / 200;
+                valorSaque -= nota200 * 200;
+                nota100 = valorSaque / 100;
+                valorSaque -= nota100 * 100;
+                nota50 = valorSaque / 50;
+                valorSaque -= nota50 * 50;
+                nota20 = valorSaque / 20;
+                valorSaque -= nota20 * 20;
+                nota10 = valorSaque / 10;
+                valorSaque -= nota10 * 10;
+                nota5 = valorSaque / 5;
+                valorSaque -= nota5 * 5;
+                nota2 = valorSaque / 2;
+                valorSaque -= nota2 * 2;
+                
+                if(valorSaque > 0){
+                    System.out.println ("O valor solicitado não pode ser fornecido.");
+                }
+            //alterar saque
+            }while(valorSaque > 0);
+            
+            System.out.println("Notas a serem fornecidas:");
+            if(nota200 > 0) System.out.println(nota200 + " nota(s) de R$ 200");
+            if(nota100 > 0) System.out.println(nota100 + " nota(s) de R$ 100");
+            if(nota50 > 0) System.out.println(nota50 + " nota(s) de R$ 50");
+            if(nota20 > 0) System.out.println(nota20 + " nota(s) de R$ 20");
+            if(nota10 > 0) System.out.println(nota10 + " nota(s) de R$ 10");
+            if(nota5 > 0) System.out.println(nota5 + " nota(s) de R$ 5");
+            if(nota2 > 0) System.out.println(nota2 + " nota(s) de R$ 2");
+            //resposta de novo saque invalida
+            do{
+                System.out.print("Deseja realizar outro saque? s/n: ");
+                resposta = scanner.nextLine();
 
-        // Se restar algum valor menor que 5, ele não pode ser atendido com as notas disponíveis
-        if (valorSaque > 0) {
-            System.out.println("Valor restante não pode ser atendido com as notas disponíveis.");
-        }
-
+                if (!resposta.equals("s") && !resposta.equals("n")){
+                    System.out.println("Opção inválida.");
+                }
+            //resposta de novo saque invalida
+            }while(!resposta.equals("s") && !resposta.equals("n"));
+        //sacar novamente
+        }while(resposta.equals("s"));
+        System.out.println("Operação encerrada.");
         scanner.close();
     }
-}    
+}

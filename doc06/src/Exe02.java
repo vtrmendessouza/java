@@ -12,11 +12,8 @@ import java.util.Scanner;
 public class Exe02 {
     public static void main(String[] args) throws Exception {
         Scanner teclado = new Scanner(System.in);
-            String nome, primeiroNome, sobrenome;
+            String nome, primeiroNome, sobrenome, saudacao;
             char sexo;
-            int posicaoAtual = 0;
-            int posicaoAnterior = 0;
-            int tamanhoNome = 0;
             
             System.out.print("Digite o nome: ");
             nome = teclado.nextLine();
@@ -24,30 +21,28 @@ public class Exe02 {
             System.out.print("Digite o sexo [f/m]: ");
             sexo = Character.toLowerCase(teclado.nextLine().charAt(0));
 
-            tamanhoNome = nome.length();
-            
             primeiroNome = descobrePrimeiroNome(nome);
             sobrenome = descobreUltimoSobrenome(nome);
 
-            //implemente aqui o codigo para apresentar 
-            //o nome no formato americano
+            saudacao = (sexo == 'm')? "MR " : "MS ";
 
-        teclado.close();
-    }
-
-    //implementar a funcao que descobre o ultimo nome
+            System.out.println(saudacao +
+                                sobrenome.toUpperCase() +
+                                ", " +
+                                primeiroNome.substring(0, 1).toUpperCase() +
+                                primeiroNome.substring(1));
+            
+            teclado.close();
+        }
     static String descobreUltimoSobrenome(String nome){
-        String sobrenome = "";
-
-        //implementar o codigo para extrai o ultimo sobrenome
+        
+        int posEspaco = nome.lastIndexOf(" ");
+        String sobrenome = nome.substring(posEspaco + 1);
         return sobrenome;
     }
-
     static String descobrePrimeiroNome(String nome){
-        int posEspaco;
 
-        posEspaco = nome.indexOf(" ");
-
-        return  nome.substring(0, posEspaco);
+        int posEspaco = nome.indexOf(" ");
+        return nome.substring(0, posEspaco);
     }
 }

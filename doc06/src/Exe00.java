@@ -57,19 +57,19 @@ public class Exe00 {
     }
 
     static int obterDia(String data){
-        int dia = 0;////
+        int dia = 0;
 
         return dia;
     }
 
     static int obterMes(String data){
-        int mes = 0;////
+        int mes = 0;
         
         return mes;
     }
 
     static int obterAno(String data){
-        int ano = 0;////
+        int ano = 0;
         
         return ano;
     }
