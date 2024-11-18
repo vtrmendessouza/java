@@ -40,7 +40,7 @@ Rogério de Freit...
 */
 import java.util.Scanner;
 
-public class Exe01 {
+public class Exe07 {
 
     public static void main(String[] args) {
         Scanner teclado;
