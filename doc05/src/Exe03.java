@@ -10,7 +10,7 @@ A impressão do resultado da conversão deve ser mantida no método main.
 Converter uma temperatura de fahrenheit para celcius
 */
 import java.util.Scanner;
-public class Exercicio03 {
+public class Exe03 {
     public static void main(String[] args) {
 
         Scanner teclado = new Scanner(System.in);

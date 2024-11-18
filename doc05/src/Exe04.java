@@ -22,7 +22,7 @@ O método deve ler do usuário utilizando o lerFloat os valores para calcular a 
 */
 import java.util.Scanner;
 import java.util.InputMismatchException;
-public class Exercicio04 {
+public class Exe04 {
     public static void main(String[] args) throws Exception{
         Scanner teclado = new Scanner(System.in);
         int encerrar = 0;

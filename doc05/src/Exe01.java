@@ -8,7 +8,7 @@ Método que imprime na tela se a + b é maior que c, chamado mostrarResultado.
 Este método deve receber três parâmetros. Os parâmetros devem ser o valor de a, de b e de c.
 */
 import java.util.Scanner;
-public class Exercicio01 {
+public class Exe01 {
     public static void main (String[] args) throws Exception {
         
         int a = 0, b = 0, c = 0;

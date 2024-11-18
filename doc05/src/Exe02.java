@@ -10,7 +10,7 @@ A impressão do resultado da conversão deve ser mantida no método main.
 Converter uma valor em reais para dollar
 */
 import java.util.Scanner;
-public class Exercicio02 {
+public class Exe02 {
     public static void main(String[] args) {
         
         float real = 0, dolar = 0, cotacao = 0.19f;

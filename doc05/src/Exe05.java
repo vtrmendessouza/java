@@ -12,7 +12,7 @@ metros, quilometros, milhas, jardas, polegadas e pés.
 */
 import java.util.InputMismatchException;
 import java.util.Scanner;
-public class Exercicio05 {
+public class Exe05 {
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
         

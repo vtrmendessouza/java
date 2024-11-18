@@ -37,58 +37,80 @@ import java.util.InputMismatchException;
 public class Exe06{
     public static void main(String[] args)throws Exception{
         Scanner scanner = new Scanner(System.in);
-        int valorSaque = 0, nota200 = 0, nota100 = 0, nota50 = 0, nota20 = 0, nota10 = 0, nota5 = 0, nota2 = 0;
-        String resposta = "";
-        boolean flag = true;
-        
-        System.out.println("Bem vindo!");
-        //sacar novamente
-        do{
-            if(resposta.equals("s")){
-                System.out.println("Bem vindo novamente!");
-                valorSaque = 0;
-            }
-            //alterar saque
-            do{
-                //try catch
-                do{
-                    if(valorSaque != 0){
-                        System.out.printf("Escolha um valor diferente de: R$ %d\n", valorSaque);
-                    }
-                    System.out.print("Digite o valor que deseja sacar: R$ ");
+        int nota200 = 0, nota100 = 0, nota50 = 0, nota20 = 0, nota10 = 0, nota5 = 0, nota2 = 0;
+        int estoque200 = 0, estoque100 = 0, estoque50 = 0, estoque20 = 0, estoque10 = 0, estoque5 = 0, estoque2 = 0;
+        int estoque = 0, saque = 0, caixa = 0;
+        String repetir = "";
 
-                    try{
-                        valorSaque = scanner.nextInt();
-                        scanner.nextLine();
-                        flag = false;
-                    }
-                    catch(InputMismatchException varInputMismatchException){
-                        System.out.println("Dado incorreto.");
-                        scanner.nextLine();
-                    }
-                //try catch
-                }while (flag);
+        estoque = lerInt(scanner, "Informe a quantidade de notas a serem abastecidas: ");
+        estoque200 = estoque;
+        estoque100 = estoque;
+        estoque50 = estoque;
+        estoque20 = estoque;
+        estoque10 = estoque;
+        estoque5 = estoque;
+        estoque2 = estoque;
+
+        do{
+            do{
+                saque = lerInt(scanner, "Digite o valor que deseja sacar: R$ ");
                 
-                nota200 = valorSaque / 200;
-                valorSaque -= nota200 * 200;
-                nota100 = valorSaque / 100;
-                valorSaque -= nota100 * 100;
-                nota50 = valorSaque / 50;
-                valorSaque -= nota50 * 50;
-                nota20 = valorSaque / 20;
-                valorSaque -= nota20 * 20;
-                nota10 = valorSaque / 10;
-                valorSaque -= nota10 * 10;
-                nota5 = valorSaque / 5;
-                valorSaque -= nota5 * 5;
-                nota2 = valorSaque / 2;
-                valorSaque -= nota2 * 2;
+                estoque200 += nota200;
+                nota200 = 0; 
+                estoque100 += nota100;
+                nota100 = 0;
+                estoque50 += nota50;
+                nota50 = 0;
+                estoque20 += nota20;
+                nota20 = 0;
+                estoque10 += nota10;
+                nota10 = 0;
+                estoque5 += nota5;
+                nota5 = 0;
+                estoque2 += nota2;
+                nota2 = 0;
                 
-                if(valorSaque > 0){
-                    System.out.println ("O valor solicitado não pode ser fornecido.");
+                while(saque >= 200 && estoque200 > 0){
+                    saque -= 200;
+                    nota200 ++;
+                    estoque200 --;
                 }
-            //alterar saque
-            }while(valorSaque > 0);
+                while(saque >= 100 && estoque100 > 0){
+                    saque -= 100;
+                    nota100 ++;
+                    estoque100 --;
+                }
+                while(saque >= 50 && estoque50 > 0){
+                    saque -= 50;
+                    nota50 ++;
+                    estoque50 --;
+                }
+                while(saque >= 20 && estoque20 > 0){
+                    saque -= 20;
+                    nota20 ++;
+                    estoque20 --;
+                }
+                while(saque >= 10 && estoque10 > 0){
+                    saque -= 10;
+                    nota10 ++;
+                    estoque10 --;
+                }
+                while(saque >= 5 && estoque5 > 0){
+                    saque -= 5;
+                    nota5 ++;
+                    estoque5 --;
+                }
+                while(saque >= 2 && estoque2 > 0){
+                    saque -= 2;
+                    nota2 ++;
+                    estoque2 --;
+                }
+                if(saque > 0){
+                    System.out.println("O valor solicitado não pode ser fornecido.");
+                    System.out.printf("Faltou: R$ %d,00 \n", saque);
+                }
+            }
+            while(saque > 0);
             
             System.out.println("Notas a serem fornecidas:");
             if(nota200 > 0) System.out.println(nota200 + " nota(s) de R$ 200");
@@ -98,19 +120,54 @@ public class Exe06{
             if(nota10 > 0) System.out.println(nota10 + " nota(s) de R$ 10");
             if(nota5 > 0) System.out.println(nota5 + " nota(s) de R$ 5");
             if(nota2 > 0) System.out.println(nota2 + " nota(s) de R$ 2");
-            //resposta de novo saque invalida
-            do{
-                System.out.print("Deseja realizar outro saque? s/n: ");
-                resposta = scanner.nextLine();
+            
+            repetir = lerString(scanner, "Deseja realizar outro saque? s/n: ");
+        }
+        while(repetir.equals("s"));
+        
+        caixa = estoque200 * 200 + estoque100 * 100 + estoque50 * 50 +
+                    estoque20 * 20 + estoque10 * 10 + estoque5 * 5 + estoque2 * 2;
 
-                if (!resposta.equals("s") && !resposta.equals("n")){
-                    System.out.println("Opção inválida.");
-                }
-            //resposta de novo saque invalida
-            }while(!resposta.equals("s") && !resposta.equals("n"));
-        //sacar novamente
-        }while(resposta.equals("s"));
-        System.out.println("Operação encerrada.");
+        System.out.println("Notas disponíveis:");
+        System.out.println(estoque200 + " nota(s) de R$ 200");
+        System.out.println(estoque100 + " nota(s) de R$ 100");
+        System.out.println(estoque50 + " nota(s) de R$ 50");
+        System.out.println(estoque20 + " nota(s) de R$ 20");
+        System.out.println(estoque10 + " nota(s) de R$ 10");
+        System.out.println(estoque5 + " nota(s) de R$ 5");
+        System.out.println(estoque2 + " nota(s) de R$ 2");
+        System.out.printf("Saldo disponível: R$ %d,00\n", caixa);
+        
         scanner.close();
+    }
+    static int lerInt(Scanner scanner, String mensagem){
+        int valorInt = 0;
+        boolean flag = false;
+        do{
+            try {
+                System.out.print(mensagem);
+                valorInt = scanner.nextInt();
+                flag = true;
+            } catch (InputMismatchException variavException) {
+                System.out.println("Valor incorreto.");
+                scanner.nextLine();
+            }
+        }
+        while(!flag);
+        return valorInt;
+    }
+    static String lerString(Scanner scanner, String mensagem){
+        String str = "";
+        do{
+            System.out.print(mensagem);
+            scanner.nextLine();
+            str = scanner.nextLine();
+
+            if (!str.equals("s") && !str.equals("n")){
+                System.out.println("Opção inválida.");
+            }
+        }
+        while(!str.equals("s") && !str.equals("n"));
+        return str;
     }
 }
