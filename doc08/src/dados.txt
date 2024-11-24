@@ -1,0 +1,4 @@
+Vitor Mendes;35;70.0
+Big Jhonson;18;59.5
+Uncle Bob;96;120.75
+Billy The Kid;64;82.0
