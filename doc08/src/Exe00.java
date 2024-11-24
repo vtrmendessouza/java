@@ -39,26 +39,23 @@ Rogério de Freitas Ribeiro deve ficar
 Rogério de Freit...
 */
 import java.util.Scanner;
-
 public class Exe00 {
-
     public static void main(String[] args) {
-        Scanner teclado;
-        teclado = new Scanner(System.in);     
+        Scanner teclado = new Scanner(System.in);     
 
         //declaramos e já inicializamos as 
         //variaveis com 400 posicoes vazias
         String nomes[] = new String[400];
         int numeroDeps[] = new int[400];
         float salarios[] = new float[400];
-        
-        //variavel utilizada para armazenar a ultima 
-        //posicao preenchida do vetor
+
+        String nomesMenorNumeroDeps[] = new String[400];
+        int menorNumeroDeps[] = new int[400];
+
+        //variavel utilizada para armazenar a ultima posicao preenchida do vetor
         int ultimaPosicaoGravada = 0 ;
-        
-        //variavel para guardar a resposta do 
-        //usuario se ele deseja digitar os dados
-        //de um novo habitante
+
+        //variavel para guardar a resposta do usuario se ele deseja digitar os dados de um novo habitante
         char resposta; 
 
         //leitura dos habitantes e gravacao na memoria (vetores)
@@ -76,12 +73,9 @@ public class Exe00 {
                 break;
             }
         }
-
         imprimirDados(nomes, salarios, numeroDeps, ultimaPosicaoGravada);
-        
         teclado.close();
     }
-
     static void imprimirDados(String nomes[], float salarios[], int numeroDeps[], int ultimaPosicaoGravada){
         //acessando os dados para imprimir na tela
         int qtdeEspacos;
@@ -92,71 +86,119 @@ public class Exe00 {
             //imprime o nome do habitante
             System.out.print(nomes[posicaoVetor]);
             
-            //calcula quantos espacos sao necessarios para alinhar
-            //o valor do salario na posicao da coluna salario
+            //calcula quantos espacos sao necessarios para alinhar o valor do salario na posicao da coluna salario
             qtdeEspacos = (20 - nomes[posicaoVetor].length());
             //imprime a quantidade de espacos para alinhar os salarios
             System.out.print(geraEspacos(qtdeEspacos));
 
             //imprime o salario
             System.out.print("R$ " + salarios[posicaoVetor]);
-            //calcula quantos espacos sao necessarios para alinhar
-            //a quantidade de dependentes
+
+            //calcula quantos espacos sao necessarios para alinhar a quantidade de dependentes
             qtdeEspacos = (20 - Float.toString(salarios[posicaoVetor]).length());
+
             //imprime os espacos
             System.out.print(geraEspacos(qtdeEspacos));
 
             //imprime a quantidade de dependentes
             System.out.println(numeroDeps[posicaoVetor]);
-
-            //imprime a media de salarios
-            System.out.println(mediaSalario(salarios, ultimaPosicaoGravada));
-
         }
+        mediaSalario(salarios, ultimaPosicaoGravada);
+        mediaDependente(numeroDeps, ultimaPosicaoGravada);
+        menorDependente(numeroDeps, nomes, ultimaPosicaoGravada);
+        maiorSalario(salarios, nomes, ultimaPosicaoGravada);
     }
-
     static String geraEspacos(int qtde){
         String espacos = "";
 
         for (int i = 0; i < qtde; i++) {
             espacos += " ";
         }
-
         return espacos;
     }
-
     static String[] lerNome(Scanner teclado, String nomes[], int posicaoLivre){
         System.out.print("Digite o nome do habitante: ");
         nomes[posicaoLivre] = teclado.nextLine(); 
         return nomes;
     }
-
     static float[] lerSalario(Scanner teclado, float salarios[], int posicaoLivre){
         System.out.print("Digite o salario R$: ");
         salarios[posicaoLivre] = teclado.nextFloat(); 
         
         //resolve o problema da limpeza do buffer
         teclado.nextLine();
-
         return salarios;
     }
-
     static int[] lerDependentes(Scanner teclado, int numeroDeps[], int posicaoLivre){
         System.out.print("Digite a quantidade de dependentes: ");
         numeroDeps[posicaoLivre] = teclado.nextInt(); 
 
         //resolve o problema da limpeza do buffer
         teclado.nextLine();
-        
         return numeroDeps;
     }
-    static float mediaSalario (float salarios[], int ultimaPosicaoGravada){
+    static void mediaSalario (float salarios[], int ultimaPosicaoGravada){
         float media = 0;
 
-        for(int i = 0; i < ultimaPosicaoGravada; i++){
+        for(int i = 0; i < ultimaPosicaoGravada + 1; i++){
             media += salarios[i];
         }
-        media = media / ultimaPosicaoGravada;
-        return media;
+        media = media / (ultimaPosicaoGravada + 1);
+        System.out.printf("\nMédia salarial: R$ %.2f\n", media);
+    }
+    static void mediaDependente (int numeroDeps[], int ultimaPosicaoGravada){
+        float media = 0;
+
+        for(int i = 0; i < ultimaPosicaoGravada + 1; i++){
+            media += numeroDeps[i];
+        }
+        media = media / (ultimaPosicaoGravada + 1);
+        System.out.printf("Média de dependentes: %.1f dependentes por habitante.\n", media);
+    }
+    static void menorDependente (int numeroDeps[], String nomes[], int ultimaPosicaoGravada){
+        String nome = "";
+        int quantidade = 0;
+
+        for(int i = 0; i < ultimaPosicaoGravada + 1; i++){
+            if(i == 0){
+                nome = nomes[i];
+                quantidade = numeroDeps[i];
+            }
+            else if(numeroDeps[i] < quantidade){
+                nome = nomes[i];
+                quantidade = numeroDeps[i];
+            }
+        }
+        System.out.println("Habitante com a menor quantidade de dependentes: " + nome);
+        System.out.println("Quantidade de dependentes de " + nome + ": " + quantidade);
+    }
+    static void maiorSalario (float salarios[], String nomes[], int ultimaPosicaoGravada){
+        String nome = "";
+        float valor = 0;
+
+        for(int i = 0; i < ultimaPosicaoGravada + 1; i++){
+            if(i == 0){
+                nome = nomes[i];
+                valor = salarios[i];
+            }
+            else if(salarios[i] > valor){
+                nome = nomes[i];
+                valor = salarios[i];
+            }
+        }
+        System.out.println("Nome do habitante com maior salário: " + nome);
+        System.out.print("Valor do salário de " + nome + " R$: ");
+        System.out.printf("%.2f\n", valor);
+    }
+    static void vetorMenorNumeroDeps(int numeroDeps[], String nomes[], int ultimaPosicaoGravada, float mediaDependente, int menorNumeroDeps[], String nomesMenorNumeroDeps[]){
+        int contador = 0;
+
+        for(int i = 0; i < ultimaPosicaoGravada; i++){
+            if(numeroDeps[i] < mediaDependente){
+                menorNumeroDeps[contador] = numeroDeps[i];
+                nomesMenorNumeroDeps[contador] = nomes[i];
+                contador++;
+            }
+        }
     }
 }
