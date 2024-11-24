@@ -14,7 +14,6 @@ Dica: Insira um novo item  no menu "Exibir a Pessoa com a Menor Idade".
 Desenvolva uma nova funcionalidade que descubra quem tem o maior peso. 
 Exiba o nome da Pessoa e o peso. 
 Dica: Insira um novo item  no menu "Exibir a Pessoa com o Maior Peso".
-
 Desenvolva uma nova funcionalidade que descubra a quantidade 
 de pessoas quem tem um peso maior ou igual ao informado pelo usuario. 
 Exiba somente a quantidade. 
@@ -48,12 +47,6 @@ public class Exe01 {
     //variavel para controlar quando se deve ou nao limpar a
     static boolean limparTela = true;
 
-    static int valorInt = 0;
-    static float valorFloat = 0;
-    static String nomeMenorIdade = "";
-    static String nomeMaiorPeso = "";
-    static int quantidadeMaiorPeso = 0;
-    
     //fim das variaveis globais
     public static void main(String[] args) {
         //variavel que armazena a resposta do menu
@@ -74,6 +67,9 @@ public class Exe01 {
         switch (opcao) {
             case 1:
                 adicionarDados();
+                salvarDados();
+                carregarDados();
+                limparTela = false;
                 break;
             case 2:
                 limparTela();
@@ -82,7 +78,6 @@ public class Exe01 {
                 break;
             case 3:
                 limparTela();
-                salvarDados();
                 System.out.println("Encerrando...");
                 break;
             case 4:
@@ -92,17 +87,17 @@ public class Exe01 {
                 break;
             case 5:
                 limparTela();
-                System.out.println("Pessoa com a Menor Idade: " + menorIdade(nomeMenorIdade));
+                System.out.println("Pessoa com a Menor Idade: " + menorIdade());
                 limparTela = false;
                 break;
             case 6:
                 limparTela();
-                System.out.println("Pessoa com o Maior Peso: " + maiorPeso(nomeMaiorPeso));
+                System.out.println("Pessoa com o Maior Peso: " + maiorPeso());
                 limparTela = false;
                 break;
             case 7:
                 limparTela();
-                System.out.println("QTDE de Pessoas acima de Peso: " + quantMaiorPeso(quantidadeMaiorPeso, teclado));
+                System.out.println("QTDE de Pessoas acima de Peso: " + quantMaiorPeso());
                 limparTela = false;
                 break;
             default:
@@ -125,20 +120,14 @@ public class Exe01 {
 
         System.out.print("Digite o nome: ");
         nomes[contador] = teclado.nextLine();
-
-        //System.out.print("Digite a idade: ");
-        //idades[contador] = teclado.nextInt();
-        idades[contador] = lerInt(valorInt, teclado, "Digite a idade: ");
-
-        //System.out.print("Digite o peso (em kg): ");
-        //pesos[contador] = teclado.nextFloat();
-        pesos[contador] = lerFloat(valorFloat, teclado, "Digite o peso (em kg): ");
+        idades[contador] = lerInt("Digite a idade: ");
+        pesos[contador] = lerFloat("Digite o peso (em kg): ");
         
         contador++;
     }
     
     static int lerOpcaoMenu(){
-        int opcao;
+        int opcao = 0;
         System.out.println("\n############## Menu ##############\n");
         System.out.println("1. Adicionar dados");
         System.out.println("2. Mostrar dados");
@@ -283,8 +272,10 @@ public class Exe01 {
             }
         }
     }
-    static int lerInt(int valorInt, Scanner teclado, String mensagem){
+    static int lerInt(String mensagem){
+        int valorInt = 0;
         boolean flag = false;
+
         do{
             try {
                 System.out.print(mensagem);
@@ -299,8 +290,10 @@ public class Exe01 {
         teclado.nextLine();
         return valorInt;
     }
-    static float lerFloat(float valorFloat, Scanner teclado, String mensagem){
+    static float lerFloat(String mensagem){
+        float valorFloat = 0;
         boolean flag = false;
+
         do{
             try {
                 System.out.print(mensagem);
@@ -315,8 +308,10 @@ public class Exe01 {
         teclado.nextLine();
         return valorFloat;
     }
-    static String menorIdade(String nomeMenorIdade){
+    static String menorIdade(){
+        String nomeMenorIdade = "";
         int valorMenorIdade = 0;
+
         for(int i = 0; i < contador; i++){
             if(i == 0){
                 valorMenorIdade = idades[i];
@@ -328,8 +323,10 @@ public class Exe01 {
         }
         return nomeMenorIdade;
     }
-    static String maiorPeso(String nomeMaiorPeso){
+    static String maiorPeso(){
+        String nomeMaiorPeso = "";
         float valorMaiorPeso = 0;
+
         for(int i = 0; i < contador; i++){
             if(i == 0){
                 valorMaiorPeso = pesos[i];
@@ -341,9 +338,10 @@ public class Exe01 {
         }
         return nomeMaiorPeso;
     }
-    static int quantMaiorPeso(int quantidadeMaiorPeso, Scanner teclado){
-        
+    static int quantMaiorPeso(){
+        int quantidadeMaiorPeso = 0;
         float valorMaiorPeso = 0;
+
         System.out.println("Informe o peso: ");
         valorMaiorPeso = teclado.nextFloat();
 

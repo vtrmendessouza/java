@@ -2,3 +2,11 @@ Vitor Mendes;35;70.0
 Big Jhonson;18;59.5
 Uncle Bob;96;120.75
 Billy The Kid;64;82.0
+Baby Silva Sauro;4;225.125
+Pão de Quaijo Rebelde;21;75.5125
+Vitor Mendes;35;70.0
+Big Jhonson;18;59.5
+Uncle Bob;96;120.75
+Billy The Kid;64;82.0
+Baby Silva Sauro;4;225.125
+Pão de Quaijo Rebelde;21;75.5125

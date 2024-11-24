@@ -40,7 +40,7 @@ Rogério de Freit...
 */
 import java.util.Scanner;
 
-public class Exe07 {
+public class Exe00 {
 
     public static void main(String[] args) {
         Scanner teclado;
@@ -78,7 +78,7 @@ public class Exe07 {
         }
 
         imprimirDados(nomes, salarios, numeroDeps, ultimaPosicaoGravada);
-
+        
         teclado.close();
     }
 
@@ -108,6 +108,10 @@ public class Exe07 {
 
             //imprime a quantidade de dependentes
             System.out.println(numeroDeps[posicaoVetor]);
+
+            //imprime a media de salarios
+            System.out.println(mediaSalario(salarios, ultimaPosicaoGravada));
+
         }
     }
 
@@ -146,5 +150,13 @@ public class Exe07 {
         
         return numeroDeps;
     }
-     
+    static float mediaSalario (float salarios[], int ultimaPosicaoGravada){
+        float media = 0;
+
+        for(int i = 0; i < ultimaPosicaoGravada; i++){
+            media += salarios[i];
+        }
+        media = media / ultimaPosicaoGravada;
+        return media;
+    }
 }
