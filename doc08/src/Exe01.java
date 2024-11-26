@@ -1,267 +1,138 @@
 /*
-21/11/2024 - 35º ENCONTRO
-Exercício Desafio
-Este código possui um problema na entrada de dados da idade e do peso, 
-se o usuário digitar um texto no lugar da idade ou do peso, 
-será gerado uma exceção e o aplicativo fechará. 
-Faça então a tratativa da leitura dos dados garantindo que 
-o usuário insira um valor que seja aceito.
-Desenvolva uma nova funcionalidade que conte a quantidade de de pessoas cadastradas.
-Dica: Insira um novo item no menu "Exibir a QTDE de Pessoas" 
-e depois no switch faça a exibição da quantidade de linhas no vetor.
-Desenvolva uma nova funcionalidade que descubra quem tem a menor idade. 
-Exiba o nome da Pessoa e a idade. 
-Dica: Insira um novo item  no menu "Exibir a Pessoa com a Menor Idade".
-Desenvolva uma nova funcionalidade que descubra quem tem o maior peso. 
-Exiba o nome da Pessoa e o peso. 
-Dica: Insira um novo item  no menu "Exibir a Pessoa com o Maior Peso".
-Desenvolva uma nova funcionalidade que descubra a quantidade 
-de pessoas quem tem um peso maior ou igual ao informado pelo usuario. 
-Exiba somente a quantidade. 
-Dica: Insira um novo item  no menu "Contar QTDE de Pessoas acima de Peso". 
-Quando o usuário selecionar esta opção pergunte 
-qual o peso que o usuário deseja utilizar como critério de busca, 
-e descubra quantas pessoas tem um peso maior ou igual ao informado pelo usuário. 
+14/11/2024 - 33º ENCONTRO
+Desafio: Sistema de Controle de Habitantes
+O código abaixo realiza a leitura de múltiplos nomes, 
+salarios e qtde de dependentes de uma determinada cidade.
+Faça ajustes no código para ao término da impressão dos dados dos habitantes, 
+seja impresso na tela:
+- A média dos salarios dos habitantes.
+Exemplo: 
+Média dos salários: R$ 2780,22
+- A média de dependentes.
+Exemplo:
+Média de dependentes: 2,7 dependentes por habitante.
+- O nome do habitante que tem a menor quantidade de dependentes. 
+Além do nome imprima também a quantidade de dependentes deste habitante. 
+Não se preocupe se existir empate na quantidade mínima de habitantes. 
+Exemplo:
+Habitante com a menor quantidade de dependentes: Carlos
+Quantidade de dependentes do Carlos: 1
+- O nome do habitante que tem o maior salário. 
+Além do nome imprima também o valor do salário deste habitante.
+Exemplo: 
+Nome do habitante com maior salário: José
+Valor do salário do José: R$ 4200,58
+- Imprima o nome e a quantidade de dependentes dos habitantes que possuem 
+o número de dependentes menor que a média geral de dependentes por habitante.
+Exemplo:
+Nome                             Qtde de Dependentes
+Mário                              1
+Maria                              1
+Marcelo                          2
+Roberto                          0
+- Este código possui um problema, foi estipulado que serão 20 espaços para imprimir a coluna de nome. 
+Se um usuário tiver mais de 20 caracteres no nome a formatação ficará incorreta. 
+Você deve fazer uma correção na impressão do nome da seguinte forma: 
+Se o usuário tiver mais de 19 caracteres você deverá retirar três caracteres no fim do nome 
+e terminar com ... no nome.
+Exemplo:
+Rogério de Freitas Ribeiro deve ficar
+Rogério de Freit...
 */
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 public class Exe01 {
-    //inicio das variaveis globais
-    static Scanner teclado = new Scanner(System.in);
-    static String CAMINHO_ARQUIVO = "./doc08/src/dataExe01.txt";
-    static int TAMANHO_MAXIMO = 50;
-    static String[] nomes = new String[TAMANHO_MAXIMO];
-    static int[] idades = new int[TAMANHO_MAXIMO];
-    static float[] pesos = new float[TAMANHO_MAXIMO];
-    //controlar quantas posicoes ja foram gravadas no vetor
-    static int contador = 0;
-    //variavel para controlar quando se deve ou nao limpar a
-    static boolean limparTela = true;
-    //fim das variaveis globais
     public static void main(String[] args) {
-        //variavel que armazena a resposta do menu
-        int opcao;
-        carregarDados();
-        do {
-            limparTela();
-            opcao = lerOpcaoMenu();
-            processarOpcaoMenu(opcao);
-        } while(opcao != 3);
+        Scanner teclado = new Scanner(System.in);     
+        //declaramos e já inicializamos as 
+        //variaveis com 400 posicoes vazias
+        String nomes[] = new String[400];
+        int numeroDeps[] = new int[400];
+        float salarios[] = new float[400];
+        //variavel utilizada para armazenar a ultima posicao preenchida do vetor
+        int ultimaPosicaoGravada = 0 ;
+        //variavel para guardar a resposta do usuario se ele deseja digitar os dados de um novo habitante
+        char resposta; 
+        //leitura dos habitantes e gravacao na memoria (vetores)
+        for (int posicaoVetor = 0; posicaoVetor < 400; posicaoVetor++) {
+            boolean flag = false;
+            nomes = lerNome(teclado, nomes, posicaoVetor);
+            salarios = lerSalario(teclado, salarios, posicaoVetor);
+            numeroDeps = lerDependentes(teclado, numeroDeps, posicaoVetor);
+            do{
+                System.out.print ("\nDeseja entrar com dados do próximo habitante? [s/n]: ");
+                resposta = teclado.nextLine().toLowerCase().charAt(0);
+                if (resposta == 'n'){
+                    ultimaPosicaoGravada = posicaoVetor;
+                    flag = true;              
+                }
+                else if(resposta != 's' && resposta != 'n'){
+                    System.out.println("Opção inválida.");
+                }
+            }
+            while(resposta != 's' && resposta != 'n');
+            if(flag){
+                break;
+            }
+        }
+        float mediaSalario = calcularMediaSalario(salarios, ultimaPosicaoGravada);
+        float mediaDeps = calcularMediaDeps(numeroDeps, ultimaPosicaoGravada);
+        int posicaoMenorDeps = encontrarMenorDeps(numeroDeps, ultimaPosicaoGravada);
+        int posicaoMaiorSalario = encontrarMaiorSalario(salarios, ultimaPosicaoGravada);
+        imprimirDados(nomes, salarios, numeroDeps, ultimaPosicaoGravada);
+        imprimirDesafio(mediaSalario, mediaDeps, posicaoMenorDeps, posicaoMaiorSalario, nomes, numeroDeps, salarios);
+        imprimirMenorDeps(nomes, numeroDeps, ultimaPosicaoGravada, mediaDeps);
+        imprimirMaiorSalario(nomes, salarios, ultimaPosicaoGravada, mediaSalario);
         teclado.close();
     }
-    static void processarOpcaoMenu(int opcao){
-        limparTela();
-        switch (opcao) {
-            case 1:
-                adicionarDados();
-                break;
-            case 2:
-                mostrarDados();
-                break;
-            case 3:
-                System.out.println("\nEncerrando...");
-                break;
-            case 4:
-                System.out.printf("\nQTDE de Pessoas: %d\n", contador);
-                break;
-            case 5:
-                System.out.println("\nPessoa com a Menor Idade: " + menorIdade());
-                break;
-            case 6:
-                System.out.println("\nPessoa com o Maior Peso: " + maiorPeso());
-                break;
-            case 7:
-                System.out.println("\nQTDE de Pessoas acima de Peso: " + quantMaiorPeso());
-                break;
-            case 8:
-                alterarDados();
-                break;
-            case 9:
-                apagarDados();
-                break;
-                default:
-                System.out.println("\nOpção inválida. Tente novamente.");
-            }
-            limparTela = false;
-    }
-    static void adicionarDados() {
-        limparTela = true;
-        limparTela();        
-        //Verifico se tem espaco nos vetores
-        if (contador >= TAMANHO_MAXIMO) {
-            System.out.println("Limite de dados atingido! Não é possível adicionar mais.");
-            //estou usando um retorne para forcar o fim da execucao
-            //do metodo adicionarDados quando nao tiver mais posicoes livres 
-            //no vetor. 
-            return;
-        }
-        System.out.print("Digite o nome: ");
-        nomes[contador] = teclado.nextLine();
-        idades[contador] = lerInt("Digite a idade: ");
-        pesos[contador] = lerFloat("Digite o peso (em kg): ");
-        contador++;
-        salvarDados();
-    }
-    static int lerOpcaoMenu(){
-        int opcao = 0;
-        System.out.println("\n############## Menu ##############\n");
-        System.out.println("1. Adicionar dados");
-        System.out.println("2. Mostrar dados");
-        System.out.println("3. Sair");
-        System.out.println("4. Exibir a QTDE de Pessoas");
-        System.out.println("5. Exibir a Pessoa com a Menor Idade");
-        System.out.println("6. Exibir a Pessoa com o Maior Peso");
-        System.out.println("7. Contar QTDE de Pessoas acima de Peso");
-        System.out.println("8. Alterar dados");
-        System.out.println("9. Apagar dados");
-        opcao = lerInt("Escolha uma opção: ");
-        teclado.nextLine(); // Limpar buffer
-        return opcao;
-    }
-    static void carregarDados() {
-        contador = 0;
-        FileReader arquivo = null;
-        BufferedReader bufferLeitura = null;
-        try {
-            //define o arquivo que sera abert
-            arquivo = new FileReader(CAMINHO_ARQUIVO);
-            bufferLeitura = new BufferedReader(arquivo);
-            String linha = bufferLeitura.readLine();
-            while (linha != null) {
-                String[] campos = linha.split(";");
-                if (campos.length == 3 && contador < TAMANHO_MAXIMO) {
-                    nomes[contador] = campos[0];
-                    //como o split devolve o resultado como string
-                    //é necessario converter a idade do arquivo para int 
-                    idades[contador] = Integer.parseInt(campos[1]);
-                    //é necessário converter o peso do arquivo para float
-                    pesos[contador] = Float.parseFloat(campos[2]);
-                    contador++;
-                }
-                linha = bufferLeitura.readLine();
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Arquivo não encontrado. Um novo será criado ao salvar.");
-        } catch (IOException e) {
-            System.out.println("Erro ao carregar os dados: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.out.println("Erro nos dados do arquivo: formato inválido.");
-        } finally {
-            // Fechamento do arquivo e do bufferLeitura
-            try {
-                if (bufferLeitura != null) {
-                    bufferLeitura.close();
-                }
-                if (arquivo != null) {
-                    arquivo.close();
-                }
-            } catch (IOException e) {
-                System.out.println("Erro ao fechar o arquivo: " + e.getMessage());
-            }
-        }
-    }
-    static void mostrarDados() {
+    static void imprimirDados(String nomes[], float salarios[], int numeroDeps[], int ultimaPosicaoGravada){
+        //acessando os dados para imprimir na tela
         int qtdeEspacos;
         String nomeGrande = "";
-        if (contador == 0) {
-            System.out.println("Nenhum dado disponível.");
-            return;
-        }
-        System.out.println("\nID                  Nome                Idade               Peso");
+        System.out.println("\nHabitantes cadastrados:");
+        System.out.println("Nome                Salario                QtdeDependentes");
         System.out.println("----------------------------------------------------------");
-        for (int i = 0; i < contador; i++) {
-            qtdeEspacos = 0;
-            if(nomes[i] != null){
-                // imprime id
-                System.out.print(i + 1);
-                if(i < 9){
-                    qtdeEspacos = 19;
-                }
-                else{
-                    qtdeEspacos = 18;
-                }
-                System.out.print(gerarEspacos(qtdeEspacos));
-                if(nomes[i].length() < 20){
-                    System.out.print(nomes[i]);
-                    //calcula quantos espacos sao necessarios para alinhar
-                    //o valor da idade na posicao da coluna idade
-                    qtdeEspacos = (20 - nomes[i].length());
-                    //imprime a quantidade de espacos para alinhar os salarios
-                    System.out.print(gerarEspacos(qtdeEspacos));
-                }
-                else{
-                    nomeGrande = nomes[i].substring(0, 17);
-                    System.out.print(nomeGrande + "...");
-                }
-                System.out.print(idades[i]);
-                qtdeEspacos = (20 - String.valueOf(idades[i]).length());
-                System.out.print(gerarEspacos(qtdeEspacos));
-                System.out.printf("%.1f", pesos[i]);
+        for (int posicaoVetor = 0; posicaoVetor <= ultimaPosicaoGravada; posicaoVetor++) {
+            if(nomes[posicaoVetor].length() <= 20){
+                //imprime o nome do habitante
+                System.out.print(nomes[posicaoVetor]);
+                //calcula quantos espacos sao necessarios para alinhar o valor do salario na posicao da coluna salario
+                qtdeEspacos = (20 - nomes[posicaoVetor].length());
+                //imprime a quantidade de espacos para alinhar os salarios
+                System.out.print(geraEspacos(qtdeEspacos));
             }
+            else{
+                nomeGrande = nomes[posicaoVetor].substring(0, 17);
+                System.out.print(nomeGrande + "...");
+                }
+                //imprime o salario
+                System.out.printf("R$ %.2f", salarios[posicaoVetor]);
+            //calcula quantos espacos sao necessarios para alinhar a quantidade de dependentes
+            qtdeEspacos = (20 - Float.toString(salarios[posicaoVetor]).length());
+            //imprime os espacos
+            System.out.print(geraEspacos(qtdeEspacos));
+            //imprime a quantidade de dependentes
+            System.out.println(numeroDeps[posicaoVetor]);
         }
     }
-    static void salvarDados() {
-        BufferedWriter gravador = null;
-        try {
-            // Inicializa o BufferedWriter para escrever no arquivo
-            gravador = new BufferedWriter(new FileWriter(CAMINHO_ARQUIVO));
-            // Escreve os dados no arquivo
-            for (int i = 0; i < contador; i++) {
-                if(nomes[i] != null){
-                    //escreve os dados no arquivo
-                    gravador.write(nomes[i] + ";" + idades[i] + ";" + pesos[i]);
-                    //cria uma nova linha no arquivo
-                    gravador.newLine();
-                }
-            }
-            System.out.println("\nDados salvos no arquivo.");
-        } catch (IOException e) {
-            System.out.println("Erro ao salvar os dados: " + e.getMessage());
-        } finally {
-            // Fechamento do BufferedWriter 
-            if (gravador != null) {
-                try {
-                    gravador.close();
-                } catch (IOException e) {
-                    System.out.println("Erro ao fechar o arquivo: " + e.getMessage());
-                }
-            }
-        }
-        carregarDados();
-    }
-    static String gerarEspacos(int qtde){
+    static String geraEspacos(int qtde){
         String espacos = "";
-
         for (int i = 0; i < qtde; i++) {
             espacos += " ";
         }
         return espacos;
     }
-    static void limparTela(){
-        if (limparTela){
-            try {
-                if (System.getProperty("os.name").contains("Windows")) {
-                    new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-                } else {
-                    new ProcessBuilder("clear").inheritIO().start().waitFor();
-                }
-            } catch (Exception e) {
-                System.out.println("Erro ao limpar a tela: " + e.getMessage());
-            }
-        }
+    static String[] lerNome(Scanner teclado, String nomes[], int posicaoLivre){
+        System.out.print("Digite o nome do habitante: ");
+        nomes[posicaoLivre] = teclado.nextLine(); 
+        return nomes;
     }
-    static int lerInt(String mensagem){
-        int valorInt = 0;
+    static float[] lerSalario(Scanner teclado, float salarios[], int posicaoLivre){
         boolean flag = true;
         do{
             try {
-                System.out.print(mensagem);
-                valorInt = teclado.nextInt();
+                System.out.print("\nDigite o salario R$: ");
+                salarios[posicaoLivre] = teclado.nextFloat(); 
                 flag = false;
             } catch (InputMismatchException variavException) {
                 System.out.println("Valor incorreto.");
@@ -269,111 +140,114 @@ public class Exe01 {
             }
         }
         while(flag);
-        return valorInt;
-    }
-    static float lerFloat(String mensagem){
-        float valorFloat = 0;
-        boolean flag = true;
-        do{
-            try {
-                System.out.print(mensagem);
-                valorFloat = teclado.nextFloat();
-                flag = false;
-            } catch (InputMismatchException variavException) {
-                System.out.println("Valor incorreto.");
-                teclado.nextLine();
-            }
-        }
-        while(flag);
-        return valorFloat;
-    }
-    static char lerResposta(String mensagem){
-        char resposta;
-        do{
-            System.out.print(mensagem);
-            teclado.nextLine();
-            resposta = teclado.nextLine().toLowerCase().charAt(0);
-            if (resposta != 's' && resposta != 'n'){
-                System.out.println("Opção inválida.");
-            }
-        }
-        while((resposta != 's' && resposta != 'n'));
-        return resposta;
-    }
-    static String menorIdade(){
-        String nomeMenorIdade = "";
-        int valorMenorIdade = 0;
-        for(int i = 0; i < contador; i++){
-            if(i == 0){
-                valorMenorIdade = idades[i];
-                nomeMenorIdade = nomes[i];
-            }
-            else if(idades[i] < valorMenorIdade){
-                nomeMenorIdade = nomes[i];
-            }
-        }
-        return nomeMenorIdade;
-    }
-    static String maiorPeso(){
-        String nomeMaiorPeso = "";
-        float valorMaiorPeso = 0;
-        for(int i = 0; i < contador; i++){
-            if(i == 0){
-                valorMaiorPeso = pesos[i];
-                nomeMaiorPeso = nomes[i];
-            }
-            else if(idades[i] < valorMaiorPeso){
-                nomeMaiorPeso = nomes[i];
-            }
-        }
-        return nomeMaiorPeso;
-    }
-    static int quantMaiorPeso(){
-        int quantidadeMaiorPeso = 0;
-        float valorMaiorPeso = 0;
-        System.out.println("Informe o peso: ");
-        valorMaiorPeso = teclado.nextFloat();
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] >= valorMaiorPeso){
-                quantidadeMaiorPeso ++;
-            }
-        }
+        //resolve o problema da limpeza do buffer
         teclado.nextLine();
-        return quantidadeMaiorPeso;
+        return salarios;
     }
-    static void alterarDados() {
-        limparTela = true;
-        limparTela();
-        mostrarDados();
-        char resposta;
-        int id = lerInt("Digite o ID que deseja alterar: ") - 1;
-        resposta = lerResposta("Deseja alterar o nome " + nomes[id] + "?");
-        if(resposta == 's'){
-            nomes[id] = teclado.nextLine();
+    static int[] lerDependentes(Scanner teclado, int numeroDeps[], int posicaoLivre){
+        boolean flag = true;
+        do{
+            try {
+                System.out.print("\nDigite a quantidade de dependentes: ");
+                numeroDeps[posicaoLivre] = teclado.nextInt(); 
+                flag = false;
+            } catch (InputMismatchException variavException) {
+                System.out.println("Valor incorreto.");
+                teclado.nextLine();
+            }
         }
-        resposta = lerResposta("Deseja alterar a idade " + idades[id] + "?");
-        if(resposta == 's'){
-            idades[id] = lerInt("Digite a nova idade: ");
+        while(flag);
+        teclado.nextLine();
+        return numeroDeps;
+    }
+    static float calcularMediaSalario (float salarios[], int ultimaPosicaoGravada){
+        float media = 0;
+        for(int i = 0; i < ultimaPosicaoGravada + 1; i++){
+            media += salarios[i];
         }
-        resposta = lerResposta("Deseja alterar o peso " + pesos[id] + "?");
-        if(resposta == 's'){
-            pesos[id] = lerInt("Digite o novo peso: ");
+        media = media / (ultimaPosicaoGravada + 1);
+        return media;
+    }
+    static float calcularMediaDeps (int numeroDeps[], int ultimaPosicaoGravada){
+        float media = 0;
+        for(int i = 0; i < ultimaPosicaoGravada + 1; i++){
+            media += numeroDeps[i];
         }
-        resposta = lerResposta("Confirma as alterações? s/n");
-        if(resposta == 's'){
-            salvarDados();
+        media = media / (ultimaPosicaoGravada + 1);
+        return media;
+    }
+    static int encontrarMenorDeps (int numeroDeps[], int ultimaPosicaoGravada){
+        int posicao = 0, quantidade = 0;
+        for(int i = 0; i < ultimaPosicaoGravada + 1; i++){
+            if(i == 0){
+                quantidade = numeroDeps[i];
+            }
+            else if(numeroDeps[i] < quantidade){
+                posicao = i;
+                quantidade = numeroDeps[i];
+            }
+        }
+        return posicao;
+    }
+    static int encontrarMaiorSalario (float salarios[], int ultimaPosicaoGravada){
+        int posicao = 0;
+        float valor= 0;
+        for(int i = 0; i < ultimaPosicaoGravada + 1; i++){
+            if(i == 0){
+                valor = salarios[i];
+            }
+            else if(salarios[i] > valor){
+                posicao = i;
+                valor = salarios[i];
+            }
+        }
+        return posicao;
+    }
+    static void imprimirDesafio(float mediaSalario, float mediaDeps, int posicaoMenorDeps, 
+    int posicaoMaiorSalario, String nomes[], int numeroDeps[], float salarios[]){
+        String nomeMenorDeps = nomes[posicaoMenorDeps];
+        int quantidadeMenorDeps = numeroDeps[posicaoMenorDeps];
+        String nomeMaiorSalario = nomes[posicaoMaiorSalario];
+        float valorMaiorSalario = salarios[posicaoMaiorSalario];
+        System.out.printf("\nMédia salarial: R$ %.2f\n", mediaSalario);
+        System.out.printf("Média de dependentes: %.1f dependentes por habitante.\n", mediaDeps);
+        System.out.println("Habitante com a menor quantidade de dependentes: " + nomeMenorDeps);
+        System.out.println("Quantidade de dependentes de " + nomeMenorDeps + ": " + quantidadeMenorDeps);
+        System.out.println("Nome do habitante com maior salário: " + nomeMaiorSalario);
+        System.out.print("Valor do salário de " + nomeMaiorSalario + " R$: ");
+        System.out.printf("%.2f\n", valorMaiorSalario);   
+    }
+    static void imprimirMenorDeps(String nomes[], int numeroDeps[], int ultimaPosicaoGravada, float mediaDeps){
+        int qtdeEspacos;
+        System.out.println("\nHabitantes com quantidade de dependentes abaixo da média:");
+        System.out.println("Nome                QtdeDependentes");
+        System.out.println("-----------------------------------");
+        for (int posicaoVetor = 0; posicaoVetor <= ultimaPosicaoGravada; posicaoVetor++) {
+            if(numeroDeps[posicaoVetor] < mediaDeps){
+                System.out.print(nomes[posicaoVetor]);
+            
+                qtdeEspacos = (20 - nomes[posicaoVetor].length());
+                System.out.print(geraEspacos(qtdeEspacos));
+            }
+            if(numeroDeps[posicaoVetor] < mediaDeps){
+                System.out.println(numeroDeps[posicaoVetor]);
+            }
         }
     }
-    static void apagarDados() {
-        char resposta;
-        limparTela = true;
-        limparTela();
-        mostrarDados();
-        int id = lerInt("Digite o ID que deseja apagar: ") - 1;
-        resposta = lerResposta("Deseja apagar " + nomes[id] + "? s/n");
-        if (resposta == 's'){
-            nomes[id] = null;
+    static void imprimirMaiorSalario(String nomes[], float salarios[], int ultimaPosicaoGravada, float mediaSalario){
+        int qtdeEspacos;
+        System.out.println("\nHabitantes com valor de salário acima da média:");
+        System.out.println("Nome                QtdeDependentes");
+        System.out.println("-----------------------------------");
+        for (int posicaoVetor = 0; posicaoVetor <= ultimaPosicaoGravada; posicaoVetor++) {
+            if(salarios[posicaoVetor] > mediaSalario){
+                System.out.print(nomes[posicaoVetor]);
+                qtdeEspacos = (20 - nomes[posicaoVetor].length());
+                System.out.print(geraEspacos(qtdeEspacos));
+            }
+            if(salarios[posicaoVetor] > mediaSalario){
+                System.out.printf("%.2f\n", salarios[posicaoVetor]);
+            }
         }
-        salvarDados();
     }
 }
