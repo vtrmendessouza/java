@@ -31,61 +31,34 @@ import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.util.*;
 public class Exe02 {
-    //inicio das variaveis globais
     static Scanner teclado = new Scanner(System.in);
     static String CAMINHO_ARQUIVO = "./doc08/src/dataExe01.txt";
     static int TAMANHO_MAXIMO = 50;
     static String[] nomes = new String[TAMANHO_MAXIMO];
     static int[] idades = new int[TAMANHO_MAXIMO];
     static float[] pesos = new float[TAMANHO_MAXIMO];
-    //controlar quantas posicoes ja foram gravadas no vetor
     static int contador = 0;
-    //variavel para controlar quando se deve ou nao limpar a
     static boolean limparTela = true;
-    //fim das variaveis globais
     public static void main(String[] args) {
-        //variavel que armazena a resposta do menu
         int opcao;
         carregarDados();
         do {
             limparTela();
             opcao = lerOpcaoMenu();
             processarOpcaoMenu(opcao);
-        } while(opcao != 5);
+        } while(opcao != 7);
         teclado.close();
     }
     static int lerOpcaoMenu(){
         int opcao = 0;
-        System.out.println("\n############## Menu ##############\n");
-        System.out.println("1.  Mostrar dados");
-        System.out.println("2.  Adicionar dados");
-        System.out.println("3.  Alterar dados");
-        System.out.println("4.  Apagar dados");
-        System.out.println("5.  Sair");
-        System.out.println("6.  Exibir a QTDE de pessoas");
-        System.out.println("7.  Exibir a media de idade");
-        System.out.println("8.  Contar quantidade de pessoas acima da media de idade");
-        System.out.println("9.  Contar quantidade de pessoas abaixo da media de idade");
-        System.out.println("8.  Exibir a porcentagem de pessoas acima da media de idade");
-        System.out.println("9.  Exibir a porcentagem de pessoas abaixo da media de idade");
-        System.out.println("10. Exibir a pessoa com a maior idade");
-        System.out.println("11. Exibir a pessoa com a menor idade");
-        System.out.println("13. Contar quantidade de pessoas acima da idade desejada");
-        System.out.println("14. Contar quantidae de pessoas abaixo da idade desejada");
-        System.out.println("15. Exibir a porcentagem de pessoas acima da idade desejada");
-        System.out.println("16. Exibir a porcentagem de pessoas abaixo da idade desejada");
-        System.out.println("17. Exibir a media de peso");
-        System.out.println("18. Contar quantidade de pessoas acima da media de peso");
-        System.out.println("19. Contar quantidade de pessoas abaixo da media de peso");
-        System.out.println("20. Exibir a porcentagem de pessoas acima da media de peso");
-        System.out.println("21. Exibir a porcentagem de pessoas abaixo da media de peso");
-        System.out.println("22. Exibir a pessoa com o maior peso");
-        System.out.println("23. Exibir a pessoa com o menor peso");
-        System.out.println("24. Contar quantidade de pessoas acima do peso desejado");
-        System.out.println("25. Contar quantidade de pessoas abaixo do peso desejado");
-        System.out.println("26. Exibir a porcentagem de pessoas acima do peso desejado");
-        System.out.println("27. Exibir a porcentagem de pessoas abaixo do peso desejado");
-        System.out.println("28. Exibir relatório completo");
+        System.out.println("\n############# Menu #############");
+        System.out.println("1. Exibir dados");
+        System.out.println("2. Exibir relatório");
+        System.out.println("3. Exibir relatório personalizado");
+        System.out.println("4. Adicionar dados");
+        System.out.println("5. Alterar dados");
+        System.out.println("6. Apagar dados");
+        System.out.println("7. Sair");
         opcao = lerInt("Escolha uma opção: ");
         return opcao;
     }
@@ -96,28 +69,22 @@ public class Exe02 {
                 mostrarDados();
                 break;
             case 2:
-                adicionarDados();
+                //exibirRelatorio();
                 break;
             case 3:
-                alterarDados();
+                //exibirRelatorioPersonalizado();
                 break;
             case 4:
-                apagarDados();
+                adicionarDados();
                 break;
             case 5:
-                System.out.println("\nEncerrando...");
+                alterarDados();
                 break;
             case 6:
-                System.out.printf("\nQTDE de Pessoas: %d\n", contador);
+                apagarDados();
                 break;
             case 7:
-                System.out.println("\nPessoa com a Menor Idade: " + menorIdade());
-                break;
-            case 8:
-                System.out.println("\nPessoa com o Maior Peso: " + maiorPeso());
-                break;
-            case 9:
-                System.out.println("\nQTDE de Pessoas acima de Peso: " + quantMaiorPeso());
+                System.out.println("\nEncerrando...");
                 break;
             default:
                 System.out.println("\nOpção inválida. Tente novamente.");
@@ -129,7 +96,7 @@ public class Exe02 {
         FileReader arquivo = null;
         BufferedReader bufferLeitura = null;
         try {
-            //define o arquivo que sera abert
+            //define o arquivo que sera aberto
             arquivo = new FileReader(CAMINHO_ARQUIVO);
             bufferLeitura = new BufferedReader(arquivo);
             String linha = bufferLeitura.readLine();
@@ -153,7 +120,7 @@ public class Exe02 {
         } catch (NumberFormatException e) {
             System.out.println("Erro nos dados do arquivo: formato inválido.");
         } finally {
-            // Fechamento do arquivo e do bufferLeitura
+            //fechamento do arquivo e do bufferLeitura
             try {
                 if (bufferLeitura != null) {
                     bufferLeitura.close();
@@ -170,12 +137,11 @@ public class Exe02 {
         limparTela = true;
         int q = 0;
         limparTela();        
-        //Verifico se tem espaco nos vetores
+        //verifico se tem espaco nos vetores
         if (contador >= TAMANHO_MAXIMO) {
             System.out.println("Limite de dados atingido! Não é possível adicionar mais.");
-            //estou usando um retorne para forcar o fim da execucao
-            //do metodo adicionarDados quando nao tiver mais posicoes livres 
-            //no vetor. 
+            //estou usando um retorne para forcar o fim da execucao do metodo adicionarDados 
+            //quando nao tiver mais posicoes livres no vetor. 
             return;
         }
         do{
@@ -199,9 +165,9 @@ public class Exe02 {
     static void salvarDados() {
         BufferedWriter gravador = null;
         try {
-            // Inicializa o BufferedWriter para escrever no arquivo
+            //inicializa o BufferedWriter para escrever no arquivo
             gravador = new BufferedWriter(new FileWriter(CAMINHO_ARQUIVO));
-            // Escreve os dados no arquivo
+            //escreve os dados no arquivo
             for (int i = 0; i < contador; i++) {
                 if(nomes[i] != null){
                     //escreve os dados no arquivo
@@ -214,7 +180,7 @@ public class Exe02 {
         } catch (IOException e) {
             System.out.println("Erro ao salvar os dados: " + e.getMessage());
         } finally {
-            // Fechamento do BufferedWriter 
+            //fechamento do BufferedWriter 
             if (gravador != null) {
                 try {
                     gravador.close();
@@ -373,106 +339,170 @@ public class Exe02 {
         }
         salvarDados();
     }
-    static String maiorIdade(){
-        String nomeMaiorIdade = "";
-        int valorMenorIdade = 0;
+    static String maiorIdadeGeral(){
+        String nome = "";
+        int valor = 0;
         for(int i = 0; i < contador; i++){
             if(i == 0){
-                valorMenorIdade = idades[i];
-                nomeMaiorIdade = nomes[i];
+                valor = idades[i];
+                nome = nomes[i];
             }
-            else if(idades[i] > valorMenorIdade){
-                nomeMaiorIdade = nomes[i];
+            else if(idades[i] > valor){
+                nome = nomes[i];
             }
         }
-        return nomeMaiorIdade;
+        return nome;
     }
-    static String menorIdade(){
-        String nomeMenorIdade = "";
-        int valorMenorIdade = 0;
+    static String menorIdadeGeral(){
+        String nome = "";
+        int valor = 0;
         for(int i = 0; i < contador; i++){
             if(i == 0){
-                valorMenorIdade = idades[i];
-                nomeMenorIdade = nomes[i];
+                valor = idades[i];
+                nome = nomes[i];
             }
-            else if(idades[i] < valorMenorIdade){
-                nomeMenorIdade = nomes[i];
+            else if(idades[i] < valor){
+                nome = nomes[i];
             }
         }
-        return nomeMenorIdade;
+        return nome;
     }
-    static String maiorPeso(){
-        String nomeMaiorPeso = "";
-        float valorMaiorPeso = 0;
+    static String maiorPesoGeral(){
+        String nome = "";
+        float peso = 0;
         for(int i = 0; i < contador; i++){
             if(i == 0){
-                valorMaiorPeso = pesos[i];
-                nomeMaiorPeso = nomes[i];
+                peso = pesos[i];
+                nome = nomes[i];
             }
-            else if(idades[i] < valorMaiorPeso){
-                nomeMaiorPeso = nomes[i];
+            else if(idades[i] < peso){
+                nome = nomes[i];
             }
         }
-        return nomeMaiorPeso;
+        return nome;
     }
-    static String menorPeso(){
-        String nomeMenorPeso = "";
-        float valorMaiorPeso = 0;
+    static String menorPesoGeral(){
+        String nome = "";
+        float peso = 0;
         for(int i = 0; i < contador; i++){
             if(i == 0){
-                valorMaiorPeso = pesos[i];
-                nomeMenorPeso = nomes[i];
+                peso = pesos[i];
+                nome = nomes[i];
             }
-            else if(idades[i] > valorMaiorPeso){
-                nomeMenorPeso = nomes[i];
+            else if(idades[i] > peso){
+                nome = nomes[i];
             }
         }
-        return nomeMenorPeso;
+        return nome;
     }
-    static int quantMaiorIdade(){
-        int quantidadeMaiorIdade = 0, valorMaiorIdade = 0;
-        valorMaiorIdade = lerInt("Informe a idade: ");
+    static int quantMaiorIdadeMediaGeral(){
+        int quantidade = 0, valor = 0, q = 0;
+        for(int i = 0; i > contador; i++){
+            q += idades[i];
+        }
+        valor = q / contador;
         for(int i = 0; i < contador; i++){
-            if(pesos[i] >= valorMaiorIdade){
-                quantidadeMaiorIdade ++;
+            if(idades[i] >= valor){
+                quantidade ++;
             }
         }
         teclado.nextLine();
-        return quantidadeMaiorIdade;
+        return quantidade;
     }
-    static int quantMenorIdade(){
-        int quantidadeMenorIdade = 0, valorMenorIdade = 0;
-        valorMenorIdade = lerInt("Informe a idade: ");
+    static int quantMenorIdadeMedia(){
+        int quantidade = 0, valor = 0, q = 0;
+        for(int i = 0; i > contador; i++){
+            q += idades[i];
+        }
+        valor = q / contador;
         for(int i = 0; i < contador; i++){
-            if(pesos[i] >= valorMenorIdade){
-                quantidadeMenorIdade ++;
+            if(idades[i] >= valor){
+                quantidade ++;
             }
         }
         teclado.nextLine();
-        return quantidadeMenorIdade;
+        return quantidade;
     }
-    static int quantMaiorPeso(){
-        int quantidadeMaiorPeso = 0;
-        float valorMaiorPeso = 0;
-        valorMaiorPeso = lerFloat("Informe o peso: ");
+    static int quantMaiorPesoMedia(){
+        int quantidade = 0, valor = 0, q = 0;
+        for(int i = 0; i > contador; i++){
+            q += pesos[i];
+        }
+        valor = q / contador;
         for(int i = 0; i < contador; i++){
-            if(pesos[i] >= valorMaiorPeso){
-                quantidadeMaiorPeso ++;
+            if(pesos[i] >= valor){
+                quantidade ++;
             }
         }
         teclado.nextLine();
-        return quantidadeMaiorPeso;
+        return quantidade;
     }
-    static int quantMenorPeso(){
-        int quantidadeMenorPeso = 0;
-        float valorMenorPeso = 0;
-        valorMenorPeso = lerFloat("Informe o peso: ");
+    static int quantMenorPesoMedia(){
+        int quantidade = 0, valor = 0, q = 0;
+        for(int i = 0; i > contador; i++){
+            q += pesos[i];
+        }
+        valor = q / contador;
         for(int i = 0; i < contador; i++){
-            if(pesos[i] >= valorMenorPeso){
-                quantidadeMenorPeso ++;
+            if(pesos[i] >= valor){
+                quantidade ++;
             }
         }
         teclado.nextLine();
-        return quantidadeMenorPeso;
+        return quantidade;
+    }
+    static int escolherIdade(){
+        int escolha = lerInt("Informe a idade: ");
+        teclado.nextLine();
+        return escolha;
+    }
+    static float escolherPeso(){
+        float escolha = lerFloat("Informe o peso: ");
+        teclado.nextLine();
+        return escolha;
+    }
+    static int quantMaiorIdadeEscolha(){
+        int quantidade = 0;
+        int valor = escolherIdade();
+        for(int i = 0; i < contador; i++){
+            if(idades[i] >= valor){
+                quantidade ++;
+            }
+        }
+        teclado.nextLine();
+        return quantidade;
+    }
+    static int quantMenorIdadeEscolha(){
+        int quantidade = 0;
+        int valor = escolherIdade();
+        for(int i = 0; i < contador; i++){
+            if(idades[i] >= valor){
+                quantidade ++;
+            }
+        }
+        teclado.nextLine();
+        return quantidade;
+    }
+    static int quantMaiorPesoEscolha(){
+        int quantidade = 0;
+        float peso = escolherPeso();
+        for(int i = 0; i < contador; i++){
+            if(pesos[i] >= peso){
+                quantidade ++;
+            }
+        }
+        teclado.nextLine();
+        return quantidade;
+    }
+    static int quantMenorPesoEscolha(){
+        int quantidade = 0;
+        float peso = escolherPeso();
+        for(int i = 0; i < contador; i++){
+            if(pesos[i] >= peso){
+                quantidade ++;
+            }
+        }
+        teclado.nextLine();
+        return quantidade;
     }
 }

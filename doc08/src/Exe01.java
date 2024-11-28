@@ -109,9 +109,9 @@ public class Exe01 {
             else{
                 nomeGrande = nomes[posicaoVetor].substring(0, 17);
                 System.out.print(nomeGrande + "...");
-                }
-                //imprime o salario
-                System.out.printf("R$ %.2f", salarios[posicaoVetor]);
+            }
+            //imprime o salario
+            System.out.printf("R$ %.2f", salarios[posicaoVetor]);
             //calcula quantos espacos sao necessarios para alinhar a quantidade de dependentes
             qtdeEspacos = (20 - Float.toString(salarios[posicaoVetor]).length());
             //imprime os espacos
