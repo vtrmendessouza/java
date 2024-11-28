@@ -41,15 +41,15 @@ public class Exe02 {
     static boolean limparTela = true;
     public static void main(String[] args) {
         int opcao;
+        limparTela();
         carregarDados();
         do {
-            limparTela();
-            opcao = lerOpcaoMenu();
-            processarOpcaoMenu(opcao);
+            opcao = exibirMenu();
+            processarMenu(opcao);
         } while(opcao != 7);
         teclado.close();
     }
-    static int lerOpcaoMenu(){
+    static int exibirMenu(){
         int opcao = 0;
         System.out.println("\n############# Menu #############");
         System.out.println("1. Exibir dados");
@@ -62,34 +62,39 @@ public class Exe02 {
         opcao = lerInt("Escolha uma opção: ");
         return opcao;
     }
-    static void processarOpcaoMenu(int opcao){
-        limparTela();
+    static void processarMenu(int opcao){
         switch (opcao) {
             case 1:
-                mostrarDados();
+                limparTela();
+                exibirDados();
                 break;
             case 2:
-                //exibirRelatorio();
+                limparTela();
+                exibirRelatorio();
                 break;
             case 3:
+                limparTela();
                 //exibirRelatorioPersonalizado();
                 break;
             case 4:
+                limparTela();
                 adicionarDados();
                 break;
             case 5:
+                limparTela();
                 alterarDados();
                 break;
             case 6:
+                limparTela();
                 apagarDados();
                 break;
             case 7:
-                System.out.println("\nEncerrando...");
+                limparTela();
+                System.out.print("Programa encerrado.\n");
                 break;
             default:
-                System.out.println("\nOpção inválida. Tente novamente.");
+                System.out.println("Opção inválida.\n");
         }
-        limparTela = false;
     }
     static void carregarDados() {
         contador = 0;
@@ -134,9 +139,7 @@ public class Exe02 {
         }
     }
     static void adicionarDados() {
-        limparTela = true;
         int q = 0;
-        limparTela();        
         //verifico se tem espaco nos vetores
         if (contador >= TAMANHO_MAXIMO) {
             System.out.println("Limite de dados atingido! Não é possível adicionar mais.");
@@ -148,15 +151,15 @@ public class Exe02 {
             System.out.print("Digite o nome: ");
             nomes[contador] = teclado.nextLine();
             q = 0;
-            for(int i = 0; i < nomes.length; i++){
+            for(int i = 0; i < contador; i++){
                 if(nomes[contador].equals(nomes[i])){
                     q++;
                 }
             }
-            if(q > 1){
+            if(q > 0){
                 System.out.println("Nome já cadastrado.");
             }
-        } while(q > 1);
+        } while(q > 0);
         idades[contador] = lerInt("Digite a idade: ");
         pesos[contador] = lerFloat("Digite o peso (em kg): ");
         contador++;
@@ -176,7 +179,7 @@ public class Exe02 {
                     gravador.newLine();
                 }
             }
-            System.out.println("\nDados salvos no arquivo.");
+            System.out.println("Dados salvos no arquivo.");
         } catch (IOException e) {
             System.out.println("Erro ao salvar os dados: " + e.getMessage());
         } finally {
@@ -191,7 +194,7 @@ public class Exe02 {
         }
         carregarDados();
     }
-    static void mostrarDados() {
+    static void exibirDados() {
         int qtdeEspacos = 0;
         String nomeGrande = "";
         if (contador == 0) {
@@ -306,12 +309,12 @@ public class Exe02 {
     }
     static void alterarDados() {
         limparTela = true;
-        limparTela();
-        mostrarDados();
+        exibirDados();
         char resposta;
         int id = (lerInt("\nDigite o ID que deseja alterar: ") - 1);
         resposta = lerResposta("Deseja alterar o nome " + nomes[id] + "? s/n ");
         if(resposta == 's'){
+            System.out.print("Digite o novo nome: ");
             nomes[id] = teclado.nextLine();
         }
         resposta = lerResposta("Deseja alterar a idade " + idades[id] + "? s/n ");
@@ -320,18 +323,20 @@ public class Exe02 {
         }
         resposta = lerResposta("Deseja alterar o peso " + pesos[id] + "? s/n ");
         if(resposta == 's'){
-            pesos[id] = lerInt("Digite o novo peso: ");
+            pesos[id] = lerFloat("Digite o novo peso: ");
         }
         resposta = lerResposta("Confirma as alterações? s/n ");
         if(resposta == 's'){
             salvarDados();
         }
+        else{
+            System.out.print("Alterações descartadas.\n");
+        }
     }
     static void apagarDados() {
         char resposta;
         limparTela = true;
-        limparTela();
-        mostrarDados();
+        exibirDados();
         int id = lerInt("\nDigite o ID que deseja apagar: ") - 1;
         resposta = lerResposta("Deseja apagar " + nomes[id] + "? s/n ");
         if (resposta == 's'){
@@ -339,116 +344,110 @@ public class Exe02 {
         }
         salvarDados();
     }
-    static String maiorIdadeGeral(){
-        String nome = "";
-        int valor = 0;
+    static int maiorIdade(){
+        int idade = 0;
         for(int i = 0; i < contador; i++){
             if(i == 0){
-                valor = idades[i];
-                nome = nomes[i];
+                idade = idades[i];
             }
-            else if(idades[i] > valor){
-                nome = nomes[i];
+            else if(idades[i] > idade){
+                idade = idades[i];
             }
         }
-        return nome;
+        return idade;
     }
-    static String menorIdadeGeral(){
-        String nome = "";
-        int valor = 0;
+    static int menorIdade(){
+        int idade = 0;
         for(int i = 0; i < contador; i++){
             if(i == 0){
-                valor = idades[i];
-                nome = nomes[i];
+                idade = idades[i];
             }
-            else if(idades[i] < valor){
-                nome = nomes[i];
+            else if(idades[i] < idade){
+                idade = idades[i];
             }
         }
-        return nome;
+        return idade;
     }
-    static String maiorPesoGeral(){
-        String nome = "";
+    static float maiorPeso(){
         float peso = 0;
         for(int i = 0; i < contador; i++){
             if(i == 0){
                 peso = pesos[i];
-                nome = nomes[i];
-            }
-            else if(idades[i] < peso){
-                nome = nomes[i];
-            }
-        }
-        return nome;
-    }
-    static String menorPesoGeral(){
-        String nome = "";
-        float peso = 0;
-        for(int i = 0; i < contador; i++){
-            if(i == 0){
-                peso = pesos[i];
-                nome = nomes[i];
             }
             else if(idades[i] > peso){
-                nome = nomes[i];
+                peso = pesos[i];
             }
         }
-        return nome;
+        return peso;
     }
-    static int quantMaiorIdadeMediaGeral(){
-        int quantidade = 0, valor = 0, q = 0;
-        for(int i = 0; i > contador; i++){
+    static float menorPeso(){
+        float peso = 0;
+        for(int i = 0; i < contador; i++){
+            if(i == 0){
+                peso = pesos[i];
+            }
+            else if(idades[i] < peso){
+                peso = pesos[i];
+            }
+        }
+        return peso;
+    }
+    static float mediaIdade(){
+        float media = 0;
+        int q = 0;
+        for(int i = 0; i < contador; i++){
             q += idades[i];
         }
-        valor = q / contador;
+        media = q / contador;
+        return media;
+    }
+    static float mediaPeso(){
+        float media = 0;
+        int q = 0;
         for(int i = 0; i < contador; i++){
-            if(idades[i] >= valor){
+            q += pesos[i];
+        }
+        media = q / contador;
+        return media;
+    }
+    static int quantMaiorIdadeMedia(){
+        int quantidade = 0;
+        float media = mediaIdade();
+        for(int i = 0; i < contador; i++){
+            if(idades[i] > media){
                 quantidade ++;
             }
         }
-        teclado.nextLine();
         return quantidade;
     }
     static int quantMenorIdadeMedia(){
-        int quantidade = 0, valor = 0, q = 0;
-        for(int i = 0; i > contador; i++){
-            q += idades[i];
-        }
-        valor = q / contador;
+        int quantidade = 0;
+        float media = mediaIdade();
         for(int i = 0; i < contador; i++){
-            if(idades[i] >= valor){
+            if(idades[i] < media){
                 quantidade ++;
             }
         }
-        teclado.nextLine();
         return quantidade;
     }
     static int quantMaiorPesoMedia(){
-        int quantidade = 0, valor = 0, q = 0;
-        for(int i = 0; i > contador; i++){
-            q += pesos[i];
-        }
-        valor = q / contador;
+        int quantidade = 0;
+        float media = mediaPeso();
         for(int i = 0; i < contador; i++){
-            if(pesos[i] >= valor){
+            if(pesos[i] > media){
                 quantidade ++;
             }
         }
-        teclado.nextLine();
         return quantidade;
     }
     static int quantMenorPesoMedia(){
-        int quantidade = 0, valor = 0, q = 0;
-        for(int i = 0; i > contador; i++){
-            q += pesos[i];
-        }
-        valor = q / contador;
+        int quantidade = 0;
+        float media = mediaPeso();
         for(int i = 0; i < contador; i++){
-            if(pesos[i] >= valor){
+            if(pesos[i] < media){
                 quantidade ++;
             }
         }
-        teclado.nextLine();
         return quantidade;
     }
     static int escolherIdade(){
@@ -469,7 +468,6 @@ public class Exe02 {
                 quantidade ++;
             }
         }
-        teclado.nextLine();
         return quantidade;
     }
     static int quantMenorIdadeEscolha(){
@@ -480,7 +478,6 @@ public class Exe02 {
                 quantidade ++;
             }
         }
-        teclado.nextLine();
         return quantidade;
     }
     static int quantMaiorPesoEscolha(){
@@ -491,7 +488,6 @@ public class Exe02 {
                 quantidade ++;
             }
         }
-        teclado.nextLine();
         return quantidade;
     }
     static int quantMenorPesoEscolha(){
@@ -502,7 +498,25 @@ public class Exe02 {
                 quantidade ++;
             }
         }
-        teclado.nextLine();
         return quantidade;
+    }
+    static void exibirRelatorio(){
+        //nome da maior/menor idade/peso
+        //porcentagem acima/abaixo da media idade/peso
+        //desvio maior/menor idade/peso
+        System.out.printf("\nTotal de cadastros: %d\n", contador);
+        System.out.printf("Média de idade: %.1f\n", mediaIdade());
+        System.out.printf("Média de peso: %.1f\n", mediaPeso());
+        
+        System.out.printf("\nMaior idade: %d\n", maiorIdade());
+        System.out.printf("Menor idade: %d\n", menorIdade());
+        System.out.printf("Idade acima da média: %d\n", quantMaiorIdadeMedia());
+        System.out.printf("Idade abaixo da média: %d\n",quantMenorIdadeMedia());
+        
+        System.out.printf("\nMaior peso: %.1f\n", maiorPeso());
+        System.out.printf("Menor peso: %.1f\n", menorPeso());
+        System.out.printf("Peso acima da média: %d\n", quantMaiorPesoMedia());
+        System.out.printf("Peso abaixo da média: %d\n",quantMenorPesoMedia());
+        
     }
 }
