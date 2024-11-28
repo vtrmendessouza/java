@@ -2,3 +2,16 @@ Vitor Mendes;35;70.0
 Big Jhonson;18;59.5
 chuck norris;50;85.0
 bezerra da silva;165;50.0
+bob;1;1.0
+Vitor Mendes;35;70.0
+Big Jhonson;18;59.5
+chuck norris;50;85.0
+bezerra da silva;165;50.0
+bob;1;1.0
+joe;1;1.0
+roy;1;1.0
+billy;99;200.0
+Etevaldo;100;49.0
+1234567890123456789;50;120.0
+12345678901234567890;1;1.0
+123456789012345678901;1;1.0

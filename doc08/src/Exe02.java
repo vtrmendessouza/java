@@ -51,77 +51,78 @@ public class Exe02 {
             limparTela();
             opcao = lerOpcaoMenu();
             processarOpcaoMenu(opcao);
-        } while(opcao != 3);
+        } while(opcao != 5);
         teclado.close();
+    }
+    static int lerOpcaoMenu(){
+        int opcao = 0;
+        System.out.println("\n############## Menu ##############\n");
+        System.out.println("1.  Mostrar dados");
+        System.out.println("2.  Adicionar dados");
+        System.out.println("3.  Alterar dados");
+        System.out.println("4.  Apagar dados");
+        System.out.println("5.  Sair");
+        System.out.println("6.  Exibir a QTDE de pessoas");
+        System.out.println("7.  Exibir a media de idade");
+        System.out.println("8.  Contar quantidade de pessoas acima da media de idade");
+        System.out.println("9.  Contar quantidade de pessoas abaixo da media de idade");
+        System.out.println("8.  Exibir a porcentagem de pessoas acima da media de idade");
+        System.out.println("9.  Exibir a porcentagem de pessoas abaixo da media de idade");
+        System.out.println("10. Exibir a pessoa com a maior idade");
+        System.out.println("11. Exibir a pessoa com a menor idade");
+        System.out.println("13. Contar quantidade de pessoas acima da idade desejada");
+        System.out.println("14. Contar quantidae de pessoas abaixo da idade desejada");
+        System.out.println("15. Exibir a porcentagem de pessoas acima da idade desejada");
+        System.out.println("16. Exibir a porcentagem de pessoas abaixo da idade desejada");
+        System.out.println("17. Exibir a media de peso");
+        System.out.println("18. Contar quantidade de pessoas acima da media de peso");
+        System.out.println("19. Contar quantidade de pessoas abaixo da media de peso");
+        System.out.println("20. Exibir a porcentagem de pessoas acima da media de peso");
+        System.out.println("21. Exibir a porcentagem de pessoas abaixo da media de peso");
+        System.out.println("22. Exibir a pessoa com o maior peso");
+        System.out.println("23. Exibir a pessoa com o menor peso");
+        System.out.println("24. Contar quantidade de pessoas acima do peso desejado");
+        System.out.println("25. Contar quantidade de pessoas abaixo do peso desejado");
+        System.out.println("26. Exibir a porcentagem de pessoas acima do peso desejado");
+        System.out.println("27. Exibir a porcentagem de pessoas abaixo do peso desejado");
+        System.out.println("28. Exibir relatório completo");
+        opcao = lerInt("Escolha uma opção: ");
+        return opcao;
     }
     static void processarOpcaoMenu(int opcao){
         limparTela();
         switch (opcao) {
             case 1:
-                adicionarDados();
-                break;
-            case 2:
                 mostrarDados();
                 break;
+            case 2:
+                adicionarDados();
+                break;
             case 3:
-                System.out.println("\nEncerrando...");
-                break;
-            case 4:
-                System.out.printf("\nQTDE de Pessoas: %d\n", contador);
-                break;
-            case 5:
-                System.out.println("\nPessoa com a Menor Idade: " + menorIdade());
-                break;
-            case 6:
-                System.out.println("\nPessoa com o Maior Peso: " + maiorPeso());
-                break;
-            case 7:
-                System.out.println("\nQTDE de Pessoas acima de Peso: " + quantMaiorPeso());
-                break;
-            case 8:
                 alterarDados();
                 break;
-            case 9:
+            case 4:
                 apagarDados();
                 break;
-                default:
+            case 5:
+                System.out.println("\nEncerrando...");
+                break;
+            case 6:
+                System.out.printf("\nQTDE de Pessoas: %d\n", contador);
+                break;
+            case 7:
+                System.out.println("\nPessoa com a Menor Idade: " + menorIdade());
+                break;
+            case 8:
+                System.out.println("\nPessoa com o Maior Peso: " + maiorPeso());
+                break;
+            case 9:
+                System.out.println("\nQTDE de Pessoas acima de Peso: " + quantMaiorPeso());
+                break;
+            default:
                 System.out.println("\nOpção inválida. Tente novamente.");
-            }
-            limparTela = false;
-    }
-    static void adicionarDados() {
-        limparTela = true;
-        limparTela();        
-        //Verifico se tem espaco nos vetores
-        if (contador >= TAMANHO_MAXIMO) {
-            System.out.println("Limite de dados atingido! Não é possível adicionar mais.");
-            //estou usando um retorne para forcar o fim da execucao
-            //do metodo adicionarDados quando nao tiver mais posicoes livres 
-            //no vetor. 
-            return;
         }
-        System.out.print("Digite o nome: ");
-        nomes[contador] = teclado.nextLine();
-        idades[contador] = lerInt("Digite a idade: ");
-        pesos[contador] = lerFloat("Digite o peso (em kg): ");
-        contador++;
-        salvarDados();
-    }
-    static int lerOpcaoMenu(){
-        int opcao = 0;
-        System.out.println("\n############## Menu ##############\n");
-        System.out.println("1. Adicionar dados");
-        System.out.println("2. Mostrar dados");
-        System.out.println("3. Sair");
-        System.out.println("4. Exibir a QTDE de Pessoas");
-        System.out.println("5. Exibir a Pessoa com a Menor Idade");
-        System.out.println("6. Exibir a Pessoa com o Maior Peso");
-        System.out.println("7. Contar QTDE de Pessoas acima de Peso");
-        System.out.println("8. Alterar dados");
-        System.out.println("9. Apagar dados");
-        opcao = lerInt("Escolha uma opção: ");
-        teclado.nextLine(); // Limpar buffer
-        return opcao;
+        limparTela = false;
     }
     static void carregarDados() {
         contador = 0;
@@ -165,45 +166,35 @@ public class Exe02 {
             }
         }
     }
-    static void mostrarDados() {
-        int qtdeEspacos;
-        String nomeGrande = "";
-        if (contador == 0) {
-            System.out.println("Nenhum dado disponível.");
+    static void adicionarDados() {
+        limparTela = true;
+        int q = 0;
+        limparTela();        
+        //Verifico se tem espaco nos vetores
+        if (contador >= TAMANHO_MAXIMO) {
+            System.out.println("Limite de dados atingido! Não é possível adicionar mais.");
+            //estou usando um retorne para forcar o fim da execucao
+            //do metodo adicionarDados quando nao tiver mais posicoes livres 
+            //no vetor. 
             return;
         }
-        System.out.println("\nID                  Nome                Idade               Peso");
-        System.out.println("----------------------------------------------------------");
-        for (int i = 0; i < contador; i++) {
-            qtdeEspacos = 0;
-            if(nomes[i] != null){
-                // imprime id
-                System.out.print(i + 1);
-                if(i < 9){
-                    qtdeEspacos = 19;
+        do{
+            System.out.print("Digite o nome: ");
+            nomes[contador] = teclado.nextLine();
+            q = 0;
+            for(int i = 0; i < nomes.length; i++){
+                if(nomes[contador].equals(nomes[i])){
+                    q++;
                 }
-                else{
-                    qtdeEspacos = 18;
-                }
-                System.out.print(gerarEspacos(qtdeEspacos));
-                if(nomes[i].length() < 20){
-                    System.out.print(nomes[i]);
-                    //calcula quantos espacos sao necessarios para alinhar
-                    //o valor da idade na posicao da coluna idade
-                    qtdeEspacos = (20 - nomes[i].length());
-                    //imprime a quantidade de espacos para alinhar os salarios
-                    System.out.print(gerarEspacos(qtdeEspacos));
-                }
-                else{
-                    nomeGrande = nomes[i].substring(0, 17);
-                    System.out.print(nomeGrande + "...");
-                }
-                System.out.print(idades[i]);
-                qtdeEspacos = (20 - String.valueOf(idades[i]).length());
-                System.out.print(gerarEspacos(qtdeEspacos));
-                System.out.printf("%.1f", pesos[i]);
             }
-        }
+            if(q > 1){
+                System.out.println("Nome já cadastrado.");
+            }
+        } while(q > 1);
+        idades[contador] = lerInt("Digite a idade: ");
+        pesos[contador] = lerFloat("Digite o peso (em kg): ");
+        contador++;
+        salvarDados();
     }
     static void salvarDados() {
         BufferedWriter gravador = null;
@@ -233,6 +224,52 @@ public class Exe02 {
             }
         }
         carregarDados();
+    }
+    static void mostrarDados() {
+        int qtdeEspacos = 0;
+        String nomeGrande = "";
+        if (contador == 0) {
+            System.out.println("Nenhum dado disponível.");
+            return;
+        }
+        System.out.println("\nID  Nome                  Idade Peso");
+        System.out.println("---------------------------------------");
+        for (int i = 0; i < contador; i++) {
+            if(nomes[i] != null){
+                System.out.print("|");
+                System.out.print(i + 1);
+                if(i < 9){
+                    qtdeEspacos = 2;
+                }
+                else{
+                    qtdeEspacos = 1;
+                }
+                System.out.print(gerarEspacos(qtdeEspacos));
+                if(nomes[i].length() < 21){
+                    System.out.print("|");
+                    System.out.print(nomes[i]);
+                    //calcula quantos espacos sao necessarios para alinhar
+                    //o valor da idade na posicao da coluna idade
+                    qtdeEspacos = (21 - nomes[i].length());
+                    //imprime a quantidade de espacos para alinhar os salarios
+                    System.out.print(gerarEspacos(qtdeEspacos));
+                }
+                else{
+                    System.out.print("|");
+                    nomeGrande = nomes[i].substring(0, 17);
+                    System.out.print(nomeGrande + "... ");
+                }
+                System.out.print("|");
+                System.out.print(idades[i]);
+                qtdeEspacos = (4 - String.valueOf(idades[i]).length());
+                System.out.print(gerarEspacos(qtdeEspacos));
+                System.out.print("|");
+                System.out.printf("%.1f", pesos[i]);
+                qtdeEspacos = (6 - String.valueOf(pesos[i]).length());
+                System.out.print(gerarEspacos(qtdeEspacos));
+                System.out.print("|\n");
+            }
+        }
     }
     static String gerarEspacos(int qtde){
         String espacos = "";
@@ -269,6 +306,7 @@ public class Exe02 {
             }
         }
         while(flag);
+        teclado.nextLine();
         return valorInt;
     }
     static float lerFloat(String mensagem){
@@ -285,13 +323,13 @@ public class Exe02 {
             }
         }
         while(flag);
+        teclado.nextLine();
         return valorFloat;
     }
     static char lerResposta(String mensagem){
         char resposta;
         do{
             System.out.print(mensagem);
-            teclado.nextLine();
             resposta = teclado.nextLine().toLowerCase().charAt(0);
             if (resposta != 's' && resposta != 'n'){
                 System.out.println("Opção inválida.");
@@ -299,6 +337,55 @@ public class Exe02 {
         }
         while((resposta != 's' && resposta != 'n'));
         return resposta;
+    }
+    static void alterarDados() {
+        limparTela = true;
+        limparTela();
+        mostrarDados();
+        char resposta;
+        int id = (lerInt("\nDigite o ID que deseja alterar: ") - 1);
+        resposta = lerResposta("Deseja alterar o nome " + nomes[id] + "? s/n ");
+        if(resposta == 's'){
+            nomes[id] = teclado.nextLine();
+        }
+        resposta = lerResposta("Deseja alterar a idade " + idades[id] + "? s/n ");
+        if(resposta == 's'){
+            idades[id] = lerInt("Digite a nova idade: ");
+        }
+        resposta = lerResposta("Deseja alterar o peso " + pesos[id] + "? s/n ");
+        if(resposta == 's'){
+            pesos[id] = lerInt("Digite o novo peso: ");
+        }
+        resposta = lerResposta("Confirma as alterações? s/n ");
+        if(resposta == 's'){
+            salvarDados();
+        }
+    }
+    static void apagarDados() {
+        char resposta;
+        limparTela = true;
+        limparTela();
+        mostrarDados();
+        int id = lerInt("\nDigite o ID que deseja apagar: ") - 1;
+        resposta = lerResposta("Deseja apagar " + nomes[id] + "? s/n ");
+        if (resposta == 's'){
+            nomes[id] = null;
+        }
+        salvarDados();
+    }
+    static String maiorIdade(){
+        String nomeMaiorIdade = "";
+        int valorMenorIdade = 0;
+        for(int i = 0; i < contador; i++){
+            if(i == 0){
+                valorMenorIdade = idades[i];
+                nomeMaiorIdade = nomes[i];
+            }
+            else if(idades[i] > valorMenorIdade){
+                nomeMaiorIdade = nomes[i];
+            }
+        }
+        return nomeMaiorIdade;
     }
     static String menorIdade(){
         String nomeMenorIdade = "";
@@ -328,11 +415,46 @@ public class Exe02 {
         }
         return nomeMaiorPeso;
     }
+    static String menorPeso(){
+        String nomeMenorPeso = "";
+        float valorMaiorPeso = 0;
+        for(int i = 0; i < contador; i++){
+            if(i == 0){
+                valorMaiorPeso = pesos[i];
+                nomeMenorPeso = nomes[i];
+            }
+            else if(idades[i] > valorMaiorPeso){
+                nomeMenorPeso = nomes[i];
+            }
+        }
+        return nomeMenorPeso;
+    }
+    static int quantMaiorIdade(){
+        int quantidadeMaiorIdade = 0, valorMaiorIdade = 0;
+        valorMaiorIdade = lerInt("Informe a idade: ");
+        for(int i = 0; i < contador; i++){
+            if(pesos[i] >= valorMaiorIdade){
+                quantidadeMaiorIdade ++;
+            }
+        }
+        teclado.nextLine();
+        return quantidadeMaiorIdade;
+    }
+    static int quantMenorIdade(){
+        int quantidadeMenorIdade = 0, valorMenorIdade = 0;
+        valorMenorIdade = lerInt("Informe a idade: ");
+        for(int i = 0; i < contador; i++){
+            if(pesos[i] >= valorMenorIdade){
+                quantidadeMenorIdade ++;
+            }
+        }
+        teclado.nextLine();
+        return quantidadeMenorIdade;
+    }
     static int quantMaiorPeso(){
         int quantidadeMaiorPeso = 0;
         float valorMaiorPeso = 0;
-        System.out.println("Informe o peso: ");
-        valorMaiorPeso = teclado.nextFloat();
+        valorMaiorPeso = lerFloat("Informe o peso: ");
         for(int i = 0; i < contador; i++){
             if(pesos[i] >= valorMaiorPeso){
                 quantidadeMaiorPeso ++;
@@ -341,39 +463,16 @@ public class Exe02 {
         teclado.nextLine();
         return quantidadeMaiorPeso;
     }
-    static void alterarDados() {
-        limparTela = true;
-        limparTela();
-        mostrarDados();
-        char resposta;
-        int id = lerInt("Digite o ID que deseja alterar: ") - 1;
-        resposta = lerResposta("Deseja alterar o nome " + nomes[id] + "?");
-        if(resposta == 's'){
-            nomes[id] = teclado.nextLine();
+    static int quantMenorPeso(){
+        int quantidadeMenorPeso = 0;
+        float valorMenorPeso = 0;
+        valorMenorPeso = lerFloat("Informe o peso: ");
+        for(int i = 0; i < contador; i++){
+            if(pesos[i] >= valorMenorPeso){
+                quantidadeMenorPeso ++;
+            }
         }
-        resposta = lerResposta("Deseja alterar a idade " + idades[id] + "?");
-        if(resposta == 's'){
-            idades[id] = lerInt("Digite a nova idade: ");
-        }
-        resposta = lerResposta("Deseja alterar o peso " + pesos[id] + "?");
-        if(resposta == 's'){
-            pesos[id] = lerInt("Digite o novo peso: ");
-        }
-        resposta = lerResposta("Confirma as alterações? s/n");
-        if(resposta == 's'){
-            salvarDados();
-        }
-    }
-    static void apagarDados() {
-        char resposta;
-        limparTela = true;
-        limparTela();
-        mostrarDados();
-        int id = lerInt("Digite o ID que deseja apagar: ") - 1;
-        resposta = lerResposta("Deseja apagar " + nomes[id] + "? s/n");
-        if (resposta == 's'){
-            nomes[id] = null;
-        }
-        salvarDados();
+        teclado.nextLine();
+        return quantidadeMenorPeso;
     }
 }
