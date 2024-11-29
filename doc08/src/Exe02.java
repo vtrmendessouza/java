@@ -1,28 +1,4 @@
-/*
-21/11/2024 - 35º ENCONTRO
-Exercício Desafio
-Este código possui um problema na entrada de dados da idade e do peso, 
-se o usuário digitar um texto no lugar da idade ou do peso, 
-será gerado uma exceção e o aplicativo fechará. 
-Faça então a tratativa da leitura dos dados garantindo que 
-o usuário insira um valor que seja aceito.
-Desenvolva uma nova funcionalidade que conte a quantidade de de pessoas cadastradas.
-Dica: Insira um novo item no menu "Exibir a QTDE de Pessoas" 
-e depois no switch faça a exibição da quantidade de linhas no vetor.
-Desenvolva uma nova funcionalidade que descubra quem tem a menor idade. 
-Exiba o nome da Pessoa e a idade. 
-Dica: Insira um novo item  no menu "Exibir a Pessoa com a Menor Idade".
-Desenvolva uma nova funcionalidade que descubra quem tem o maior peso. 
-Exiba o nome da Pessoa e o peso. 
-Dica: Insira um novo item  no menu "Exibir a Pessoa com o Maior Peso".
-Desenvolva uma nova funcionalidade que descubra a quantidade 
-de pessoas quem tem um peso maior ou igual ao informado pelo usuario. 
-Exiba somente a quantidade. 
-Dica: Insira um novo item  no menu "Contar QTDE de Pessoas acima de Peso". 
-Quando o usuário selecionar esta opção pergunte 
-qual o peso que o usuário deseja utilizar como critério de busca, 
-e descubra quantas pessoas tem um peso maior ou igual ao informado pelo usuário. 
-*/
+//21/11/2024 - 35º ENCONTRO
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -31,7 +7,7 @@ import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.util.*;
 public class Exe02 {
-    static Scanner teclado = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
     static String CAMINHO_ARQUIVO = "./doc08/src/dataExe01.txt";
     static int TAMANHO_MAXIMO = 50;
     static String[] nomes = new String[TAMANHO_MAXIMO];
@@ -46,17 +22,17 @@ public class Exe02 {
             opcao = exibirMenu();
             processarMenu(opcao);
         } while(opcao != 7);
-        teclado.close();
+        scanner.close();
     }
     static int exibirMenu(){
         int opcao = 0;
-        System.out.println("\n############### Menu ###############");
-        System.out.println("1. Exibir dados");
-        System.out.println("2. Exibir relatório");
-        System.out.println("3. Exibir relatório personalizado");
-        System.out.println("4. Adicionar dados");
-        System.out.println("5. Alterar dados");
-        System.out.println("6. Apagar dados");
+        System.out.println("\n#. Menu Principal:");
+        System.out.println("1. Exibir Dados");
+        System.out.println("2. Exibir Relatório");
+        System.out.println("3. Exibir Relatório Personalizado");
+        System.out.println("4. Adicionar Dados");
+        System.out.println("5. Alterar Dados");
+        System.out.println("6. Apagar Dados");
         System.out.println("7. Sair");
         opcao = lerInt("Escolha uma opção: ");
         return opcao;
@@ -137,6 +113,59 @@ public class Exe02 {
             }
         }
     }
+    static void exibirDados() {
+        int qtdeEspacos = 0;
+        int espacoNomeTabela = 0;
+        int espacoNomeTitulo = 0;
+        int linha = 0;
+        if (contador == 0) {
+            System.out.println("Nenhum dado disponível.");
+            return;
+        }
+        for(int i = 0; i < contador; i++){
+            if(i == 0){
+                espacoNomeTabela = String.valueOf(nomes[i]).length() + 1;
+            }
+            else if (nomes[i].length() > espacoNomeTabela) {
+                espacoNomeTabela = String.valueOf(nomes[i]).length() + 1;
+            }
+        }
+        espacoNomeTitulo = espacoNomeTabela - 4;
+        linha = espacoNomeTitulo + 23;
+        System.out.print("|ID ");
+        System.out.print("|Nome");
+        System.out.print(gerarEspacos(espacoNomeTitulo, " "));
+        System.out.print("|Idade ");
+        System.out.print("|Peso |\n");
+        System.out.print(gerarEspacos(linha, "-"));
+        System.out.print("\n");
+        for (int i = 0; i < contador; i++) {
+            if(nomes[i] != null){
+                System.out.print("|");
+                System.out.print(i + 1);
+                if(i < 9){
+                    qtdeEspacos = 2;
+                }
+                else{
+                    qtdeEspacos = 1;
+                }
+                System.out.print(gerarEspacos(qtdeEspacos, " "));
+                System.out.print("|");
+                System.out.print(nomes[i]);
+                qtdeEspacos = (espacoNomeTabela - nomes[i].length());
+                System.out.print(gerarEspacos(qtdeEspacos, " "));
+                System.out.print("|");
+                System.out.print(idades[i]);
+                qtdeEspacos = (6 - String.valueOf(idades[i]).length());
+                System.out.print(gerarEspacos(qtdeEspacos, " "));
+                System.out.print("|");
+                System.out.printf("%.1f", pesos[i]);
+                qtdeEspacos = (5 - String.valueOf(pesos[i]).length());
+                System.out.print(gerarEspacos(qtdeEspacos, " "));
+                System.out.print("|\n");
+            }
+        }
+    }
     static void adicionarDados() {
         int q = 0;
         //verifico se tem espaco nos vetores
@@ -148,7 +177,7 @@ public class Exe02 {
         }
         do{
             System.out.print("Digite o nome: ");
-            nomes[contador] = teclado.nextLine();
+            nomes[contador] = scanner.nextLine();
             q = 0;
             for(int i = 0; i < contador; i++){
                 if(nomes[contador].equals(nomes[i])){
@@ -171,146 +200,6 @@ public class Exe02 {
             System.out.print("Alterações descartadas.\n");
         }
     }
-    static void salvarDados() {
-        BufferedWriter gravador = null;
-        try {
-            //inicializa o BufferedWriter para escrever no arquivo
-            gravador = new BufferedWriter(new FileWriter(CAMINHO_ARQUIVO));
-            //escreve os dados no arquivo
-            for (int i = 0; i < contador; i++) {
-                if(nomes[i] != null){
-                    //escreve os dados no arquivo
-                    gravador.write(nomes[i] + ";" + idades[i] + ";" + pesos[i]);
-                    //cria uma nova linha no arquivo
-                    gravador.newLine();
-                }
-            }
-            System.out.println("Alterações salvas.");
-        } catch (IOException e) {
-            System.out.println("Erro ao salvar os dados: " + e.getMessage());
-        } finally {
-            //fechamento do BufferedWriter 
-            if (gravador != null) {
-                try {
-                    gravador.close();
-                } catch (IOException e) {
-                    System.out.println("Erro ao fechar o arquivo: " + e.getMessage());
-                }
-            }
-        }
-        carregarDados();
-    }
-    static void exibirDados() {
-        int qtdeEspacos = 0;
-        String nomeGrande = "";
-        if (contador == 0) {
-            System.out.println("Nenhum dado disponível.");
-            return;
-        }
-        System.out.println("ID  Nome                  Idade Peso");
-        System.out.println("---------------------------------------");
-        for (int i = 0; i < contador; i++) {
-            if(nomes[i] != null){
-                System.out.print("|");
-                System.out.print(i + 1);
-                if(i < 9){
-                    qtdeEspacos = 2;
-                }
-                else{
-                    qtdeEspacos = 1;
-                }
-                System.out.print(gerarEspacos(qtdeEspacos));
-                if(nomes[i].length() < 21){
-                    System.out.print("|");
-                    System.out.print(nomes[i]);
-                    //calcula quantos espacos sao necessarios para alinhar
-                    //o valor da idade na posicao da coluna idade
-                    qtdeEspacos = (21 - nomes[i].length());
-                    //imprime a quantidade de espacos para alinhar os salarios
-                    System.out.print(gerarEspacos(qtdeEspacos));
-                }
-                else{
-                    System.out.print("|");
-                    nomeGrande = nomes[i].substring(0, 17);
-                    System.out.print(nomeGrande + "... ");
-                }
-                System.out.print("|");
-                System.out.print(idades[i]);
-                qtdeEspacos = (4 - String.valueOf(idades[i]).length());
-                System.out.print(gerarEspacos(qtdeEspacos));
-                System.out.print("|");
-                System.out.printf("%.1f", pesos[i]);
-                qtdeEspacos = (6 - String.valueOf(pesos[i]).length());
-                System.out.print(gerarEspacos(qtdeEspacos));
-                System.out.print("|\n");
-            }
-        }
-    }
-    static String gerarEspacos(int qtde){
-        String espacos = "";
-
-        for (int i = 0; i < qtde; i++) {
-            espacos += " ";
-        }
-        return espacos;
-    }
-    static void limparTela(){
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                new ProcessBuilder("clear").inheritIO().start().waitFor();
-            }
-        } catch (Exception e) {
-            System.out.println("Erro ao limpar a tela: " + e.getMessage());
-        }
-    }
-    static int lerInt(String mensagem){
-        int valorInt = 0;
-        boolean flag = true;
-        do{
-            try {
-                System.out.print(mensagem);
-                valorInt = teclado.nextInt();
-                flag = false;
-            } catch (InputMismatchException variavException) {
-                System.out.println("Valor incorreto.");
-                teclado.nextLine();
-            }
-        }
-        while(flag);
-        teclado.nextLine();
-        return valorInt;
-    }
-    static float lerFloat(String mensagem){
-        float valorFloat = 0;
-        boolean flag = true;
-        do{
-            try {
-                System.out.print(mensagem);
-                valorFloat = teclado.nextFloat();
-                flag = false;
-            } catch (InputMismatchException variavException) {
-                System.out.println("Valor incorreto.");
-                teclado.nextLine();
-            }
-        }
-        while(flag);
-        teclado.nextLine();
-        return valorFloat;
-    }
-    static char lerResposta(String mensagem){
-        char resposta;
-        do{
-            System.out.print(mensagem);
-            resposta = teclado.nextLine().toLowerCase().charAt(0);
-            if (resposta != 's' && resposta != 'n'){
-                System.out.println("Opção inválida.");
-            }
-        }
-        while((resposta != 's' && resposta != 'n'));
-        return resposta;
-    }
     static void alterarDados() {
         exibirDados();
         char resposta;
@@ -318,7 +207,7 @@ public class Exe02 {
         resposta = lerResposta("Deseja alterar o nome " + nomes[id] + "? s/n ");
         if(resposta == 's'){
             System.out.print("Digite o novo nome: ");
-            nomes[id] = teclado.nextLine();
+            nomes[id] = scanner.nextLine();
         }
         resposta = lerResposta("Deseja alterar a idade " + idades[id] + "? s/n ");
         if(resposta == 's'){
@@ -345,6 +234,99 @@ public class Exe02 {
             nomes[id] = null;
         }
         salvarDados();
+    }
+    static void salvarDados() {
+        BufferedWriter gravador = null;
+        try {
+            //inicia o BufferedWriter
+            gravador = new BufferedWriter(new FileWriter(CAMINHO_ARQUIVO));
+            for (int i = 0; i < contador; i++) {
+                if(nomes[i] != null){
+                    //escreve os dados no arquivo
+                    gravador.write(nomes[i] + ";" + idades[i] + ";" + pesos[i]);
+                    //cria uma nova linha no arquivo
+                    gravador.newLine();
+                }
+            }
+            System.out.println("Alterações salvas.");
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar os dados: " + e.getMessage());
+        } finally {
+            //fecha o BufferedWriter 
+            if (gravador != null) {
+                try {
+                    gravador.close();
+                } catch (IOException e) {
+                    System.out.println("Erro ao fechar o arquivo: " + e.getMessage());
+                }
+            }
+        }
+        carregarDados();
+    }
+    static String gerarEspacos(int qtde, String modelo){
+        String espacos = "";
+
+        for (int i = 0; i < qtde; i++) {
+            espacos += modelo;
+        }
+        return espacos;
+    }
+    static void limparTela(){
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao limpar a tela: " + e.getMessage());
+        }
+    }
+    static int lerInt(String mensagem){
+        int valorInt = 0;
+        boolean flag = true;
+        do{
+            try {
+                System.out.print(mensagem);
+                valorInt = scanner.nextInt();
+                flag = false;
+            } catch (InputMismatchException variavException) {
+                System.out.println("Valor incorreto.");
+                scanner.nextLine();
+            }
+        }
+        while(flag);
+        scanner.nextLine();
+        return valorInt;
+    }
+    static float lerFloat(String mensagem){
+        float valorFloat = 0;
+        boolean flag = true;
+        do{
+            try {
+                System.out.print(mensagem);
+                valorFloat = scanner.nextFloat();
+                flag = false;
+            } catch (InputMismatchException variavException) {
+                System.out.println("Valor incorreto.");
+                scanner.nextLine();
+            }
+        }
+        while(flag);
+        scanner.nextLine();
+        return valorFloat;
+    }
+    static char lerResposta(String mensagem){
+        char resposta;
+        do{
+            System.out.print(mensagem);
+            resposta = scanner.nextLine().toLowerCase().charAt(0);
+            if (resposta != 's' && resposta != 'n'){
+                System.out.println("Opção inválida.");
+            }
+        }
+        while((resposta != 's' && resposta != 'n'));
+        return resposta;
     }
     static int valorMaiorIdade(){
         int idade = 0;
@@ -534,24 +516,30 @@ public class Exe02 {
     }
     static void exibirRelatorio(){
         System.out.printf("Total de cadastros: %d\n", contador);
+        
         System.out.printf("\nMédia de idade: %.1f\n", mediaIdade());
         System.out.printf("Idade acima da média: %d (%.2f%%)\n", quantMaiorIdadeMedia(), percentMaiorIdadeMedia());
         System.out.printf("Idade abaixo da média: %d (%.2f%%)\n",quantMenorIdadeMedia(), percentMenorIdadeMedia());
+        
         System.out.printf("\nMédia de peso: %.1f\n", mediaPeso());
         System.out.printf("Peso acima da média: %d (%.2f%%)\n", quantMaiorPesoMedia(), percentMaiorPesoMedia());
         System.out.printf("Peso abaixo da média: %d (%.2f%%)\n",quantMenorPesoMedia(), percentMenorPesoMedia());
+        
         System.out.print("\nMaior idade: " + nomeMaiorIdade());
         System.out.printf(", %d anos.", valorMaiorIdade());
         System.out.printf(" (%.1f vezes acima da média)\n", (valorMaiorIdade() / mediaIdade()));
         System.out.print("Menor idade: " + nomeMenorIdade());
         System.out.printf(", %d anos.", valorMenorIdade());
         System.out.printf(" (%.1f vezes abaixo da média)\n", (mediaIdade() / valorMenorIdade()));
+        
         System.out.print("\nMaior peso: " + nomeMaiorPeso());
         System.out.printf(", %.1f quilos.", valorMaiorPeso());
         System.out.printf(" (%.1f vezes acima da média)\n", (valorMaiorPeso() / mediaPeso()));
         System.out.print("Menor peso: " + nomeMenorPeso());
         System.out.printf(", %.1f quilos.", valorMenorPeso());
         System.out.printf(" (%.1f vezes abaixo da média)\n", (mediaPeso() / valorMenorPeso()));
+
+        tabelaMaiorIdadeMedia();
     }
     static void exibirRelatorioPersonalizado(){
         int quantMaiorIdade = 0;
@@ -618,5 +606,63 @@ public class Exe02 {
         System.out.printf("%d (%.2f%%)\n", quantMenorPeso, percentMenorPeso);
         System.out.print("Peso igual a " + escolhaPeso + ": ");
         System.out.printf("%d (%.2f%%)\n", quantMediaPeso, percentMediaPeso);
+    }
+    static void tabelaMaiorIdadeMedia(){
+        int qtdeEspacos = 0;
+        int espacoNomeTabela = 0;
+        int espacoNomeTitulo = 0;
+        int linha = 0;
+        if (contador == 0) {
+            System.out.println("Nenhum dado disponível.");
+            return;
+        }
+        for(int i = 0; i < contador; i++){
+            if(idades[i] > mediaIdade()){
+                if(i == 0){
+                    espacoNomeTabela = String.valueOf(nomes[i]).length() + 1;
+                }
+                else if (nomes[i].length() > espacoNomeTabela) {
+                    espacoNomeTabela = String.valueOf(nomes[i]).length() + 1;
+                }
+            }
+        }
+        espacoNomeTitulo = espacoNomeTabela - 4;
+        linha = espacoNomeTitulo + 17;
+        System.out.println("\nIdade acima da média:");
+        System.out.print("|ID ");
+        System.out.print("|Nome");
+        System.out.print(gerarEspacos(espacoNomeTitulo, " "));
+        System.out.print("|Idade |\n");
+        System.out.print(gerarEspacos(linha, "-"));
+        System.out.print("\n");
+        for (int i = 0; i <= contador; i++) {
+            if(idades[i] > mediaIdade()){
+                System.out.print(nomes[i]);
+                qtdeEspacos = (20 - nomes[i].length());
+                System.out.print(gerarEspacos(espacoNomeTabela, " "));
+                System.out.printf("%d\n", idades[i]);
+            }
+        }
+    }
+    static void tabelaMenorIdadeMedia(){
+
+    }
+    static void tabelaMaiorPesoMedia(){
+
+    }
+    static void tabelaMenorPesoMedia(){
+
+    }
+    static void tabelaMaiorIdadeEscolha(){
+
+    }
+    static void tabelaMenorIdadeEscolha(){
+
+    }
+    static void tabelaMaiorPesoEscolha(){
+
+    }
+    static void tabelaMenorPesoEscolha(){
+
     }
 }

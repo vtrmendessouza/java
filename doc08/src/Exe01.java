@@ -1,44 +1,4 @@
-/*
-14/11/2024 - 33º ENCONTRO
-Desafio: Sistema de Controle de Habitantes
-O código abaixo realiza a leitura de múltiplos nomes, 
-salarios e qtde de dependentes de uma determinada cidade.
-Faça ajustes no código para ao término da impressão dos dados dos habitantes, 
-seja impresso na tela:
-- A média dos salarios dos habitantes.
-Exemplo: 
-Média dos salários: R$ 2780,22
-- A média de dependentes.
-Exemplo:
-Média de dependentes: 2,7 dependentes por habitante.
-- O nome do habitante que tem a menor quantidade de dependentes. 
-Além do nome imprima também a quantidade de dependentes deste habitante. 
-Não se preocupe se existir empate na quantidade mínima de habitantes. 
-Exemplo:
-Habitante com a menor quantidade de dependentes: Carlos
-Quantidade de dependentes do Carlos: 1
-- O nome do habitante que tem o maior salário. 
-Além do nome imprima também o valor do salário deste habitante.
-Exemplo: 
-Nome do habitante com maior salário: José
-Valor do salário do José: R$ 4200,58
-- Imprima o nome e a quantidade de dependentes dos habitantes que possuem 
-o número de dependentes menor que a média geral de dependentes por habitante.
-Exemplo:
-Nome                             Qtde de Dependentes
-Mário                              1
-Maria                              1
-Marcelo                          2
-Roberto                          0
-- Este código possui um problema, foi estipulado que serão 20 espaços para imprimir a coluna de nome. 
-Se um usuário tiver mais de 20 caracteres no nome a formatação ficará incorreta. 
-Você deve fazer uma correção na impressão do nome da seguinte forma: 
-Se o usuário tiver mais de 19 caracteres você deverá retirar três caracteres no fim do nome 
-e terminar com ... no nome.
-Exemplo:
-Rogério de Freitas Ribeiro deve ficar
-Rogério de Freit...
-*/
+//14/11/2024 - 33º ENCONTRO
 import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Exe01 {
@@ -91,32 +51,24 @@ public class Exe01 {
         teclado.close();
     }
     static void imprimirDados(String nomes[], float salarios[], int numeroDeps[], int ultimaPosicaoGravada){
-        //acessando os dados para imprimir na tela
         int qtdeEspacos;
         String nomeGrande = "";
         System.out.println("\nHabitantes cadastrados:");
-        System.out.println("Nome                Salario                QtdeDependentes");
+        System.out.println("Nome                Salário                    Dependentes");
         System.out.println("----------------------------------------------------------");
         for (int posicaoVetor = 0; posicaoVetor <= ultimaPosicaoGravada; posicaoVetor++) {
             if(nomes[posicaoVetor].length() <= 20){
-                //imprime o nome do habitante
                 System.out.print(nomes[posicaoVetor]);
-                //calcula quantos espacos sao necessarios para alinhar o valor do salario na posicao da coluna salario
                 qtdeEspacos = (20 - nomes[posicaoVetor].length());
-                //imprime a quantidade de espacos para alinhar os salarios
                 System.out.print(geraEspacos(qtdeEspacos));
             }
             else{
-                nomeGrande = nomes[posicaoVetor].substring(0, 17);
-                System.out.print(nomeGrande + "...");
+                nomeGrande = nomes[posicaoVetor].substring(0, 16);
+                System.out.print(nomeGrande + "... ");
             }
-            //imprime o salario
             System.out.printf("R$ %.2f", salarios[posicaoVetor]);
-            //calcula quantos espacos sao necessarios para alinhar a quantidade de dependentes
             qtdeEspacos = (20 - Float.toString(salarios[posicaoVetor]).length());
-            //imprime os espacos
             System.out.print(geraEspacos(qtdeEspacos));
-            //imprime a quantidade de dependentes
             System.out.println(numeroDeps[posicaoVetor]);
         }
     }
@@ -157,7 +109,6 @@ public class Exe01 {
             }
         }
         while(flag);
-        //resolve o problema da limpeza do buffer
         teclado.nextLine();
         return salarios;
     }
@@ -277,8 +228,8 @@ public class Exe01 {
         int qtdeEspacos;
         String nomeGrande = "";
         System.out.println("\nHabitantes com valor de salário acima da média:");
-        System.out.println("Nome                Salario");
-        System.out.println("------------------------------");
+        System.out.println("Nome                Salário");
+        System.out.println("-------------------------------");
         for (int posicaoVetor = 0; posicaoVetor <= ultimaPosicaoGravada; posicaoVetor++) {
             if(salarios[posicaoVetor] > mediaSalario){
                 if(nomes[posicaoVetor].length() <= 20){
@@ -287,8 +238,8 @@ public class Exe01 {
                     System.out.print(geraEspacos(qtdeEspacos));
                 }
                 else{
-                    nomeGrande = nomes[posicaoVetor].substring(0, 17);
-                    System.out.print(nomeGrande + "...");
+                    nomeGrande = nomes[posicaoVetor].substring(0, 16);
+                    System.out.print(nomeGrande + "... ");
                 }
                 System.out.printf("R$ %.2f\n", salarios[posicaoVetor]);
             }
@@ -298,8 +249,8 @@ public class Exe01 {
         int qtdeEspacos;
         String nomeGrande = "";
         System.out.println("\nHabitantes com valor de salário abaixo da média:");
-        System.out.println("Nome                Salario");
-        System.out.println("------------------------------");
+        System.out.println("Nome                Salário");
+        System.out.println("-------------------------------");
         for (int posicaoVetor = 0; posicaoVetor <= ultimaPosicaoGravada; posicaoVetor++) {
             if(salarios[posicaoVetor] < mediaSalario){
                 if(nomes[posicaoVetor].length() <= 20){
@@ -308,8 +259,8 @@ public class Exe01 {
                     System.out.print(geraEspacos(qtdeEspacos));
                 }
                 else{
-                    nomeGrande = nomes[posicaoVetor].substring(0, 17);
-                    System.out.print(nomeGrande + "...");
+                    nomeGrande = nomes[posicaoVetor].substring(0, 16);
+                    System.out.print(nomeGrande + "... ");
                 }
                 System.out.printf("R$ %.2f\n", salarios[posicaoVetor]);
             }
@@ -329,8 +280,8 @@ public class Exe01 {
                     System.out.print(geraEspacos(qtdeEspacos));
                 }
                 else{
-                    nomeGrande = nomes[posicaoVetor].substring(0, 17);
-                    System.out.print(nomeGrande + "...");
+                    nomeGrande = nomes[posicaoVetor].substring(0, 16);
+                    System.out.print(nomeGrande + "... ");
                 }
                 System.out.println(numeroDeps[posicaoVetor]);
             }
@@ -350,8 +301,8 @@ public class Exe01 {
                     System.out.print(geraEspacos(qtdeEspacos));
                 }
                 else{
-                    nomeGrande = nomes[posicaoVetor].substring(0, 17);
-                    System.out.print(nomeGrande + "...");
+                    nomeGrande = nomes[posicaoVetor].substring(0, 16);
+                    System.out.print(nomeGrande + "... ");
                 }
                 System.out.println(numeroDeps[posicaoVetor]);
             }
