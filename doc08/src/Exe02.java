@@ -161,8 +161,15 @@ public class Exe02 {
         } while(q > 0);
         idades[contador] = lerInt("Digite a idade: ");
         pesos[contador] = lerFloat("Digite o peso (em kg): ");
-        contador++;
-        salvarDados();
+    
+        char resposta = lerResposta("Confirma as alterações? s/n ");
+        if(resposta == 's'){
+            salvarDados();
+            contador++;
+        }
+        else{
+            System.out.print("Alterações descartadas.\n");
+        }
     }
     static void salvarDados() {
         BufferedWriter gravador = null;
@@ -178,7 +185,7 @@ public class Exe02 {
                     gravador.newLine();
                 }
             }
-            System.out.println("Dados salvos no arquivo.");
+            System.out.println("Alterações salvas.");
         } catch (IOException e) {
             System.out.println("Erro ao salvar os dados: " + e.getMessage());
         } finally {
@@ -525,102 +532,91 @@ public class Exe02 {
         float percentual = (quantMenorPesoMedia() / conversor) * 100;
         return percentual;
     }
-    static int escolherIdade(){
-        int escolhaIdade = lerInt("Informe a idade: ");
-        return escolhaIdade;
-    }
-    static float escolherPeso(){
-        float escolhaPeso = lerFloat("Informe o peso: ");
-        return escolhaPeso;
-    }
-    static int quantMaiorIdadeEscolha(int escolhaIdade){
-        int quantidade = 0;
-        for(int i = 0; i < contador; i++){
-            if(idades[i] >= escolhaIdade){
-                quantidade ++;
-            }
-        }
-        return quantidade;
-    }
-    static int quantMenorIdadeEscolha(int escolhaIdade){
-        int quantidade = 0;
-        for(int i = 0; i < contador; i++){
-            if(idades[i] >= escolhaIdade){
-                quantidade ++;
-            }
-        }
-        return quantidade;
-    }
-    static int quantMaiorPesoEscolha(float escolhaPeso){
-        int quantidade = 0;
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] >= escolhaPeso){
-                quantidade ++;
-            }
-        }
-        return quantidade;
-    }
-    static int quantMenorPesoEscolha(float escolhaPeso){
-        int quantidade = 0;
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] >= escolhaPeso){
-                quantidade ++;
-            }
-        }
-        return quantidade;
-    }
-    static float percentMaiorIdadeEscolha(){
-        float conversor = contador;
-        float percentual = (quantMaiorIdadeEscolha() / conversor) * 100;
-        return percentual;
-    }
-    static float percentMenorIdadeEscolha(){
-        float conversor = contador;
-        float percentual = (quantMenorIdadeEscolha() / conversor) * 100;
-        return percentual;
-    }
-    static float percentMaiorPesoEscolha(){
-        float conversor = contador;
-        float percentual = (quantMaiorPesoEscolha() / conversor) * 100;
-        return percentual;
-    }
-    static float percentMenorPesoEscolha(){
-        float conversor = contador;
-        float percentual = (quantMenorPesoEscolha() / conversor) * 100;
-        return percentual;
-    }
     static void exibirRelatorio(){
         System.out.printf("Total de cadastros: %d\n", contador);
- 
         System.out.printf("\nMédia de idade: %.1f\n", mediaIdade());
         System.out.printf("Idade acima da média: %d (%.2f%%)\n", quantMaiorIdadeMedia(), percentMaiorIdadeMedia());
         System.out.printf("Idade abaixo da média: %d (%.2f%%)\n",quantMenorIdadeMedia(), percentMenorIdadeMedia());
- 
         System.out.printf("\nMédia de peso: %.1f\n", mediaPeso());
         System.out.printf("Peso acima da média: %d (%.2f%%)\n", quantMaiorPesoMedia(), percentMaiorPesoMedia());
         System.out.printf("Peso abaixo da média: %d (%.2f%%)\n",quantMenorPesoMedia(), percentMenorPesoMedia());
- 
         System.out.print("\nMaior idade: " + nomeMaiorIdade());
         System.out.printf(", %d anos.", valorMaiorIdade());
-        System.out.printf(" (%.1f vezes maior)\n", (valorMaiorIdade() / mediaIdade()));
+        System.out.printf(" (%.1f vezes acima da média)\n", (valorMaiorIdade() / mediaIdade()));
         System.out.print("Menor idade: " + nomeMenorIdade());
         System.out.printf(", %d anos.", valorMenorIdade());
-        System.out.printf(" (%.1f vezes menor)\n", (mediaIdade() / valorMenorIdade()));
- 
+        System.out.printf(" (%.1f vezes abaixo da média)\n", (mediaIdade() / valorMenorIdade()));
         System.out.print("\nMaior peso: " + nomeMaiorPeso());
         System.out.printf(", %.1f quilos.", valorMaiorPeso());
-        System.out.printf(" (%.1f vezes maior)\n", (valorMaiorPeso() / mediaPeso()));
+        System.out.printf(" (%.1f vezes acima da média)\n", (valorMaiorPeso() / mediaPeso()));
         System.out.print("Menor peso: " + nomeMenorPeso());
         System.out.printf(", %.1f quilos.", valorMenorPeso());
-        System.out.printf(" (%.1f vezes menor)\n", (mediaPeso() / valorMenorPeso()));
+        System.out.printf(" (%.1f vezes abaixo da média)\n", (mediaPeso() / valorMenorPeso()));
     }
     static void exibirRelatorioPersonalizado(){
-        escolherIdade();
-        escolherPeso();
-        System.out.printf("Total de cadastros: %d\n", contador);
-        System.out.printf("\nIdade acima do solicitado: %d (%.2f%%)\n", quantMaiorIdadeEscolha(), percentMaiorIdadeEscolha());
-        System.out.printf("Idade abaixo do solicitado: %d (%.2f%%)\n",quantMenorIdadeEscolha(), percentMenorIdadeEscolha());
-        System.out.printf("Peso acima do solicitado: %d (%.2f%%)\n", quantMaiorPesoEscolha(), percentMaiorPesoEscolha());
-        System.out.printf("Peso abaixo do solicitado: %d (%.2f%%)\n",quantMenorPesoEscolha(), percentMenorPesoEscolha());
+        int quantMaiorIdade = 0;
+        int quantMenorIdade = 0;
+        int quantMediaIdade = 0;
+        int quantMaiorPeso = 0;
+        int quantMenorPeso = 0;
+        int quantMediaPeso = 0;
+        float percentMaiorIdade = 0;
+        float percentMenorIdade = 0;
+        float percentMediaIdade = 0;
+        float percentMaiorPeso = 0;
+        float percentMenorPeso = 0;
+        float percentMediaPeso = 0;
+        float conversor = contador;
+        int escolhaIdade = lerInt("Informe a idade: ");
+        float escolhaPeso = lerFloat("Informe o peso: ");
+        for(int i = 0; i < contador; i++){
+            if(idades[i] > escolhaIdade){
+                quantMaiorIdade ++;
+            }
+        }
+        for(int i = 0; i < contador; i++){
+            if(idades[i] < escolhaIdade){
+                quantMenorIdade ++;
+            }
+        }
+        for(int i = 0; i < contador; i++){
+            if(idades[i] == escolhaIdade){
+                quantMediaIdade ++;
+            }
+        }
+        for(int i = 0; i < contador; i++){
+            if(pesos[i] > escolhaPeso){
+                quantMaiorPeso ++;
+            }
+        }
+        for(int i = 0; i < contador; i++){
+            if(pesos[i] < escolhaPeso){
+                quantMenorPeso ++;
+            }
+        }
+        for(int i = 0; i < contador; i++){
+            if(pesos[i] == escolhaPeso){
+                quantMediaPeso ++;
+            }
+        }
+        percentMaiorIdade = (quantMaiorIdade / conversor) * 100;
+        percentMenorIdade = (quantMenorIdade / conversor) * 100;
+        percentMediaIdade = (quantMediaIdade / conversor) * 100;
+        percentMaiorPeso = (quantMaiorPeso / conversor) * 100;
+        percentMenorPeso = (quantMenorPeso / conversor) * 100;
+        percentMediaPeso = (quantMediaPeso / conversor) * 100;
+        System.out.printf("\nTotal de cadastros: %d\n", contador);
+        System.out.print("Idade acima de " + escolhaIdade + ": ");
+        System.out.printf("%d (%.2f%%)\n", quantMaiorIdade, percentMaiorIdade);
+        System.out.print("Idade abaixo de " + escolhaIdade + ": ");
+        System.out.printf("%d (%.2f%%)\n", quantMenorIdade, percentMenorIdade);
+        System.out.print("Idade igual a " + escolhaIdade + ": ");
+        System.out.printf("%d (%.2f%%)\n", quantMediaIdade, percentMediaIdade);
+        System.out.print("Peso acima de " + escolhaPeso + ": ");
+        System.out.printf("%d (%.2f%%)\n", quantMaiorPeso, percentMaiorPeso);
+        System.out.print("Peso abaixo de " + escolhaPeso + ": ");
+        System.out.printf("%d (%.2f%%)\n", quantMenorPeso, percentMenorPeso);
+        System.out.print("Peso igual a " + escolhaPeso + ": ");
+        System.out.printf("%d (%.2f%%)\n", quantMediaPeso, percentMediaPeso);
     }
 }
