@@ -16,15 +16,15 @@ public class Exe02 {
     static int contador = 0;
     public static void main (String[] args) throws Exception {
         int opcao;
-        limparTela();
-        carregarDados();
         do {
+            carregarDados();
             opcao = exibirMenu();
             processarMenu(opcao);
         } while(opcao != 7);
         scanner.close();
     }
     static int exibirMenu(){
+        limparTela();
         int opcao = 0;
         System.out.println("\n#. Menu Principal:");
         System.out.println("1. Adicionar Dados");
@@ -40,27 +40,21 @@ public class Exe02 {
     static void processarMenu(int opcao){
         switch (opcao) {
             case 1:
-                limparTela();
                 adicionarDados();
                 break;
             case 2:
-                limparTela();
                 alterarDados();
                 break;
             case 3:
-                limparTela();
                 apagarDados();
                 break;
             case 4:
-                limparTela();
                 exibirDados();
                 break;
             case 5:
-                limparTela();
                 exibirRelatorio();
                 break;
             case 6:
-                limparTela();
                 exibirRelatorioPersonalizado();
                 break;
             case 7:
@@ -175,9 +169,12 @@ public class Exe02 {
                 System.out.print("|\n");
             }
         }
+        System.out.print("\nPressione qualquer tecla para voltar ao menu: ");
+        scanner.nextLine();
     }
     static void adicionarDados() {
         int q = 0;
+        limparTela();
         //verifico se tem espaco nos vetores
         if (contador >= TAMANHO_MAXIMO) {
             System.out.println("Limite de dados atingido! Não é possível adicionar mais.");
@@ -210,11 +207,15 @@ public class Exe02 {
         else{
             System.out.print("Alterações descartadas.\n");
         }
+        System.out.print("\nPressione qualquer tecla para voltar ao menu: ");
+        scanner.nextLine();
     }
     static void alterarDados() {
-        exibirDados();
         char resposta;
-        int id = (lerInt("\nDigite o ID que deseja alterar: ") - 1);
+        int id = 0;
+        limparTela();
+        exibirDados();
+        id = (lerInt("\nDigite o ID que deseja alterar: ") - 1);
         resposta = lerResposta("Deseja alterar o nome " + nomes[id] + "? s/n ");
         if(resposta == 's'){
             System.out.print("Digite o novo nome: ");
@@ -236,11 +237,15 @@ public class Exe02 {
         else{
             System.out.print("Alterações descartadas.\n");
         }
+        System.out.print("\nPressione qualquer tecla para voltar ao menu: ");
+        scanner.nextLine();
     }
     static void apagarDados() {
         char resposta;
+        int id = 0;
+        limparTela();
         exibirDados();
-        int id = lerInt("\nDigite o ID que deseja apagar: ") - 1;
+        id = lerInt("\nDigite o ID que deseja apagar: ") - 1;
         resposta = lerResposta("Deseja apagar " + nomes[id] + "? s/n ");
         if (resposta == 's'){
             nomes[id] = null;
@@ -249,6 +254,8 @@ public class Exe02 {
         carregarDados();
         salvarDados();
         System.out.println("Alterações salvas.");
+        System.out.print("\nPressione qualquer tecla para voltar ao menu: ");
+        scanner.nextLine();
     }
     static void salvarDados() {
         BufferedWriter gravador = null;
@@ -527,392 +534,6 @@ public class Exe02 {
         float percentual = (quantMenorPesoMedia() / conversor) * 100;
         return percentual;
     }
-    static void exibirRelatorio(){
-        System.out.printf("Total de cadastros: %d\n", contador);
-        System.out.printf("Média de idade: %.1f\n", mediaIdade());
-        System.out.printf("Média de peso: %.1f\n", mediaPeso());
-        System.out.printf("\nIdade acima da média: %d (%.2f%%)\n", quantMaiorIdadeMedia(), percentMaiorIdadeMedia());
-        System.out.printf("Idade abaixo da média: %d (%.2f%%)\n",quantMenorIdadeMedia(), percentMenorIdadeMedia());
-        System.out.printf("Peso acima da média: %d (%.2f%%)\n", quantMaiorPesoMedia(), percentMaiorPesoMedia());
-        System.out.printf("Peso abaixo da média: %d (%.2f%%)\n",quantMenorPesoMedia(), percentMenorPesoMedia());
-        System.out.print("\nMaior idade: " + nomeMaiorIdade());
-        System.out.printf(", %d anos.", valorMaiorIdade());
-        System.out.printf(" (%.1f vezes acima da média)\n", (valorMaiorIdade() / mediaIdade()));
-        System.out.print("Menor idade: " + nomeMenorIdade());
-        System.out.printf(", %d anos.", valorMenorIdade());
-        System.out.printf(" (%.1f vezes abaixo da média)\n", (mediaIdade() / valorMenorIdade()));
-        System.out.print("Maior peso: " + nomeMaiorPeso());
-        System.out.printf(", %.1f quilos.", valorMaiorPeso());
-        System.out.printf(" (%.1f vezes acima da média)\n", (valorMaiorPeso() / mediaPeso()));
-        System.out.print("Menor peso: " + nomeMenorPeso());
-        System.out.printf(", %.1f quilos.", valorMenorPeso());
-        System.out.printf(" (%.1f vezes abaixo da média)\n", (mediaPeso() / valorMenorPeso()));
-        tabelaMaiorIdadeMedia();
-        tabelaMenorIdadeMedia();
-        tabelaMaiorPesoMedia();
-        tabelaMenorPesoMedia();
-    }
-    static void exibirRelatorioPersonalizado(){
-        int quantMaiorIdade = 0;
-        int quantMenorIdade = 0;
-        int quantMediaIdade = 0;
-        int quantMaiorPeso = 0;
-        int quantMenorPeso = 0;
-        int quantMediaPeso = 0;
-        float percentMaiorIdade = 0;
-        float percentMenorIdade = 0;
-        float percentMediaIdade = 0;
-        float percentMaiorPeso = 0;
-        float percentMenorPeso = 0;
-        float percentMediaPeso = 0;
-        float conversor = contador;
-        int escolhaIdade = lerInt("Informe a idade: ");
-        float escolhaPeso = lerFloat("Informe o peso: ");
-        for(int i = 0; i < contador; i++){
-            if(idades[i] > escolhaIdade){
-                quantMaiorIdade ++;
-            }
-        }
-        for(int i = 0; i < contador; i++){
-            if(idades[i] < escolhaIdade){
-                quantMenorIdade ++;
-            }
-        }
-        for(int i = 0; i < contador; i++){
-            if(idades[i] == escolhaIdade){
-                quantMediaIdade ++;
-            }
-        }
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] > escolhaPeso){
-                quantMaiorPeso ++;
-            }
-        }
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] < escolhaPeso){
-                quantMenorPeso ++;
-            }
-        }
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] == escolhaPeso){
-                quantMediaPeso ++;
-            }
-        }
-        percentMaiorIdade = (quantMaiorIdade / conversor) * 100;
-        percentMenorIdade = (quantMenorIdade / conversor) * 100;
-        percentMediaIdade = (quantMediaIdade / conversor) * 100;
-        percentMaiorPeso = (quantMaiorPeso / conversor) * 100;
-        percentMenorPeso = (quantMenorPeso / conversor) * 100;
-        percentMediaPeso = (quantMediaPeso / conversor) * 100;
-        System.out.printf("\nTotal de cadastros: %d\n", contador);
-        System.out.print("Idade acima de " + escolhaIdade + ": ");
-        System.out.printf("%d (%.2f%%)\n", quantMaiorIdade, percentMaiorIdade);
-        System.out.print("Idade abaixo de " + escolhaIdade + ": ");
-        System.out.printf("%d (%.2f%%)\n", quantMenorIdade, percentMenorIdade);
-        System.out.print("Idade igual a " + escolhaIdade + ": ");
-        System.out.printf("%d (%.2f%%)\n", quantMediaIdade, percentMediaIdade);
-        System.out.print("Peso acima de " + escolhaPeso + ": ");
-        System.out.printf("%d (%.2f%%)\n", quantMaiorPeso, percentMaiorPeso);
-        System.out.print("Peso abaixo de " + escolhaPeso + ": ");
-        System.out.printf("%d (%.2f%%)\n", quantMenorPeso, percentMenorPeso);
-        System.out.print("Peso igual a " + escolhaPeso + ": ");
-        System.out.printf("%d (%.2f%%)\n", quantMediaPeso, percentMediaPeso);
-        int qtdeCaracteres = 0;
-        int espacoNomeTabela = 0;
-        int espacoNomeTitulo = 0;
-        int linha = 0;
-        int diferenca = 0;
-        String mensagem = "";
-        int mensagemEscolha = 0;
-        for(int i = 0; i < contador; i++){
-            if(idades[i] > escolhaIdade){
-                if(i == 0){
-                    espacoNomeTabela = String.valueOf(nomes[i]).length();
-                }
-                else if (nomes[i].length() > espacoNomeTabela) {
-                    espacoNomeTabela = String.valueOf(nomes[i]).length();
-                }
-            }
-        }
-        mensagem = "Idade Acima de: ";
-        mensagemEscolha = String.valueOf(escolhaIdade).length();
-        espacoNomeTitulo = espacoNomeTabela - 4;
-        linha = espacoNomeTitulo + 17;
-        qtdeCaracteres = (linha - mensagem.length() - mensagemEscolha) / 2;
-        diferenca = linha - mensagem.length() - mensagemEscolha - qtdeCaracteres * 2;
-        System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
-        System.out.print(mensagem + escolhaIdade);
-        System.out.print(gerarCaractere(qtdeCaracteres, "-"));
-        System.out.print(gerarCaractere(diferenca, "-") + "\n");
-        System.out.print("|ID ");
-        System.out.print("|Nome");
-        System.out.print(gerarCaractere(espacoNomeTitulo, " "));
-        System.out.print("|Idade |\n");
-        System.out.print(gerarCaractere(linha, "-"));
-        System.out.print("\n");
-        for(int i = 0; i < contador; i++){
-            if(idades[i] > escolhaIdade){
-                System.out.print("|");
-                System.out.print(i + 1);
-                if(i < 9){
-                    qtdeCaracteres = 2;
-                }
-                else{
-                    qtdeCaracteres = 1;
-                }
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|");
-                System.out.print(nomes[i]);
-                qtdeCaracteres = (espacoNomeTabela - nomes[i].length());
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|");
-                System.out.print(idades[i]);
-                qtdeCaracteres = (6 - String.valueOf(idades[i]).length());
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|\n");
-            }
-        }
-        for(int i = 0; i < contador; i++){
-            if(idades[i] == escolhaIdade){
-                if(i == 0){
-                    espacoNomeTabela = String.valueOf(nomes[i]).length();
-                }
-                else if (nomes[i].length() > espacoNomeTabela) {
-                    espacoNomeTabela = String.valueOf(nomes[i]).length();
-                }
-            }
-        }
-        mensagem = "Idade Igual a: ";
-        mensagemEscolha = String.valueOf(escolhaIdade).length();
-        espacoNomeTitulo = espacoNomeTabela - 4;
-        linha = espacoNomeTitulo + 17;
-        qtdeCaracteres = (linha - mensagem.length() - mensagemEscolha) / 2;
-        diferenca = linha - mensagem.length() - mensagemEscolha - qtdeCaracteres * 2;
-        System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
-        System.out.print(mensagem + escolhaIdade);
-        System.out.print(gerarCaractere(qtdeCaracteres, "-"));
-        System.out.print(gerarCaractere(diferenca, "-") + "\n");
-        System.out.print("|ID ");
-        System.out.print("|Nome");
-        System.out.print(gerarCaractere(espacoNomeTitulo, " "));
-        System.out.print("|Idade |\n");
-        System.out.print(gerarCaractere(linha, "-"));
-        System.out.print("\n");
-        for(int i = 0; i < contador; i++){
-            if(idades[i] == escolhaIdade){
-                System.out.print("|");
-                System.out.print(i + 1);
-                if(i < 9){
-                    qtdeCaracteres = 2;
-                }
-                else{
-                    qtdeCaracteres = 1;
-                }
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|");
-                System.out.print(nomes[i]);
-                qtdeCaracteres = (espacoNomeTabela - nomes[i].length());
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|");
-                System.out.print(idades[i]);
-                qtdeCaracteres = (6 - String.valueOf(idades[i]).length());
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|\n");
-            }
-        }
-        for(int i = 0; i < contador; i++){
-            if(idades[i] < escolhaIdade){
-                if(i == 0){
-                    espacoNomeTabela = String.valueOf(nomes[i]).length();
-                }
-                else if (nomes[i].length() > espacoNomeTabela) {
-                    espacoNomeTabela = String.valueOf(nomes[i]).length();
-                }
-            }
-        }
-        mensagem = "Idade Abaixo de: ";
-        mensagemEscolha = String.valueOf(escolhaIdade).length();
-        espacoNomeTitulo = espacoNomeTabela - 4;
-        linha = espacoNomeTitulo + 17;
-        qtdeCaracteres = (linha - mensagem.length() - mensagemEscolha) / 2;
-        diferenca = linha - mensagem.length() - mensagemEscolha - qtdeCaracteres * 2;
-        System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
-        System.out.print(mensagem + escolhaIdade);
-        System.out.print(gerarCaractere(qtdeCaracteres, "-"));
-        System.out.print(gerarCaractere(diferenca, "-") + "\n");
-        System.out.print("|ID ");
-        System.out.print("|Nome");
-        System.out.print(gerarCaractere(espacoNomeTitulo, " "));
-        System.out.print("|Idade |\n");
-        System.out.print(gerarCaractere(linha, "-"));
-        System.out.print("\n");
-        for(int i = 0; i < contador; i++){
-            if(idades[i] < escolhaIdade){
-                System.out.print("|");
-                System.out.print(i + 1);
-                if(i < 9){
-                    qtdeCaracteres = 2;
-                }
-                else{
-                    qtdeCaracteres = 1;
-                }
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|");
-                System.out.print(nomes[i]);
-                qtdeCaracteres = (espacoNomeTabela - nomes[i].length());
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|");
-                System.out.print(idades[i]);
-                qtdeCaracteres = (6 - String.valueOf(idades[i]).length());
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|\n");
-            }
-        }
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] > escolhaPeso){
-                if(i == 0){
-                    espacoNomeTabela = String.valueOf(nomes[i]).length();
-                }
-                else if (nomes[i].length() > espacoNomeTabela) {
-                    espacoNomeTabela = String.valueOf(nomes[i]).length();
-                }
-            }
-        }
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] == escolhaPeso){
-                if(i == 0){
-                    espacoNomeTabela = String.valueOf(nomes[i]).length();
-                }
-                else if (nomes[i].length() > espacoNomeTabela) {
-                    espacoNomeTabela = String.valueOf(nomes[i]).length();
-                }
-            }
-        }
-        mensagem = "Peso Acima de: ";
-        mensagemEscolha = String.valueOf(escolhaPeso).length();
-        espacoNomeTitulo = espacoNomeTabela - 4;
-        linha = espacoNomeTitulo + 17;
-        qtdeCaracteres = (linha - mensagem.length() - mensagemEscolha) / 2;
-        diferenca = linha - mensagem.length() - mensagemEscolha - qtdeCaracteres * 2;
-        System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
-        System.out.print(mensagem + escolhaPeso);
-        System.out.print(gerarCaractere(qtdeCaracteres, "-"));
-        System.out.print(gerarCaractere(diferenca, "-") + "\n");
-        System.out.print("|ID ");
-        System.out.print("|Nome");
-        System.out.print(gerarCaractere(espacoNomeTitulo, " "));
-        System.out.print("|Peso  |\n");
-        System.out.print(gerarCaractere(linha, "-"));
-        System.out.print("\n");
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] > escolhaPeso){
-                System.out.print("|");
-                System.out.print(i + 1);
-                if(i < 9){
-                    qtdeCaracteres = 2;
-                }
-                else{
-                    qtdeCaracteres = 1;
-                }
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|");
-                System.out.print(nomes[i]);
-                qtdeCaracteres = (espacoNomeTabela - nomes[i].length());
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|");
-                System.out.print(pesos[i]);
-                qtdeCaracteres = (6 - String.valueOf(pesos[i]).length());
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|\n");
-            }
-        }
-        mensagem = "Peso Igual a: ";
-        mensagemEscolha = String.valueOf(escolhaPeso).length();
-        espacoNomeTitulo = espacoNomeTabela - 4;
-        linha = espacoNomeTitulo + 17;
-        qtdeCaracteres = (linha - mensagem.length() - mensagemEscolha) / 2;
-        diferenca = linha - mensagem.length() - mensagemEscolha - qtdeCaracteres * 2;
-        System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
-        System.out.print(mensagem + escolhaPeso);
-        System.out.print(gerarCaractere(qtdeCaracteres, "-"));
-        System.out.print(gerarCaractere(diferenca, "-") + "\n");
-        System.out.print("|ID ");
-        System.out.print("|Nome");
-        System.out.print(gerarCaractere(espacoNomeTitulo, " "));
-        System.out.print("|Peso  |\n");
-        System.out.print(gerarCaractere(linha, "-"));
-        System.out.print("\n");
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] == escolhaPeso){
-                System.out.print("|");
-                System.out.print(i + 1);
-                if(i < 9){
-                    qtdeCaracteres = 2;
-                }
-                else{
-                    qtdeCaracteres = 1;
-                }
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|");
-                System.out.print(nomes[i]);
-                qtdeCaracteres = (espacoNomeTabela - nomes[i].length());
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|");
-                System.out.print(pesos[i]);
-                qtdeCaracteres = (6 - String.valueOf(pesos[i]).length());
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|\n");
-            }
-        }
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] < escolhaPeso){
-                if(i == 0){
-                    espacoNomeTabela = String.valueOf(nomes[i]).length();
-                }
-                else if (nomes[i].length() > espacoNomeTabela) {
-                    espacoNomeTabela = String.valueOf(nomes[i]).length();
-                }
-            }
-        }
-        mensagem = "Peso Abaixo de: ";
-        mensagemEscolha = String.valueOf(escolhaPeso).length();
-        espacoNomeTitulo = espacoNomeTabela - 4;
-        linha = espacoNomeTitulo + 17;
-        qtdeCaracteres = (linha - mensagem.length() - mensagemEscolha) / 2;
-        diferenca = linha - mensagem.length() - mensagemEscolha - qtdeCaracteres * 2;
-        System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
-        System.out.print(mensagem + escolhaPeso);
-        System.out.print(gerarCaractere(qtdeCaracteres, "-"));
-        System.out.print(gerarCaractere(diferenca, "-") + "\n");
-        System.out.print("|ID ");
-        System.out.print("|Nome");
-        System.out.print(gerarCaractere(espacoNomeTitulo, " "));
-        System.out.print("|Peso  |\n");
-        System.out.print(gerarCaractere(linha, "-"));
-        System.out.print("\n");
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] < escolhaPeso){
-                System.out.print("|");
-                System.out.print(i + 1);
-                if(i < 9){
-                    qtdeCaracteres = 2;
-                }
-                else{
-                    qtdeCaracteres = 1;
-                }
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|");
-                System.out.print(nomes[i]);
-                qtdeCaracteres = (espacoNomeTabela - nomes[i].length());
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|");
-                System.out.print(pesos[i]);
-                qtdeCaracteres = (6 - String.valueOf(pesos[i]).length());
-                System.out.print(gerarCaractere(qtdeCaracteres, " "));
-                System.out.print("|\n");
-            }
-        }
-    }
     static void tabelaMaiorIdadeMedia(){
         int qtdeCaracteres = 0;
         int espacoNomeTabela = 0;
@@ -1132,5 +753,590 @@ public class Exe02 {
                 System.out.print("|\n");
             }
         }
+    }
+    static void exibirRelatorio(){
+        System.out.printf("Total de cadastros: %d\n", contador);
+        System.out.printf("Média de idade: %.1f\n", mediaIdade());
+        System.out.printf("Média de peso: %.1f\n", mediaPeso());
+        System.out.printf("\nIdade acima da média: %d (%.2f%%)\n", quantMaiorIdadeMedia(), percentMaiorIdadeMedia());
+        System.out.printf("Idade abaixo da média: %d (%.2f%%)\n",quantMenorIdadeMedia(), percentMenorIdadeMedia());
+        System.out.printf("Peso acima da média: %d (%.2f%%)\n", quantMaiorPesoMedia(), percentMaiorPesoMedia());
+        System.out.printf("Peso abaixo da média: %d (%.2f%%)\n",quantMenorPesoMedia(), percentMenorPesoMedia());
+        System.out.print("\nMaior idade: " + nomeMaiorIdade());
+        System.out.printf(", %d anos.", valorMaiorIdade());
+        System.out.printf(" (%.1f vezes acima da média)\n", (valorMaiorIdade() / mediaIdade()));
+        System.out.print("Menor idade: " + nomeMenorIdade());
+        System.out.printf(", %d anos.", valorMenorIdade());
+        System.out.printf(" (%.1f vezes abaixo da média)\n", (mediaIdade() / valorMenorIdade()));
+        System.out.print("Maior peso: " + nomeMaiorPeso());
+        System.out.printf(", %.1f quilos.", valorMaiorPeso());
+        System.out.printf(" (%.1f vezes acima da média)\n", (valorMaiorPeso() / mediaPeso()));
+        System.out.print("Menor peso: " + nomeMenorPeso());
+        System.out.printf(", %.1f quilos.", valorMenorPeso());
+        System.out.printf(" (%.1f vezes abaixo da média)\n", (mediaPeso() / valorMenorPeso()));
+        tabelaMaiorIdadeMedia();
+        tabelaMenorIdadeMedia();
+        tabelaMaiorPesoMedia();
+        tabelaMenorPesoMedia();
+        System.out.print("\nPressione qualquer tecla para voltar ao menu: ");
+        scanner.nextLine();
+    }
+    static void exibirRelatorioPersonalizado(){
+        //variaveis
+        int quantMaiorIdade = 0;
+        int quantMenorIdade = 0;
+        int quantIgualIdade = 0;
+        int quantMaiorPeso = 0;
+        int quantMenorPeso = 0;
+        int quantIgualPeso = 0;
+        float percentMaiorIdade = 0;
+        float percentMenorIdade = 0;
+        float percentIgualIdade = 0;
+        float percentMaiorPeso = 0;
+        float percentMenorPeso = 0;
+        float percentIgualPeso = 0;
+        float conversor = contador;
+        int escolhaIdade = 0;
+        float escolhaPeso = 0;
+        //inicio
+        limparTela();
+        escolhaIdade = lerInt("Informe a idade: ");
+        escolhaPeso = lerFloat("Informe o peso: ");
+        //soma idadeMaior
+        for(int i = 0; i < contador; i++){
+            if(idades[i] > escolhaIdade){
+                quantMaiorIdade ++;
+            }
+        }
+        //soma idadeIgual
+        for(int i = 0; i < contador; i++){
+            if(idades[i] == escolhaIdade){
+                quantIgualIdade ++;
+            }
+        }
+        //soma idadeMenor
+        for(int i = 0; i < contador; i++){
+            if(idades[i] < escolhaIdade){
+                quantMenorIdade ++;
+            }
+        }
+        //soma pesoMaior
+        for(int i = 0; i < contador; i++){
+            if(pesos[i] > escolhaPeso){
+                quantMaiorPeso ++;
+            }
+        }
+        //soma pesoIgual
+        for(int i = 0; i < contador; i++){
+            if(pesos[i] == escolhaPeso){
+                quantIgualPeso ++;
+            }
+        }
+        //soma pesoMenor
+        for(int i = 0; i < contador; i++){
+            if(pesos[i] < escolhaPeso){
+                quantMenorPeso ++;
+            }
+        }
+        //calcula porcentagem
+        percentMaiorIdade = (quantMaiorIdade / conversor) * 100;
+        percentIgualIdade = (quantIgualIdade / conversor) * 100;
+        percentMenorIdade = (quantMenorIdade / conversor) * 100;
+        percentMaiorPeso = (quantMaiorPeso / conversor) * 100;
+        percentIgualPeso = (quantIgualPeso / conversor) * 100;
+        percentMenorPeso = (quantMenorPeso / conversor) * 100;
+        //imprime relatorio
+        System.out.printf("\nTotal de cadastros: %d\n", contador);
+        System.out.print("Idade acima de " + escolhaIdade + ": ");
+        System.out.printf("%d (%.2f%%)\n", quantMaiorIdade, percentMaiorIdade);
+        System.out.print("Idade abaixo de " + escolhaIdade + ": ");
+        System.out.printf("%d (%.2f%%)\n", quantMenorIdade, percentMenorIdade);
+        System.out.print("Idade igual a " + escolhaIdade + ": ");
+        System.out.printf("%d (%.2f%%)\n", quantIgualIdade, percentIgualIdade);
+        System.out.print("Peso acima de " + escolhaPeso + ": ");
+        System.out.printf("%d (%.2f%%)\n", quantMaiorPeso, percentMaiorPeso);
+        System.out.print("Peso abaixo de " + escolhaPeso + ": ");
+        System.out.printf("%d (%.2f%%)\n", quantMenorPeso, percentMenorPeso);
+        System.out.print("Peso igual a " + escolhaPeso + ": ");
+        System.out.printf("%d (%.2f%%)\n", quantIgualPeso, percentIgualPeso);
+        //variaveis tabela
+        int qtdeCaracteres = 0;
+        int espacoNomeTabela = 0;
+        int espacoNomeTitulo = 0;
+        int linha = 0;
+        int diferenca = 0;
+        int mensagemNumero = 0;
+        String mensagem = "";
+        String mensagemZero = "";
+        //imprime tabela idadeMaior
+        if(quantMaiorIdade > 0){
+            //calcula tamanho de tabela
+            for(int i = 0; i < contador; i++){
+                if(idades[i] > escolhaIdade){
+                    if(i == 0){
+                        espacoNomeTabela = String.valueOf(nomes[i]).length();
+                    }
+                    else if (nomes[i].length() > espacoNomeTabela) {
+                        espacoNomeTabela = String.valueOf(nomes[i]).length();
+                    }
+                }
+            }
+            //centraliza titulo
+            mensagem = "Idade Maior que ";
+            mensagemNumero = String.valueOf(escolhaIdade).length();
+            espacoNomeTitulo = espacoNomeTabela - 4;
+            linha = espacoNomeTitulo + 17;
+            qtdeCaracteres = (linha - mensagem.length() - mensagemNumero) / 2;
+            diferenca = linha - mensagem.length() - mensagemNumero - qtdeCaracteres * 2;
+            //imprime titulo
+            System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(mensagem + escolhaIdade);
+            System.out.print(gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(gerarCaractere(diferenca, "-") + "\n");
+            System.out.print("|ID ");
+            System.out.print("|Nome");
+            System.out.print(gerarCaractere(espacoNomeTitulo, " "));
+            System.out.print("|Idade |\n");
+            System.out.print(gerarCaractere(linha, "-"));
+            System.out.print("\n");
+            //imprime id
+            for(int i = 0; i < contador; i++){
+                if(idades[i] > escolhaIdade){
+                    System.out.print("|");
+                    System.out.print(i + 1);
+                    if(i < 9){
+                        qtdeCaracteres = 2;
+                    }
+                    else{
+                        qtdeCaracteres = 1;
+                    }
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|");
+                    //imprime nome
+                    System.out.print(nomes[i]);
+                    qtdeCaracteres = (espacoNomeTabela - nomes[i].length());
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|");
+                    //imprime idade
+                    System.out.print(idades[i]);
+                    qtdeCaracteres = (6 - String.valueOf(idades[i]).length());
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|\n");
+                }
+            }
+        }
+        else{
+            //centrazila titulo
+            mensagemZero = "Nenhuma ";
+            mensagemNumero = String.valueOf(escolhaIdade).length();
+            espacoNomeTitulo = String.valueOf(mensagemZero).length() +  String.valueOf(mensagem).length() + String.valueOf(escolhaIdade).length() - 17;
+            linha = espacoNomeTitulo + 17;
+            qtdeCaracteres = (linha - mensagem.length() - mensagemNumero) / 2;
+            diferenca = linha - mensagem.length() - mensagemNumero - qtdeCaracteres * 2;
+            //imprime titulo
+            System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(mensagem + escolhaIdade);
+            System.out.print(gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(gerarCaractere(diferenca, "-") + "\n");
+            System.out.print("|ID ");
+            System.out.print("|Nome");
+            System.out.print(gerarCaractere(espacoNomeTitulo, " "));
+            System.out.print("|Idade |\n");
+            System.out.print(gerarCaractere(linha, "-"));
+            System.out.print("\n");
+            System.out.println(mensagemZero + mensagem + escolhaIdade);
+        }
+        //imrime tabela idadeIgual
+        if(quantIgualIdade > 0){
+            //calcula tamanho de tabela
+            for(int i = 0; i < contador; i++){
+                if(idades[i] == escolhaIdade){
+                    if(i == 0){
+                        espacoNomeTabela = String.valueOf(nomes[i]).length();
+                    }
+                    else if (nomes[i].length() > espacoNomeTabela) {
+                        espacoNomeTabela = String.valueOf(nomes[i]).length();
+                    }
+                }
+            }
+            //centraliza titulo
+            mensagem = "Idade Igual a ";
+            mensagemNumero = String.valueOf(escolhaIdade).length();
+            espacoNomeTitulo = espacoNomeTabela - 4;
+            linha = espacoNomeTitulo + 17;
+            qtdeCaracteres = (linha - mensagem.length() - mensagemNumero) / 2;
+            diferenca = linha - mensagem.length() - mensagemNumero - qtdeCaracteres * 2;
+            //imprime titulo
+            System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(mensagem + escolhaIdade);
+            System.out.print(gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(gerarCaractere(diferenca, "-") + "\n");
+            System.out.print("|ID ");
+            System.out.print("|Nome");
+            System.out.print(gerarCaractere(espacoNomeTitulo, " "));
+            System.out.print("|Idade |\n");
+            System.out.print(gerarCaractere(linha, "-"));
+            System.out.print("\n");
+            //imprime id
+            for(int i = 0; i < contador; i++){
+                if(idades[i] == escolhaIdade){
+                    System.out.print("|");
+                    System.out.print(i + 1);
+                    if(i < 9){
+                        qtdeCaracteres = 2;
+                    }
+                    else{
+                        qtdeCaracteres = 1;
+                    }
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|");
+                    //imprime nome
+                    System.out.print(nomes[i]);
+                    qtdeCaracteres = (espacoNomeTabela - nomes[i].length());
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|");
+                    //imprime idade
+                    System.out.print(idades[i]);
+                    qtdeCaracteres = (6 - String.valueOf(idades[i]).length());
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|\n");
+                }
+            }
+        }
+        else{
+            //centrazila titulo
+            mensagemZero = "Nenhuma ";
+            mensagemNumero = String.valueOf(escolhaIdade).length();
+            espacoNomeTitulo = String.valueOf(mensagemZero).length() +  String.valueOf(mensagem).length() + String.valueOf(escolhaIdade).length() - 17;
+            linha = espacoNomeTitulo + 17;
+            qtdeCaracteres = (linha - mensagem.length() - mensagemNumero) / 2;
+            diferenca = linha - mensagem.length() - mensagemNumero - qtdeCaracteres * 2;
+            //imprime titulo
+            System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(mensagem + escolhaIdade);
+            System.out.print(gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(gerarCaractere(diferenca, "-") + "\n");
+            System.out.print("|ID ");
+            System.out.print("|Nome");
+            System.out.print(gerarCaractere(espacoNomeTitulo, " "));
+            System.out.print("|Idade |\n");
+            System.out.print(gerarCaractere(linha, "-"));
+            System.out.print("\n");
+            System.out.println(mensagemZero + mensagem + escolhaIdade);
+        }
+        //imprime tabela idadeMaior
+        if(quantMenorIdade > 0){
+            //calcula tamanho de tabela
+            for(int i = 0; i < contador; i++){
+                if(idades[i] < escolhaIdade){
+                    if(i == 0){
+                        espacoNomeTabela = String.valueOf(nomes[i]).length();
+                    }
+                    else if (nomes[i].length() > espacoNomeTabela) {
+                        espacoNomeTabela = String.valueOf(nomes[i]).length();
+                    }
+                }
+            }
+            //centrazila titulo
+            mensagem = "Idade Menor que ";
+            mensagemNumero = String.valueOf(escolhaIdade).length();
+            espacoNomeTitulo = espacoNomeTabela - 4;
+            linha = espacoNomeTitulo + 17;
+            qtdeCaracteres = (linha - mensagem.length() - mensagemNumero) / 2;
+            diferenca = linha - mensagem.length() - mensagemNumero - qtdeCaracteres * 2;
+            //imprime titulo
+            System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(mensagem + escolhaIdade);
+            System.out.print(gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(gerarCaractere(diferenca, "-") + "\n");
+            System.out.print("|ID ");
+            System.out.print("|Nome");
+            System.out.print(gerarCaractere(espacoNomeTitulo, " "));
+            System.out.print("|Idade |\n");
+            System.out.print(gerarCaractere(linha, "-"));
+            System.out.print("\n");
+            //imprime id
+            for(int i = 0; i < contador; i++){
+                if(idades[i] < escolhaIdade){
+                    System.out.print("|");
+                    System.out.print(i + 1);
+                    if(i < 9){
+                        qtdeCaracteres = 2;
+                    }
+                    else{
+                        qtdeCaracteres = 1;
+                    }
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|");
+                    //imprime nome
+                    System.out.print(nomes[i]);
+                    qtdeCaracteres = (espacoNomeTabela - nomes[i].length());
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|");
+                    //imprime idade
+                    System.out.print(idades[i]);
+                    qtdeCaracteres = (6 - String.valueOf(idades[i]).length());
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|\n");
+                }
+            }
+        }
+        else{
+            //centrazila titulo
+            mensagemZero = "Nenhuma ";
+            mensagemNumero = String.valueOf(escolhaIdade).length();
+            espacoNomeTitulo = String.valueOf(mensagemZero).length() +  String.valueOf(mensagem).length() + String.valueOf(escolhaIdade).length() - 17;
+            linha = espacoNomeTitulo + 17;
+            qtdeCaracteres = (linha - mensagem.length() - mensagemNumero) / 2;
+            diferenca = linha - mensagem.length() - mensagemNumero - qtdeCaracteres * 2;
+            //imprime titulo
+            System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(mensagem + escolhaIdade);
+            System.out.print(gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(gerarCaractere(diferenca, "-") + "\n");
+            System.out.print("|ID ");
+            System.out.print("|Nome");
+            System.out.print(gerarCaractere(espacoNomeTitulo, " "));
+            System.out.print("|Idade |\n");
+            System.out.print(gerarCaractere(linha, "-"));
+            System.out.print("\n");
+            System.out.println(mensagemZero + mensagem + escolhaIdade);
+        }
+        //imprime tabela pesoMaior
+        if(quantMaiorPeso > 0){
+            //calcula tamanho de tabela
+            for(int i = 0; i < contador; i++){
+                if(pesos[i] > escolhaPeso){
+                    if(i == 0){
+                        espacoNomeTabela = String.valueOf(nomes[i]).length();
+                    }
+                    else if (nomes[i].length() > espacoNomeTabela) {
+                        espacoNomeTabela = String.valueOf(nomes[i]).length();
+                    }
+                }
+            }
+            //centraliza titulo
+            mensagem = "Peso Maior que ";
+            mensagemNumero = String.valueOf(escolhaPeso).length();
+            espacoNomeTitulo = espacoNomeTabela - 4;
+            linha = espacoNomeTitulo + 17;
+            qtdeCaracteres = (linha - mensagem.length() - mensagemNumero) / 2;
+            diferenca = linha - mensagem.length() - mensagemNumero - qtdeCaracteres * 2;
+            //imprime titulo
+            System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(mensagem + escolhaPeso);
+            System.out.print(gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(gerarCaractere(diferenca, "-") + "\n");
+            System.out.print("|ID ");
+            System.out.print("|Nome");
+            System.out.print(gerarCaractere(espacoNomeTitulo, " "));
+            System.out.print("|Peso  |\n");
+            System.out.print(gerarCaractere(linha, "-"));
+            System.out.print("\n");
+            //imprime id
+            for(int i = 0; i < contador; i++){
+                if(pesos[i] > escolhaPeso){
+                    System.out.print("|");
+                    System.out.print(i + 1);
+                    if(i < 9){
+                        qtdeCaracteres = 2;
+                    }
+                    else{
+                        qtdeCaracteres = 1;
+                    }
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|");
+                    //imprime nome
+                    System.out.print(nomes[i]);
+                    qtdeCaracteres = (espacoNomeTabela - nomes[i].length());
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|");
+                    //imprime peso
+                    System.out.print(pesos[i]);
+                    qtdeCaracteres = (6 - String.valueOf(pesos[i]).length());
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|\n");
+                }
+            }
+        }
+        else{
+            //centrazila titulo
+            mensagemZero = "Nenhum ";
+            mensagemNumero = String.valueOf(escolhaIdade).length();
+            espacoNomeTitulo = String.valueOf(mensagemZero).length() +  String.valueOf(mensagem).length() + String.valueOf(escolhaIdade).length() - 16;
+            linha = espacoNomeTitulo + 16;
+            qtdeCaracteres = (linha - mensagem.length() - mensagemNumero) / 2;
+            diferenca = linha - mensagem.length() - mensagemNumero - qtdeCaracteres * 2;
+            //imprime titulo
+            System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(mensagem + escolhaIdade);
+            System.out.print(gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(gerarCaractere(diferenca, "-") + "\n");
+            System.out.print("|ID ");
+            System.out.print("|Nome");
+            System.out.print(gerarCaractere(espacoNomeTitulo, " "));
+            System.out.print("|Peso |\n");
+            System.out.print(gerarCaractere(linha, "-"));
+            System.out.print("\n");
+            System.out.println(mensagemZero + mensagem + escolhaIdade);
+        }
+        //imprime tabela pesoIgual
+        if(quantIgualPeso > 0){
+            //calcula tamanho de tabela
+            for(int i = 0; i < contador; i++){
+                if(pesos[i] == escolhaPeso){
+                    if(i == 0){
+                        espacoNomeTabela = String.valueOf(nomes[i]).length();
+                    }
+                    else if (nomes[i].length() > espacoNomeTabela) {
+                        espacoNomeTabela = String.valueOf(nomes[i]).length();
+                    }
+                }
+            }
+            //centraliza titulo
+            mensagem = "Peso Igual a ";
+            mensagemNumero = String.valueOf(escolhaPeso).length();
+            espacoNomeTitulo = espacoNomeTabela - 4;
+            linha = espacoNomeTitulo + 17;
+            qtdeCaracteres = (linha - mensagem.length() - mensagemNumero) / 2;
+            diferenca = linha - mensagem.length() - mensagemNumero - qtdeCaracteres * 2;
+            //imprime titulo
+            System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(mensagem + escolhaPeso);
+            System.out.print(gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(gerarCaractere(diferenca, "-") + "\n");
+            System.out.print("|ID ");
+            System.out.print("|Nome");
+            System.out.print(gerarCaractere(espacoNomeTitulo, " "));
+            System.out.print("|Peso  |\n");
+            System.out.print(gerarCaractere(linha, "-"));
+            System.out.print("\n");
+            //imprime id
+            for(int i = 0; i < contador; i++){
+                if(pesos[i] == escolhaPeso){
+                    System.out.print("|");
+                    System.out.print(i + 1);
+                    if(i < 9){
+                        qtdeCaracteres = 2;
+                    }
+                    else{
+                        qtdeCaracteres = 1;
+                    }
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|");
+                    //imprime nome
+                    System.out.print(nomes[i]);
+                    qtdeCaracteres = (espacoNomeTabela - nomes[i].length());
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|");
+                    //imprime peso
+                    System.out.print(pesos[i]);
+                    qtdeCaracteres = (6 - String.valueOf(pesos[i]).length());
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|\n");
+                }
+            }
+        }
+        else{
+            //centrazila titulo
+            mensagemZero = "Nenhum ";
+            mensagemNumero = String.valueOf(escolhaIdade).length();
+            espacoNomeTitulo = String.valueOf(mensagemZero).length() +  String.valueOf(mensagem).length() + String.valueOf(escolhaIdade).length() - 16;
+            linha = espacoNomeTitulo + 16;
+            qtdeCaracteres = (linha - mensagem.length() - mensagemNumero) / 2;
+            diferenca = linha - mensagem.length() - mensagemNumero - qtdeCaracteres * 2;
+            //imprime titulo
+            System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(mensagem + escolhaIdade);
+            System.out.print(gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(gerarCaractere(diferenca, "-") + "\n");
+            System.out.print("|ID ");
+            System.out.print("|Nome");
+            System.out.print(gerarCaractere(espacoNomeTitulo, " "));
+            System.out.print("|Peso |\n");
+            System.out.print(gerarCaractere(linha, "-"));
+            System.out.print("\n");
+            System.out.println(mensagemZero + mensagem + escolhaIdade);
+        }
+        //imprime tabela pesoMenor
+        if(quantMenorPeso > 0){
+            //calcula tamanho de tabela
+            for(int i = 0; i < contador; i++){
+                if(pesos[i] < escolhaPeso){
+                    if(i == 0){
+                        espacoNomeTabela = String.valueOf(nomes[i]).length();
+                    }
+                    else if (nomes[i].length() > espacoNomeTabela) {
+                        espacoNomeTabela = String.valueOf(nomes[i]).length();
+                    }
+                }
+            }
+            //centraliza titulo
+            mensagem = "Peso Menor que ";
+            mensagemNumero = String.valueOf(escolhaPeso).length();
+            espacoNomeTitulo = espacoNomeTabela - 4;
+            linha = espacoNomeTitulo + 17;
+            qtdeCaracteres = (linha - mensagem.length() - mensagemNumero) / 2;
+            diferenca = linha - mensagem.length() - mensagemNumero - qtdeCaracteres * 2;
+            //imprime titulo
+            System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(mensagem + escolhaPeso);
+            System.out.print(gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(gerarCaractere(diferenca, "-") + "\n");
+            System.out.print("|ID ");
+            System.out.print("|Nome");
+            System.out.print(gerarCaractere(espacoNomeTitulo, " "));
+            System.out.print("|Peso  |\n");
+            System.out.print(gerarCaractere(linha, "-"));
+            System.out.print("\n");
+            //imprime id
+            for(int i = 0; i < contador; i++){
+                if(pesos[i] < escolhaPeso){
+                    System.out.print("|");
+                    System.out.print(i + 1);
+                    if(i < 9){
+                        qtdeCaracteres = 2;
+                    }
+                    else{
+                        qtdeCaracteres = 1;
+                    }
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|");
+                    //imprime nome
+                    System.out.print(nomes[i]);
+                    qtdeCaracteres = (espacoNomeTabela - nomes[i].length());
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|");
+                    //imprime peso
+                    System.out.print(pesos[i]);
+                    qtdeCaracteres = (6 - String.valueOf(pesos[i]).length());
+                    System.out.print(gerarCaractere(qtdeCaracteres, " "));
+                    System.out.print("|\n");
+                }
+            }
+        }
+        else{
+            //centrazila titulo
+            mensagemZero = "Nenhum ";
+            mensagemNumero = String.valueOf(escolhaIdade).length();
+            espacoNomeTitulo = String.valueOf(mensagemZero).length() +  String.valueOf(mensagem).length() + String.valueOf(escolhaIdade).length() - 16;
+            linha = espacoNomeTitulo + 16;
+            qtdeCaracteres = (linha - mensagem.length() - mensagemNumero) / 2;
+            diferenca = linha - mensagem.length() - mensagemNumero - qtdeCaracteres * 2;
+            //imprime titulo
+            System.out.print("\n" + gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(mensagem + escolhaIdade);
+            System.out.print(gerarCaractere(qtdeCaracteres, "-"));
+            System.out.print(gerarCaractere(diferenca, "-") + "\n");
+            System.out.print("|ID ");
+            System.out.print("|Nome");
+            System.out.print(gerarCaractere(espacoNomeTitulo, " "));
+            System.out.print("|Peso |\n");
+            System.out.print(gerarCaractere(linha, "-"));
+            System.out.print("\n");
+            System.out.println(mensagemZero + mensagem + escolhaIdade);
+        }
+        System.out.print("\nPressione qualquer tecla para voltar ao menu: ");
+        scanner.nextLine();
     }
 }

@@ -8,7 +8,7 @@ Bob;24;82.0
 Joe;27;72.0
 Roy;38;75.0
 Billy;44;86.0
-Etevaldo;49;49.0
+Uncle Bob;49;82.0
 Albert Einstein;200;123.4
 O Rei da Pisadinha;67;49.0
 Fulano de Tal;21;75.0
