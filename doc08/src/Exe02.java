@@ -23,10 +23,10 @@ public class Exe02 {
         } while(opcao != 7);
         scanner.close();
     }
-    static int exibirMenu(){
+    static int exibirMenu() {
         limparTela();
         int opcao = 0;
-        System.out.println("\n#. Menu Principal:");
+        System.out.println("#. Menu Principal:");
         System.out.println("1. Adicionar Dados");
         System.out.println("2. Alterar Dados");
         System.out.println("3. Apagar Dados");
@@ -37,7 +37,7 @@ public class Exe02 {
         opcao = lerInt("Escolha uma opção: ");
         return opcao;
     }
-    static void processarMenu(int opcao){
+    static void processarMenu(int opcao) {
         switch (opcao) {
             case 1:
                 adicionarDados();
@@ -119,11 +119,10 @@ public class Exe02 {
             System.out.println("Nenhum dado disponível.");
             return;
         }
-        for(int i = 0; i < contador; i++){
-            if(i == 0){
+        for (int i = 0; i < contador; i++) {
+            if (i == 0) {
                 espacoNomeTabela = String.valueOf(nomes[i]).length();
-            }
-            else if (nomes[i].length() > espacoNomeTabela) {
+            } else if (nomes[i].length() > espacoNomeTabela) {
                 espacoNomeTabela = String.valueOf(nomes[i]).length();
             }
         }
@@ -144,13 +143,12 @@ public class Exe02 {
         System.out.print(gerarCaractere(linha, "-"));
         System.out.print("\n");
         for (int i = 0; i < contador; i++) {
-            if(nomes[i] != null){
+            if (nomes[i] != null) {
                 System.out.print("|");
                 System.out.print(i + 1);
-                if(i < 9){
+                if (i < 9) {
                     qtdeCaracteres = 2;
-                }
-                else{
+                } else {
                     qtdeCaracteres = 1;
                 }
                 System.out.print(gerarCaractere(qtdeCaracteres, " "));
@@ -182,7 +180,7 @@ public class Exe02 {
             //quando nao tiver mais posicoes livres no vetor. 
             return;
         }
-        do{
+        do {
             System.out.print("Digite o nome: ");
             nomes[contador] = scanner.nextLine();
             q = 0;
@@ -191,20 +189,19 @@ public class Exe02 {
                     q++;
                 }
             }
-            if(q > 0){
+            if (q > 0) {
                 System.out.println("Nome já cadastrado.");
             }
-        } while(q > 0);
+        } while (q > 0);
         idades[contador] = lerInt("Digite a idade: ");
         pesos[contador] = lerFloat("Digite o peso (em kg): ");
     
         char resposta = lerResposta("Confirma as alterações? s/n ");
-        if(resposta == 's'){
+        if (resposta == 's') {
             contador++;
             salvarDados();
             System.out.println("Alterações salvas.");
-        }
-        else{
+        } else {
             System.out.print("Alterações descartadas.\n");
         }
         System.out.print("\nPressione qualquer tecla para voltar ao menu: ");
@@ -217,24 +214,23 @@ public class Exe02 {
         exibirDados();
         id = (lerInt("\nDigite o ID que deseja alterar: ") - 1);
         resposta = lerResposta("Deseja alterar o nome " + nomes[id] + "? s/n ");
-        if(resposta == 's'){
+        if (resposta == 's') {
             System.out.print("Digite o novo nome: ");
             nomes[id] = scanner.nextLine();
         }
         resposta = lerResposta("Deseja alterar a idade " + idades[id] + "? s/n ");
-        if(resposta == 's'){
+        if (resposta == 's') {
             idades[id] = lerInt("Digite a nova idade: ");
         }
         resposta = lerResposta("Deseja alterar o peso " + pesos[id] + "? s/n ");
-        if(resposta == 's'){
+        if (resposta == 's') {
             pesos[id] = lerFloat("Digite o novo peso: ");
         }
         resposta = lerResposta("Confirma as alterações? s/n ");
-        if(resposta == 's'){
+        if (resposta == 's') {
             salvarDados();
             System.out.println("Alterações salvas.");
-        }
-        else{
+        } else {
             System.out.print("Alterações descartadas.\n");
         }
         System.out.print("\nPressione qualquer tecla para voltar ao menu: ");
@@ -247,7 +243,7 @@ public class Exe02 {
         exibirDados();
         id = lerInt("\nDigite o ID que deseja apagar: ") - 1;
         resposta = lerResposta("Deseja apagar " + nomes[id] + "? s/n ");
-        if (resposta == 's'){
+        if (resposta == 's') {
             nomes[id] = null;
         }
         salvarDados();
@@ -283,7 +279,7 @@ public class Exe02 {
             }
         }
     }
-    static String gerarCaractere(int qtde, String modelo){
+    static String gerarCaractere (int qtde, String modelo) {
         String espacos = "";
 
         for (int i = 0; i < qtde; i++) {
@@ -291,7 +287,7 @@ public class Exe02 {
         }
         return espacos;
     }
-    static void limparTela(){
+    static void limparTela() {
         try {
             if (System.getProperty("os.name").contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -302,7 +298,7 @@ public class Exe02 {
             System.out.println("Erro ao limpar a tela: " + e.getMessage());
         }
     }
-    static int lerInt(String mensagem){
+    static int lerInt (String mensagem) {
         int valorInt = 0;
         boolean flag = true;
         do{
@@ -319,7 +315,7 @@ public class Exe02 {
         scanner.nextLine();
         return valorInt;
     }
-    static float lerFloat(String mensagem){
+    static float lerFloat (String mensagem) {
         float valorFloat = 0;
         boolean flag = true;
         do{
@@ -336,217 +332,207 @@ public class Exe02 {
         scanner.nextLine();
         return valorFloat;
     }
-    static char lerResposta(String mensagem){
+    static char lerResposta (String mensagem) {
         char resposta;
-        do{
+        do {
             System.out.print(mensagem);
             resposta = scanner.nextLine().toLowerCase().charAt(0);
             if (resposta != 's' && resposta != 'n'){
                 System.out.println("Opção inválida.");
             }
-        }
-        while((resposta != 's' && resposta != 'n'));
+        } while (resposta != 's' && resposta != 'n');
         return resposta;
     }
-    static int valorMaiorIdade(){
+    static int valorMaiorIdade() {
         int idade = 0;
-        for(int i = 0; i < contador; i++){
-            if(i == 0){
+        for (int i = 0; i < contador; i++) {
+            if (i == 0){
                 idade = idades[i];
-            }
-            else if(idades[i] > idade){
+            } else if(idades[i] > idade){
                 idade = idades[i];
             }
         }
         return idade;
     }
-    static int valorMenorIdade(){
+    static int valorMenorIdade() {
         int idade = 0;
-        for(int i = 0; i < contador; i++){
+        for (int i = 0; i < contador; i++) {
             if(i == 0){
                 idade = idades[i];
-            }
-            else if(idades[i] < idade){
+            } else if (idades[i] < idade) {
                 idade = idades[i];
             }
         }
         return idade;
     }
-    static String nomeMaiorIdade(){
+    static String nomeMaiorIdade() {
         String nome = "";
         int idade = 0;
-        for(int i = 0; i < contador; i++){
-            if(i == 0){
+        for (int i = 0; i < contador; i++) {
+            if (i == 0) {
                 nome = nomes[i];
                 idade = idades[i];
-            }
-            else if(idades[i] > idade){
+            } else if (idades[i] > idade) {
                 nome = nomes[i];
                 idade = idades[i];
             }
         }
         return nome;
     }
-    static String nomeMenorIdade(){
+    static String nomeMenorIdade() {
         String nome = "";
         int idade = 0;
-        for(int i = 0; i < contador; i++){
-            if(i == 0){
+        for (int i = 0; i < contador; i++) {
+            if (i == 0) {
                 nome = nomes[i];
                 idade = idades[i];
-            }
-            else if(idades[i] < idade){
+            } else if (idades[i] < idade) {
                 nome = nomes[i];
                 idade = idades[i];
             }
         }
         return nome;
     }
-    static float valorMaiorPeso(){
+    static float valorMaiorPeso() {
         float peso = 0;
-        for(int i = 0; i < contador; i++){
-            if(i == 0){
+        for (int i = 0; i < contador; i++) {
+            if (i == 0) {
                 peso = pesos[i];
-            }
-            else if(pesos[i] > peso){
+            } else if(pesos[i] > peso) {
                 peso = pesos[i];
             }
         }
         return peso;
     }
-    static float valorMenorPeso(){
+    static float valorMenorPeso() {
         float peso = 0;
-        for(int i = 0; i < contador; i++){
-            if(i == 0){
+        for (int i = 0; i < contador; i++) {
+            if (i == 0) {
                 peso = pesos[i];
-            }
-            else if(pesos[i] < peso){
+            } else if (pesos[i] < peso) {
                 peso = pesos[i];
             }
         }
         return peso;
     }
-    static String nomeMaiorPeso(){
+    static String nomeMaiorPeso() {
         String nome = "";
         float peso = 0;
-        for(int i = 0; i < contador; i++){
-            if(i == 0){
+        for (int i = 0; i < contador; i++) {
+            if (i == 0) {
                 nome = nomes[i];
                 peso = pesos[i];
-            }
-            else if(pesos[i] > peso){
+            } else if (pesos[i] > peso) {
                 nome = nomes[i];
                 peso = pesos[i];
             }
         }
         return nome;
     }
-    static String nomeMenorPeso(){
+    static String nomeMenorPeso() {
         String nome = "";
         float peso = 0;
-        for(int i = 0; i < contador; i++){
-            if(i == 0){
+        for (int i = 0; i < contador; i++) {
+            if (i == 0) {
                 nome = nomes[i];
                 peso = pesos[i];
-            }
-            else if(pesos[i] < peso){
+            } else if (pesos[i] < peso) {
                 nome = nomes[i];
                 peso = pesos[i];
             }
         }
         return nome;
     }
-    static float mediaIdade(){
+    static float mediaIdade() {
         float media = 0;
         int q = 0;
-        for(int i = 0; i < contador; i++){
+        for (int i = 0; i < contador; i++) {
             q += idades[i];
         }
         media = q / contador;
         return media;
     }
-    static float mediaPeso(){
+    static float mediaPeso() {
         float media = 0;
         int q = 0;
-        for(int i = 0; i < contador; i++){
+        for (int i = 0; i < contador; i++) {
             q += pesos[i];
         }
         media = q / contador;
         return media;
     }
-    static int quantMaiorIdadeMedia(){
+    static int quantMaiorIdadeMedia() {
         int quantidade = 0;
         float media = mediaIdade();
-        for(int i = 0; i < contador; i++){
+        for (int i = 0; i < contador; i++) {
             if(idades[i] > media){
                 quantidade ++;
             }
         }
         return quantidade;
     }
-    static int quantMenorIdadeMedia(){
+    static int quantMenorIdadeMedia() {
         int quantidade = 0;
         float media = mediaIdade();
-        for(int i = 0; i < contador; i++){
+        for (int i = 0; i < contador; i++) {
             if(idades[i] < media){
                 quantidade ++;
             }
         }
         return quantidade;
     }
-    static int quantMaiorPesoMedia(){
+    static int quantMaiorPesoMedia() {
         int quantidade = 0;
         float media = mediaPeso();
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] > media){
+        for (int i = 0; i < contador; i++) {
+            if (pesos[i] > media) {
                 quantidade ++;
             }
         }
         return quantidade;
     }
-    static int quantMenorPesoMedia(){
+    static int quantMenorPesoMedia() {
         int quantidade = 0;
         float media = mediaPeso();
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] < media){
+        for (int i = 0; i < contador; i++) {
+            if (pesos[i] < media) {
                 quantidade ++;
             }
         }
         return quantidade;
     }
-    static float percentMaiorIdadeMedia(){
+    static float percentMaiorIdadeMedia() {
         float conversor = contador;
         float percentual = (quantMaiorIdadeMedia() / conversor) * 100;
         return percentual;
     }
-    static float percentMenorIdadeMedia(){
+    static float percentMenorIdadeMedia() {
         float conversor = contador;
         float percentual = (quantMenorIdadeMedia() / conversor) * 100;
         return percentual;
     }
-    static float percentMaiorPesoMedia(){
+    static float percentMaiorPesoMedia() {
         float conversor = contador;
         float percentual = (quantMaiorPesoMedia() / conversor) * 100;
         return percentual;
     }
-    static float percentMenorPesoMedia(){
+    static float percentMenorPesoMedia() {
         float conversor = contador;
         float percentual = (quantMenorPesoMedia() / conversor) * 100;
         return percentual;
     }
-    static void tabelaMaiorIdadeMedia(){
+    static void tabelaMaiorIdadeMedia() {
         int qtdeCaracteres = 0;
         int espacoNomeTabela = 0;
         int espacoNomeTitulo = 0;
         int linha = 0;
         int diferenca = 0;
         String mensagem = "";
-        for(int i = 0; i < contador; i++){
-            if(idades[i] > mediaIdade()){
-                if(i == 0){
+        for (int i = 0; i < contador; i++) {
+            if (idades[i] > mediaIdade()) {
+                if (i == 0) {
                     espacoNomeTabela = String.valueOf(nomes[i]).length();
-                }
-                else if (nomes[i].length() > espacoNomeTabela) {
+                } else if (nomes[i].length() > espacoNomeTabela) {
                     espacoNomeTabela = String.valueOf(nomes[i]).length();
                 }
             }
@@ -566,14 +552,13 @@ public class Exe02 {
         System.out.print("|Idade |\n");
         System.out.print(gerarCaractere(linha, "-"));
         System.out.print("\n");
-        for(int i = 0; i < contador; i++){
-            if(idades[i] > mediaIdade()){
+        for (int i = 0; i < contador; i++) {
+            if (idades[i] > mediaIdade()) {
                 System.out.print("|");
                 System.out.print(i + 1);
-                if(i < 9){
+                if (i < 9) {
                     qtdeCaracteres = 2;
-                }
-                else{
+                } else{
                     qtdeCaracteres = 1;
                 }
                 System.out.print(gerarCaractere(qtdeCaracteres, " "));
@@ -589,19 +574,18 @@ public class Exe02 {
             }
         }
     }
-    static void tabelaMenorIdadeMedia(){
+    static void tabelaMenorIdadeMedia() {
         int qtdeCaracteres = 0;
         int espacoNomeTabela = 0;
         int espacoNomeTitulo = 0;
         int linha = 0;
         int diferenca = 0;
         String mensagem = "";
-        for(int i = 0; i < contador; i++){
-            if(idades[i] < mediaIdade()){
-                if(i == 0){
+        for (int i = 0; i < contador; i++) {
+            if (idades[i] < mediaIdade()) {
+                if (i == 0) {
                     espacoNomeTabela = String.valueOf(nomes[i]).length();
-                }
-                else if (nomes[i].length() > espacoNomeTabela) {
+                } else if (nomes[i].length() > espacoNomeTabela) {
                     espacoNomeTabela = String.valueOf(nomes[i]).length();
                 }
             }
@@ -621,14 +605,13 @@ public class Exe02 {
         System.out.print("|Idade |\n");
         System.out.print(gerarCaractere(linha, "-"));
         System.out.print("\n");
-        for(int i = 0; i < contador; i++){
-            if(idades[i] < mediaIdade()){
+        for (int i = 0; i < contador; i++) {
+            if (idades[i] < mediaIdade()) {
                 System.out.print("|");
                 System.out.print(i + 1);
-                if(i < 9){
+                if (i < 9) {
                     qtdeCaracteres = 2;
-                }
-                else{
+                } else {
                     qtdeCaracteres = 1;
                 }
                 System.out.print(gerarCaractere(qtdeCaracteres, " "));
@@ -644,16 +627,16 @@ public class Exe02 {
             }
         }
     }
-    static void tabelaMaiorPesoMedia(){
+    static void tabelaMaiorPesoMedia() {
         int qtdeCaracteres = 0;
         int espacoNomeTabela = 0;
         int espacoNomeTitulo = 0;
         int linha = 0;
         int diferenca = 0;
         String mensagem = "";
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] > mediaPeso()){
-                if(i == 0){
+        for (int i = 0; i < contador; i++) {
+            if (pesos[i] > mediaPeso()) {
+                if (i == 0) {
                     espacoNomeTabela = String.valueOf(nomes[i]).length();
                 }
                 else if (nomes[i].length() > espacoNomeTabela) {
@@ -676,14 +659,13 @@ public class Exe02 {
         System.out.print("|Peso  |\n");
         System.out.print(gerarCaractere(linha, "-"));
         System.out.print("\n");
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] > mediaPeso()){
+        for (int i = 0; i < contador; i++) {
+            if (pesos[i] > mediaPeso()) {
                 System.out.print("|");
                 System.out.print(i + 1);
-                if(i < 9){
+                if (i < 9) {
                     qtdeCaracteres = 2;
-                }
-                else{
+                } else {
                     qtdeCaracteres = 1;
                 }
                 System.out.print(gerarCaractere(qtdeCaracteres, " "));
@@ -699,19 +681,18 @@ public class Exe02 {
             }
         }
     }
-    static void tabelaMenorPesoMedia(){
+    static void tabelaMenorPesoMedia() {
         int qtdeCaracteres = 0;
         int espacoNomeTabela = 0;
         int espacoNomeTitulo = 0;
         int linha = 0;
         int diferenca = 0;
         String mensagem = "";
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] < mediaPeso()){
-                if(i == 0){
+        for (int i = 0; i < contador; i++) {
+            if (pesos[i] < mediaPeso()) {
+                if (i == 0) {
                     espacoNomeTabela = String.valueOf(nomes[i]).length();
-                }
-                else if (nomes[i].length() > espacoNomeTabela) {
+                } else if (nomes[i].length() > espacoNomeTabela) {
                     espacoNomeTabela = String.valueOf(nomes[i]).length();
                 }
             }
@@ -731,14 +712,13 @@ public class Exe02 {
         System.out.print("|Peso  |\n");
         System.out.print(gerarCaractere(linha, "-"));
         System.out.print("\n");
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] < mediaPeso()){
+        for (int i = 0; i < contador; i++) {
+            if (pesos[i] < mediaPeso()) {
                 System.out.print("|");
                 System.out.print(i + 1);
-                if(i < 9){
+                if (i < 9) {
                     qtdeCaracteres = 2;
-                }
-                else{
+                } else {
                     qtdeCaracteres = 1;
                 }
                 System.out.print(gerarCaractere(qtdeCaracteres, " "));
@@ -754,7 +734,7 @@ public class Exe02 {
             }
         }
     }
-    static void exibirRelatorio(){
+    static void exibirRelatorio() {
         System.out.printf("Total de cadastros: %d\n", contador);
         System.out.printf("Média de idade: %.1f\n", mediaIdade());
         System.out.printf("Média de peso: %.1f\n", mediaPeso());
@@ -781,7 +761,7 @@ public class Exe02 {
         System.out.print("\nPressione qualquer tecla para voltar ao menu: ");
         scanner.nextLine();
     }
-    static void exibirRelatorioPersonalizado(){
+    static void exibirRelatorioPersonalizado() {
         //variaveis
         int quantMaiorIdade = 0;
         int quantMenorIdade = 0;
@@ -803,38 +783,38 @@ public class Exe02 {
         escolhaIdade = lerInt("Informe a idade: ");
         escolhaPeso = lerFloat("Informe o peso: ");
         //soma idadeMaior
-        for(int i = 0; i < contador; i++){
-            if(idades[i] > escolhaIdade){
+        for (int i = 0; i < contador; i++) {
+            if (idades[i] > escolhaIdade) {
                 quantMaiorIdade ++;
             }
         }
         //soma idadeIgual
-        for(int i = 0; i < contador; i++){
-            if(idades[i] == escolhaIdade){
+        for (int i = 0; i < contador; i++) {
+            if (idades[i] == escolhaIdade) {
                 quantIgualIdade ++;
             }
         }
         //soma idadeMenor
-        for(int i = 0; i < contador; i++){
-            if(idades[i] < escolhaIdade){
+        for (int i = 0; i < contador; i++) {
+            if (idades[i] < escolhaIdade) {
                 quantMenorIdade ++;
             }
         }
         //soma pesoMaior
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] > escolhaPeso){
+        for (int i = 0; i < contador; i++) {
+            if (pesos[i] > escolhaPeso) {
                 quantMaiorPeso ++;
             }
         }
         //soma pesoIgual
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] == escolhaPeso){
+        for (int i = 0; i < contador; i++) {
+            if (pesos[i] == escolhaPeso) {
                 quantIgualPeso ++;
             }
         }
         //soma pesoMenor
-        for(int i = 0; i < contador; i++){
-            if(pesos[i] < escolhaPeso){
+        for (int i = 0; i < contador; i++) {
+            if (pesos[i] < escolhaPeso) {
                 quantMenorPeso ++;
             }
         }
@@ -869,14 +849,13 @@ public class Exe02 {
         String mensagem = "";
         String mensagemZero = "";
         //imprime tabela idadeMaior
-        if(quantMaiorIdade > 0){
+        if (quantMaiorIdade > 0) {
             //calcula tamanho de tabela
-            for(int i = 0; i < contador; i++){
-                if(idades[i] > escolhaIdade){
+            for (int i = 0; i < contador; i++) {
+                if (idades[i] > escolhaIdade) {
                     if(i == 0){
                         espacoNomeTabela = String.valueOf(nomes[i]).length();
-                    }
-                    else if (nomes[i].length() > espacoNomeTabela) {
+                    } else if (nomes[i].length() > espacoNomeTabela) {
                         espacoNomeTabela = String.valueOf(nomes[i]).length();
                     }
                 }
@@ -900,14 +879,13 @@ public class Exe02 {
             System.out.print(gerarCaractere(linha, "-"));
             System.out.print("\n");
             //imprime id
-            for(int i = 0; i < contador; i++){
-                if(idades[i] > escolhaIdade){
+            for (int i = 0; i < contador; i++) {
+                if (idades[i] > escolhaIdade) {
                     System.out.print("|");
                     System.out.print(i + 1);
-                    if(i < 9){
+                    if (i < 9) {
                         qtdeCaracteres = 2;
-                    }
-                    else{
+                    } else {
                         qtdeCaracteres = 1;
                     }
                     System.out.print(gerarCaractere(qtdeCaracteres, " "));
@@ -924,8 +902,7 @@ public class Exe02 {
                     System.out.print("|\n");
                 }
             }
-        }
-        else{
+        } else {
             //centrazila titulo
             mensagemZero = "Nenhuma ";
             mensagemNumero = String.valueOf(escolhaIdade).length();
@@ -947,14 +924,13 @@ public class Exe02 {
             System.out.println(mensagemZero + mensagem + escolhaIdade);
         }
         //imrime tabela idadeIgual
-        if(quantIgualIdade > 0){
+        if (quantIgualIdade > 0) {
             //calcula tamanho de tabela
-            for(int i = 0; i < contador; i++){
-                if(idades[i] == escolhaIdade){
-                    if(i == 0){
+            for (int i = 0; i < contador; i++) {
+                if (idades[i] == escolhaIdade) {
+                    if (i == 0) {
                         espacoNomeTabela = String.valueOf(nomes[i]).length();
-                    }
-                    else if (nomes[i].length() > espacoNomeTabela) {
+                    } else if (nomes[i].length() > espacoNomeTabela) {
                         espacoNomeTabela = String.valueOf(nomes[i]).length();
                     }
                 }
@@ -978,14 +954,13 @@ public class Exe02 {
             System.out.print(gerarCaractere(linha, "-"));
             System.out.print("\n");
             //imprime id
-            for(int i = 0; i < contador; i++){
-                if(idades[i] == escolhaIdade){
+            for (int i = 0; i < contador; i++) {
+                if (idades[i] == escolhaIdade) {
                     System.out.print("|");
                     System.out.print(i + 1);
-                    if(i < 9){
+                    if (i < 9) {
                         qtdeCaracteres = 2;
-                    }
-                    else{
+                    } else {
                         qtdeCaracteres = 1;
                     }
                     System.out.print(gerarCaractere(qtdeCaracteres, " "));
@@ -1002,8 +977,7 @@ public class Exe02 {
                     System.out.print("|\n");
                 }
             }
-        }
-        else{
+        } else {
             //centrazila titulo
             mensagemZero = "Nenhuma ";
             mensagemNumero = String.valueOf(escolhaIdade).length();
@@ -1025,14 +999,13 @@ public class Exe02 {
             System.out.println(mensagemZero + mensagem + escolhaIdade);
         }
         //imprime tabela idadeMaior
-        if(quantMenorIdade > 0){
+        if (quantMenorIdade > 0) {
             //calcula tamanho de tabela
-            for(int i = 0; i < contador; i++){
-                if(idades[i] < escolhaIdade){
-                    if(i == 0){
+            for (int i = 0; i < contador; i++) {
+                if (idades[i] < escolhaIdade) {
+                    if (i == 0) {
                         espacoNomeTabela = String.valueOf(nomes[i]).length();
-                    }
-                    else if (nomes[i].length() > espacoNomeTabela) {
+                    } else if (nomes[i].length() > espacoNomeTabela) {
                         espacoNomeTabela = String.valueOf(nomes[i]).length();
                     }
                 }
@@ -1056,14 +1029,13 @@ public class Exe02 {
             System.out.print(gerarCaractere(linha, "-"));
             System.out.print("\n");
             //imprime id
-            for(int i = 0; i < contador; i++){
-                if(idades[i] < escolhaIdade){
+            for (int i = 0; i < contador; i++) {
+                if (idades[i] < escolhaIdade) {
                     System.out.print("|");
                     System.out.print(i + 1);
-                    if(i < 9){
+                    if (i < 9) {
                         qtdeCaracteres = 2;
-                    }
-                    else{
+                    } else {
                         qtdeCaracteres = 1;
                     }
                     System.out.print(gerarCaractere(qtdeCaracteres, " "));
@@ -1080,8 +1052,7 @@ public class Exe02 {
                     System.out.print("|\n");
                 }
             }
-        }
-        else{
+        } else {
             //centrazila titulo
             mensagemZero = "Nenhuma ";
             mensagemNumero = String.valueOf(escolhaIdade).length();
@@ -1103,14 +1074,13 @@ public class Exe02 {
             System.out.println(mensagemZero + mensagem + escolhaIdade);
         }
         //imprime tabela pesoMaior
-        if(quantMaiorPeso > 0){
+        if (quantMaiorPeso > 0) {
             //calcula tamanho de tabela
-            for(int i = 0; i < contador; i++){
-                if(pesos[i] > escolhaPeso){
-                    if(i == 0){
+            for (int i = 0; i < contador; i++) {
+                if (pesos[i] > escolhaPeso) {
+                    if (i == 0) {
                         espacoNomeTabela = String.valueOf(nomes[i]).length();
-                    }
-                    else if (nomes[i].length() > espacoNomeTabela) {
+                    } else if (nomes[i].length() > espacoNomeTabela) {
                         espacoNomeTabela = String.valueOf(nomes[i]).length();
                     }
                 }
@@ -1134,14 +1104,13 @@ public class Exe02 {
             System.out.print(gerarCaractere(linha, "-"));
             System.out.print("\n");
             //imprime id
-            for(int i = 0; i < contador; i++){
-                if(pesos[i] > escolhaPeso){
+            for (int i = 0; i < contador; i++) {
+                if (pesos[i] > escolhaPeso) {
                     System.out.print("|");
                     System.out.print(i + 1);
-                    if(i < 9){
+                    if (i < 9) {
                         qtdeCaracteres = 2;
-                    }
-                    else{
+                    } else {
                         qtdeCaracteres = 1;
                     }
                     System.out.print(gerarCaractere(qtdeCaracteres, " "));
@@ -1158,8 +1127,7 @@ public class Exe02 {
                     System.out.print("|\n");
                 }
             }
-        }
-        else{
+        } else {
             //centrazila titulo
             mensagemZero = "Nenhum ";
             mensagemNumero = String.valueOf(escolhaIdade).length();
@@ -1181,14 +1149,13 @@ public class Exe02 {
             System.out.println(mensagemZero + mensagem + escolhaIdade);
         }
         //imprime tabela pesoIgual
-        if(quantIgualPeso > 0){
+        if (quantIgualPeso > 0) {
             //calcula tamanho de tabela
-            for(int i = 0; i < contador; i++){
-                if(pesos[i] == escolhaPeso){
-                    if(i == 0){
+            for (int i = 0; i < contador; i++) {
+                if (pesos[i] == escolhaPeso) {
+                    if (i == 0) {
                         espacoNomeTabela = String.valueOf(nomes[i]).length();
-                    }
-                    else if (nomes[i].length() > espacoNomeTabela) {
+                    } else if (nomes[i].length() > espacoNomeTabela) {
                         espacoNomeTabela = String.valueOf(nomes[i]).length();
                     }
                 }
@@ -1212,14 +1179,13 @@ public class Exe02 {
             System.out.print(gerarCaractere(linha, "-"));
             System.out.print("\n");
             //imprime id
-            for(int i = 0; i < contador; i++){
-                if(pesos[i] == escolhaPeso){
+            for (int i = 0; i < contador; i++) {
+                if (pesos[i] == escolhaPeso) {
                     System.out.print("|");
                     System.out.print(i + 1);
-                    if(i < 9){
+                    if (i < 9) {
                         qtdeCaracteres = 2;
-                    }
-                    else{
+                    } else {
                         qtdeCaracteres = 1;
                     }
                     System.out.print(gerarCaractere(qtdeCaracteres, " "));
@@ -1236,8 +1202,7 @@ public class Exe02 {
                     System.out.print("|\n");
                 }
             }
-        }
-        else{
+        } else{
             //centrazila titulo
             mensagemZero = "Nenhum ";
             mensagemNumero = String.valueOf(escolhaIdade).length();
@@ -1259,14 +1224,13 @@ public class Exe02 {
             System.out.println(mensagemZero + mensagem + escolhaIdade);
         }
         //imprime tabela pesoMenor
-        if(quantMenorPeso > 0){
+        if (quantMenorPeso > 0) {
             //calcula tamanho de tabela
-            for(int i = 0; i < contador; i++){
-                if(pesos[i] < escolhaPeso){
-                    if(i == 0){
+            for (int i = 0; i < contador; i++) {
+                if (pesos[i] < escolhaPeso) {
+                    if (i == 0) {
                         espacoNomeTabela = String.valueOf(nomes[i]).length();
-                    }
-                    else if (nomes[i].length() > espacoNomeTabela) {
+                    } else if (nomes[i].length() > espacoNomeTabela) {
                         espacoNomeTabela = String.valueOf(nomes[i]).length();
                     }
                 }
@@ -1290,14 +1254,13 @@ public class Exe02 {
             System.out.print(gerarCaractere(linha, "-"));
             System.out.print("\n");
             //imprime id
-            for(int i = 0; i < contador; i++){
-                if(pesos[i] < escolhaPeso){
+            for (int i = 0; i < contador; i++) {
+                if (pesos[i] < escolhaPeso) {
                     System.out.print("|");
                     System.out.print(i + 1);
-                    if(i < 9){
+                    if (i < 9) {
                         qtdeCaracteres = 2;
-                    }
-                    else{
+                    } else {
                         qtdeCaracteres = 1;
                     }
                     System.out.print(gerarCaractere(qtdeCaracteres, " "));
@@ -1314,8 +1277,7 @@ public class Exe02 {
                     System.out.print("|\n");
                 }
             }
-        }
-        else{
+        } else {
             //centrazila titulo
             mensagemZero = "Nenhum ";
             mensagemNumero = String.valueOf(escolhaIdade).length();
