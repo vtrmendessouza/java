@@ -17,7 +17,6 @@ public class Exe02 {
     public static void main (String[] args) throws Exception {
         int opcao;
         do {
-            carregarDados();
             opcao = exibirMenu();
             processarMenu(opcao);
         } while(opcao != 7);
@@ -114,6 +113,7 @@ public class Exe02 {
         int linha = 0;
         int diferenca = 0;
         String mensagem = "";
+        limparTela();
         carregarDados();
         if (contador == 0) {
             System.out.println("Nenhum dado disponível.");
@@ -735,6 +735,7 @@ public class Exe02 {
         }
     }
     static void exibirRelatorio() {
+        limparTela();
         System.out.printf("Total de cadastros: %d\n", contador);
         System.out.printf("Média de idade: %.1f\n", mediaIdade());
         System.out.printf("Média de peso: %.1f\n", mediaPeso());
@@ -1131,8 +1132,8 @@ public class Exe02 {
             //centrazila titulo
             mensagemZero = "Nenhum ";
             mensagemNumero = String.valueOf(escolhaIdade).length();
-            espacoNomeTitulo = String.valueOf(mensagemZero).length() +  String.valueOf(mensagem).length() + String.valueOf(escolhaIdade).length() - 16;
-            linha = espacoNomeTitulo + 16;
+            espacoNomeTitulo = String.valueOf(mensagemZero).length() +  String.valueOf(mensagem).length() + String.valueOf(escolhaIdade).length() - 17;
+            linha = espacoNomeTitulo + 17;
             qtdeCaracteres = (linha - mensagem.length() - mensagemNumero) / 2;
             diferenca = linha - mensagem.length() - mensagemNumero - qtdeCaracteres * 2;
             //imprime titulo
@@ -1143,7 +1144,7 @@ public class Exe02 {
             System.out.print("|ID ");
             System.out.print("|Nome");
             System.out.print(gerarCaractere(espacoNomeTitulo, " "));
-            System.out.print("|Peso |\n");
+            System.out.print("|Peso  |\n");
             System.out.print(gerarCaractere(linha, "-"));
             System.out.print("\n");
             System.out.println(mensagemZero + mensagem + escolhaIdade);
@@ -1206,8 +1207,8 @@ public class Exe02 {
             //centrazila titulo
             mensagemZero = "Nenhum ";
             mensagemNumero = String.valueOf(escolhaIdade).length();
-            espacoNomeTitulo = String.valueOf(mensagemZero).length() +  String.valueOf(mensagem).length() + String.valueOf(escolhaIdade).length() - 16;
-            linha = espacoNomeTitulo + 16;
+            espacoNomeTitulo = String.valueOf(mensagemZero).length() +  String.valueOf(mensagem).length() + String.valueOf(escolhaIdade).length() - 17;
+            linha = espacoNomeTitulo + 17;
             qtdeCaracteres = (linha - mensagem.length() - mensagemNumero) / 2;
             diferenca = linha - mensagem.length() - mensagemNumero - qtdeCaracteres * 2;
             //imprime titulo
@@ -1218,7 +1219,7 @@ public class Exe02 {
             System.out.print("|ID ");
             System.out.print("|Nome");
             System.out.print(gerarCaractere(espacoNomeTitulo, " "));
-            System.out.print("|Peso |\n");
+            System.out.print("|Peso  |\n");
             System.out.print(gerarCaractere(linha, "-"));
             System.out.print("\n");
             System.out.println(mensagemZero + mensagem + escolhaIdade);
@@ -1281,8 +1282,8 @@ public class Exe02 {
             //centrazila titulo
             mensagemZero = "Nenhum ";
             mensagemNumero = String.valueOf(escolhaIdade).length();
-            espacoNomeTitulo = String.valueOf(mensagemZero).length() +  String.valueOf(mensagem).length() + String.valueOf(escolhaIdade).length() - 16;
-            linha = espacoNomeTitulo + 16;
+            espacoNomeTitulo = String.valueOf(mensagemZero).length() +  String.valueOf(mensagem).length() + String.valueOf(escolhaIdade).length() - 17;
+            linha = espacoNomeTitulo + 17;
             qtdeCaracteres = (linha - mensagem.length() - mensagemNumero) / 2;
             diferenca = linha - mensagem.length() - mensagemNumero - qtdeCaracteres * 2;
             //imprime titulo
@@ -1293,7 +1294,7 @@ public class Exe02 {
             System.out.print("|ID ");
             System.out.print("|Nome");
             System.out.print(gerarCaractere(espacoNomeTitulo, " "));
-            System.out.print("|Peso |\n");
+            System.out.print("|Peso  |\n");
             System.out.print(gerarCaractere(linha, "-"));
             System.out.print("\n");
             System.out.println(mensagemZero + mensagem + escolhaIdade);
