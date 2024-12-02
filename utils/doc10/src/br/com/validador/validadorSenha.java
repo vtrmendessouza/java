@@ -1,4 +1,4 @@
-package doc10.src.br.com.validador;
+package br.com.validador;
 
 public class validadorSenha {
 
