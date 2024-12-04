@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 public class Exe02 {
     static Scanner scanner = new Scanner(System.in);
-    static String CAMINHO_ARQUIVO = "./doc08/src/dataExe01.txt";
+    static String CAMINHO_ARQUIVO = "./src/dataExe01.txt";
     static int TAMANHO_MAXIMO = 50;
     static String[] nomes = new String[TAMANHO_MAXIMO];
     static int[] idades = new int[TAMANHO_MAXIMO];
@@ -17,13 +17,14 @@ public class Exe02 {
     public static void main (String[] args) throws Exception {
         int opcao;
         do {
+            limparTela();
+            carregarDados();
             opcao = exibirMenu();
             processarMenu(opcao);
         } while(opcao != 7);
         scanner.close();
     }
     static int exibirMenu() {
-        limparTela();
         int opcao = 0;
         System.out.println("#. Menu Principal:");
         System.out.println("1. Adicionar Dados");
@@ -114,7 +115,6 @@ public class Exe02 {
         int diferenca = 0;
         String mensagem = "";
         limparTela();
-        carregarDados();
         if (contador == 0) {
             System.out.println("Nenhum dado disponível.");
             return;
@@ -172,7 +172,6 @@ public class Exe02 {
     }
     static void adicionarDados() {
         int q = 0;
-        limparTela();
         //verifico se tem espaco nos vetores
         if (contador >= TAMANHO_MAXIMO) {
             System.out.println("Limite de dados atingido! Não é possível adicionar mais.");
@@ -210,7 +209,6 @@ public class Exe02 {
     static void alterarDados() {
         char resposta;
         int id = 0;
-        limparTela();
         exibirDados();
         id = (lerInt("\nDigite o ID que deseja alterar: ") - 1);
         resposta = lerResposta("Deseja alterar o nome " + nomes[id] + "? s/n ");
@@ -239,7 +237,6 @@ public class Exe02 {
     static void apagarDados() {
         char resposta;
         int id = 0;
-        limparTela();
         exibirDados();
         id = lerInt("\nDigite o ID que deseja apagar: ") - 1;
         resposta = lerResposta("Deseja apagar " + nomes[id] + "? s/n ");
@@ -735,7 +732,6 @@ public class Exe02 {
         }
     }
     static void exibirRelatorio() {
-        limparTela();
         System.out.printf("Total de cadastros: %d\n", contador);
         System.out.printf("Média de idade: %.1f\n", mediaIdade());
         System.out.printf("Média de peso: %.1f\n", mediaPeso());
@@ -780,7 +776,6 @@ public class Exe02 {
         int escolhaIdade = 0;
         float escolhaPeso = 0;
         //inicio
-        limparTela();
         escolhaIdade = lerInt("Informe a idade: ");
         escolhaPeso = lerFloat("Informe o peso: ");
         //soma idadeMaior
