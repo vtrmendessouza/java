@@ -1,6 +1,5 @@
-package br.com.validador;
-
-public class validadorSenha {
+package br.com.producao;
+public class ValidadorSenha {
 
     // Método para validar a complexidade da senha
     public static boolean validarSenha(String senha) {
@@ -8,7 +7,6 @@ public class validadorSenha {
         if (senha == null || senha.length() < 8) {
             throw new IllegalArgumentException("A senha deve ter pelo menos 8 caracteres.");
         }
-
         // Variáveis para verificar as condições de complexidade
         boolean temMaiuscula = false;
         boolean temMinuscula = false;
@@ -23,23 +21,19 @@ public class validadorSenha {
             if (Character.isUpperCase(c)) {
                 temMaiuscula = true;
             }
-
             // Verifica se o caractere é uma letra minúscula
             if (Character.isLowerCase(c)) {
                 temMinuscula = true;
             }
-
             // Verifica se o caractere é um número
             if (Character.isDigit(c)) {
                 temNumero = true;
             }
-
             // Verifica se o caractere é um caractere especial
             if (isCaractereEspecial(c)) {
                 temCaractereEspecial = true;
             }
         }
-
         // Verifica se todas as condições de complexidade foram atendidas
         if (!temMaiuscula) {
             throw new IllegalArgumentException("A senha deve conter pelo menos uma letra maiúscula.");
@@ -53,10 +47,8 @@ public class validadorSenha {
         if (!temCaractereEspecial) {
             throw new IllegalArgumentException("A senha deve conter pelo menos um caractere especial.");
         }
-
         return true;
     }
-
     // Método auxiliar para verificar se um caractere é um caractere especial
     private static boolean isCaractereEspecial(char c) {
         // Definimos um conjunto de caracteres especiais
