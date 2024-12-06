@@ -12,7 +12,7 @@ Lembre-se que o seu código precisa prever a possibilidade do usuário informar 
 1-2-2024
 */
 import java.util.Scanner;
-public class Exe00 {
+public class Exe07 {
     public static void main(String[] args) throws Exception {
         Scanner teclado = new Scanner(System.in);
         String data = "";

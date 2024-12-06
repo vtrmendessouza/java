@@ -4,7 +4,7 @@ Exercício dos morangos e maças escrito utilizando funções e procedimentos,
 que em java chamamos de métodos.
 */
 import java.util.Scanner;
-public class Primeiro {
+public class Exe06 {
     public static void main(String[] args) {
 
         Scanner teclado = new Scanner(System.in);

@@ -2,8 +2,8 @@ import java.util.Scanner;
 import br.com.producao.ValidadorSenha;
 public class TesteSenha {
     public static void main(String[] args) {
-        Scanner teclado = new Scanner(System.in);
-        String senha = teclado.nextLine();
+        Scanner scanner = new Scanner(System.in);
+        String senha = scanner.nextLine();
 
         try {
             boolean valida = ValidadorSenha.validarSenha(senha);
@@ -11,6 +11,6 @@ public class TesteSenha {
         } catch (IllegalArgumentException e) {
             System.out.println("Erro: " + e.getMessage());
         }
-        teclado.close();
+        scanner.close();
     }
 }

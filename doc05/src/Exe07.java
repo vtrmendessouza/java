@@ -3,7 +3,7 @@ pdv = d1 * 10 + d2 * 9 + d3 * 8 + d4 * 7 + d5 * 6 + d6 * 5 + d7 * 4 + d8 * 3 + d
 sdv = d1 * 11 + d2 * 10 + d3 * 9 + d4 * 8 + d5 * 7 + d6 * 6 + d7 * 5 + d8 * 4 + d9 * 3 + pdv * 2;
 */
 import java.util.Scanner;
-public class Cpf {
+public class Exe07 {
     public static void main (String[] args) throws Exception {
         Scanner teclado;
         String cpf;

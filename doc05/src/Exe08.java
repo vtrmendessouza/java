@@ -10,7 +10,7 @@ O primeiro parâmetro deve ser o número a ser impresso o segundo parâmetro e s
 informar na tela se é par ou ímpar.
 */
 import java.util.Scanner;
-public class Exe00 {
+public class Exe08 {
     public static void main (String[] args) throws Exception {
         
         int valor = 0;

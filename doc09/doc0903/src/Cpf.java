@@ -2,8 +2,8 @@ import java.util.Scanner;
 import br.com.producao.ValidadorCpf;
 public class Cpf {
     public static void main(String[] args) {
-        Scanner teclado = new Scanner(System.in);
-        String cpf = teclado.nextLine();
+        Scanner scanner = new Scanner(System.in);
+        String cpf = scanner.nextLine();
 
         try {
             boolean valida = ValidadorCpf.validarCpf(cpf);
@@ -11,6 +11,6 @@ public class Cpf {
         } catch (IllegalArgumentException e) {
             System.out.println("Erro: " + e.getMessage());
         }
-        teclado.close();
+        scanner.close();
     }
 }

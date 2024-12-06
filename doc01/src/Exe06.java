@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class Bee1012{
+public class Exe06{
 	public static void main(String[] args){
         Scanner teclado = new Scanner(System.in);
         
