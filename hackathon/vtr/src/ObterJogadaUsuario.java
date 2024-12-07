@@ -8,6 +8,7 @@ public class ObterJogadaUsuario {
         boolean jogadaValida = false;
     
         while (!jogadaValida) {
+            
             try {
                 System.out.println("Digite a linha e a coluna que deseja jogar, separados por um espaço (Exemplo: 1 2):");
                 String entrada = teclado.nextLine().trim();

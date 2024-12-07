@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class ObterCaractereComputador {
 
     // Constante com os caracteres aceitos
-    private static final char[] CARACTERES_IDENTIFICADORES_ACEITOS = {'X', 'O', 'A', 'B', 'C'};
+    final static String CARACTERES_IDENTIFICADORES_ACEITOS = "XO0UC";
 
     //Solicita ao usuário um caractere para representar o computador.
     static char obterCaractereComputador(Scanner teclado, char caractereUsuario) {
@@ -12,8 +12,8 @@ public class ObterCaractereComputador {
 
         do {
             // Solicita ao usuário para escolher um caractere para o computador
-            System.out.print("Escolha um caractere para representar o computador (X, O, A, B, C): ");
-            String entrada = teclado.nextLine();
+            System.out.print("Escolha um caractere para representar o computador (X, O, 0, U, C): ");
+            String entrada = teclado.nextLine().toUpperCase();
 
             // Verifica se o usuário digitou apenas um caractere
             if (entrada.length() == 1) {
@@ -21,8 +21,8 @@ public class ObterCaractereComputador {
 
                 // Verifica se o caractere está na lista de permitidos e não é igual ao do usuário
                 if (caractereEscolhido != caractereUsuario) {
-                    for (char caracterePermitido : CARACTERES_IDENTIFICADORES_ACEITOS) {
-                        if (caractereEscolhido == caracterePermitido) {
+                    for (int i = 0; i < CARACTERES_IDENTIFICADORES_ACEITOS.length(); i++) {
+                        if (caractereEscolhido == CARACTERES_IDENTIFICADORES_ACEITOS.charAt(i)) {
                             caractereValido = true;
                             break;
                         }

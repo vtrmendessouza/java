@@ -2,10 +2,13 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
-public class App {
+public class AppCompleto {
 
     // Constante com os caracteres aceitos
-    private static final char[] CARACTERES_IDENTIFICADORES_ACEITOS = {'X', 'O', 'A', 'B', 'C'};
+    final static String CARACTERES_IDENTIFICADORES_ACEITOS = "XO0UC";
+
+    // Tamanho fixo do tabuleiro 3x3
+    final static int TAMANHO_TABULEIRO = 3;
 
     //Inicializa o tabuleiro 3x3 com o caractere ' ' (espaço).
     static char[][] inicializarTabuleiro(char[][] tabuleiro) {
@@ -22,22 +25,23 @@ public class App {
         return tabuleiro;
     }
     //Solicita ao usuário um caractere para representá-lo no jogo.
+    //Solicita ao usuário um caractere para representá-lo no jogo.
     static char obterCaractereUsuario(Scanner teclado) {
         char caractereEscolhido;
         boolean caractereValido = false;
 
         do {
             // Solicita ao usuário para escolher um caractere
-            System.out.print("Escolha um caractere para representar você (X, O, A, B, C): ");
-            String entrada = teclado.nextLine();
+            System.out.print("Escolha um caractere para representar você (X, O, 0, U, C): ");
+            String entrada = teclado.nextLine().toUpperCase();
 
             // Valida se o usuário digitou apenas um caractere
             if (entrada.length() == 1) {
                 caractereEscolhido = entrada.charAt(0);
 
                 // Verifica se o caractere está na lista de permitidos
-                for (char caracterePermitido : CARACTERES_IDENTIFICADORES_ACEITOS) {
-                    if (caractereEscolhido == caracterePermitido) {
+                for (int i = 0; i < CARACTERES_IDENTIFICADORES_ACEITOS.length(); i++) {
+                    if (caractereEscolhido == CARACTERES_IDENTIFICADORES_ACEITOS.charAt(i)) {
                         caractereValido = true;
                         break;
                     }
@@ -47,9 +51,13 @@ public class App {
                 }
             } else {
                 System.out.println("Entrada inválida! Por favor, digite apenas um caractere.");
-                caractereEscolhido = ' '; // Apenas inicializa para evitar erro de compilação
+                
+                // Apenas inicializa para evitar erro de compilação
+                caractereEscolhido = ' ';
             }
-        } while (!caractereValido); // Continua até que o caractere seja válido
+            
+        // Continua até que o caractere seja válido
+        } while (!caractereValido);
 
         return caractereEscolhido;
     }
@@ -60,8 +68,8 @@ public class App {
 
         do {
             // Solicita ao usuário para escolher um caractere para o computador
-            System.out.print("Escolha um caractere para representar o computador (X, O, A, B, C): ");
-            String entrada = teclado.nextLine();
+            System.out.print("Escolha um caractere para representar o computador (X, O, 0, U, C): ");
+            String entrada = teclado.nextLine().toUpperCase();
 
             // Verifica se o usuário digitou apenas um caractere
             if (entrada.length() == 1) {
@@ -69,8 +77,8 @@ public class App {
 
                 // Verifica se o caractere está na lista de permitidos e não é igual ao do usuário
                 if (caractereEscolhido != caractereUsuario) {
-                    for (char caracterePermitido : CARACTERES_IDENTIFICADORES_ACEITOS) {
-                        if (caractereEscolhido == caracterePermitido) {
+                    for (int i = 0; i < CARACTERES_IDENTIFICADORES_ACEITOS.length(); i++) {
+                        if (caractereEscolhido == CARACTERES_IDENTIFICADORES_ACEITOS.charAt(i)) {
                             caractereValido = true;
                             break;
                         }
@@ -107,6 +115,7 @@ public class App {
         boolean jogadaValida = false;
     
         while (!jogadaValida) {
+            
             try {
                 System.out.println("Digite a linha e a coluna que deseja jogar, separados por um espaço (Exemplo: 1 2):");
                 String entrada = teclado.nextLine().trim();
@@ -265,10 +274,10 @@ public class App {
     static boolean teveGanhadorColuna(char[][] tabuleiro, char caractereJogador) {
 
         // Verifica se todas as células de uma coluna estão preenchidas com o caractere do jogador
-        for (int j = 0; j < 3; j++) {
-            if (tabuleiro[0][j] == caractereJogador && 
-                tabuleiro[1][j] == caractereJogador && 
-                tabuleiro[2][j] == caractereJogador) {
+        for (int i = 0; i < 3; i++) {
+            if (tabuleiro[0][i] == caractereJogador && 
+                tabuleiro[1][i] == caractereJogador && 
+                tabuleiro[2][i] == caractereJogador) {
                 return true;  // Ganhou na coluna
             }
         }
@@ -312,28 +321,21 @@ public class App {
             e.printStackTrace(); // Caso ocorra algum erro, imprime a exceção
         }
     }
-    static void exibirTabuleiro(char[][] tabuleiro) {
+    public static void exibirTabuleiro(String[] args) {
+        Scanner teclado = new Scanner(System.in);
 
-        // Limpa a tela antes de exibir o tabuleiro
-        limparTela();
-    
-        // Exibe o conteúdo do tabuleiro no formato de uma grade 3x3
-        System.out.println("Tabuleiro:");
-        
-        for (int i = 0; i < tabuleiro.length; i++) {
-            for (int j = 0; j < tabuleiro[i].length; j++) {
-                System.out.print(tabuleiro[i][j]);
-                if (j < tabuleiro[i].length - 1) {
-                    System.out.print(" | ");
-                }
-            }
-            System.out.println();
-            if (i < tabuleiro.length - 1) {
-                System.out.println("---------");
-            }
-        }
+        // Inicializa o tabuleiro com o tamanho fixo 3x3
+        char[][] tabuleiro = new char[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO];
+        inicializarTabuleiro(tabuleiro);
+
+        // Obtém os caracteres para o jogador e computador
+        char caractereUsuario = obterCaractereUsuario(teclado);
+        char caractereComputador = obterCaractereComputador(teclado, caractereUsuario);
+
+        System.out.println("Caractere do usuário: " + caractereUsuario);
+        System.out.println("Caractere do computador: " + caractereComputador);
     }
-    static char[][] retornarTabuleiroAtualizado(char[][] tabuleiro, int[] jogada, char caractereJogador) {
+   static char[][] retornarTabuleiroAtualizado(char[][] tabuleiro, int[] jogada, char caractereJogador) {
 
         // Atualiza o tabuleiro na posição indicada pela jogada
         tabuleiro[jogada[0]][jogada[1]] = caractereJogador;
@@ -343,35 +345,42 @@ public class App {
     }
     static void exibirVitoriaComputador() {
 
-        // Exibe a mensagem de vitória do computador
         System.out.println("O computador venceu!");
-    
-        // Exibe a arte ASCII do computador feliz
-        System.out.println("      _____     ");
-        System.out.println("     |     |    ");
-        System.out.println("     |     |    ");
-        System.out.println("     | O O |    ");
-        System.out.println("     |  ^  |    ");
-        System.out.println("     | '-' |    ");
-        System.out.println("     |_____|    ");
-        System.out.println("     /     \\   ");
-        System.out.println("    |       |   ");
-        System.out.println("    |_______|   ");
+        System.out.println("""
+        \t\t\t    +---------------+
+        \t\t\t    | +-----------+ |
+        \t\t\t    | | __    __  | |
+        \t\t\t    | |  0    0   | |
+        \t\t\t    | |    --     | |
+        \t\t\t    | |   \\__/    | |
+        \t\t\t    | |           | |
+        \t\t\t    | +-----------+ |
+        \t\t\t    +-----+---+-----+
+        \t\t\t    _____|    |_____
+        \t\t\t   /                \\
+        \t\t\t  /  --------------- \\
+        \t\t\t /   ---------------  \\
+        \t\t\t +---------------------+
+        \n\n""");
     }
     static void exibirVitoriaUsuario() {
 
-        // Exibe a mensagem de vitória do usuário
         System.out.println("O usuário venceu!");
-    
-        // Exibe a arte ASCII do usuário feliz
-        System.out.println("      _____     ");
-        System.out.println("     /     \\    ");
-        System.out.println("    |  O O  |   ");
-        System.out.println("    |   ^   |   ");
-        System.out.println("    |  \\_/  |   ");
-        System.out.println("     \\_____/    ");
-        System.out.println("       | |      ");
-        System.out.println("      /   \\     ");
+        System.out.println("""
+        \t\t\t          /////////
+        \t\t\t    \\\\|/////////
+        \t\t\t     \\/////////
+        \t\t\t     |         |
+        \t\t\t    (| --- --- |)
+        \t\t\t     |  0   0  |
+        \t\t\t     |    ..   |
+        \t\t\t     |  \\___/  |
+        \t\t\t     |_________|
+        \t\t\t        |   |
+        \t\t\t        |   |
+        \t\t\t       /     \\
+        \t\t\t      /       \\
+        \n\n\n""");
     }
     static void exibirEmpate() {
 
