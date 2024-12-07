@@ -2,15 +2,18 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Completo {
-    
+public class App {
+
+    // Constante com os caracteres aceitos
+    private static final char[] CARACTERES_IDENTIFICADORES_ACEITOS = {'X', 'O', 'A', 'B', 'C'};
+
     //Inicializa o tabuleiro 3x3 com o caractere ' ' (espaço).
-    //@param tabuleiro = Matriz de caracteres representando o tabuleiro.
-    //@return O = tabuleiro inicializado.
     static char[][] inicializarTabuleiro(char[][] tabuleiro) {
+
         // Percorre todas as linhas e colunas do tabuleiro
         for (int i = 0; i < tabuleiro.length; i++) {
             for (int j = 0; j < tabuleiro[i].length; j++) {
+
                 // Define cada posição com o caractere ' ' (espaço)
                 tabuleiro[i][j] = ' ';
             }
@@ -18,13 +21,7 @@ public class Completo {
         // Retorna o tabuleiro inicializado
         return tabuleiro;
     }
-    // Constante com os caracteres aceitos
-    private static final char[] CARACTERES_IDENTIFICADORES_ACEITOS = {'X', 'O', 'A', 'B', 'C'};
-
     //Solicita ao usuário um caractere para representá-lo no jogo.
-    //@param teclado = Objeto Scanner para entrada de dados pelo teclado.
-    //@return O = caractere escolhido pelo usuário.
-   
     static char obterCaractereUsuario(Scanner teclado) {
         char caractereEscolhido;
         boolean caractereValido = false;
@@ -56,14 +53,7 @@ public class Completo {
 
         return caractereEscolhido;
     }
-    // Constante com os caracteres aceitos
-    //private static final char[] CARACTERES_IDENTIFICADORES_ACEITOS = {'X', 'O', 'A', 'B', 'C'};
-
     //Solicita ao usuário um caractere para representar o computador.
-    //@param teclado = Objeto Scanner para entrada de dados pelo teclado.
-    //@param caractereUsuario = Caractere escolhido pelo usuário, que não pode ser repetido.
-    //@return O = caractere escolhido para o computador.
-   
     static char obterCaractereComputador(Scanner teclado, char caractereUsuario) {
         char caractereEscolhido;
         boolean caractereValido = false;
@@ -93,31 +83,76 @@ public class Completo {
                 }
             } else {
                 System.out.println("Entrada inválida! Por favor, digite apenas um caractere.");
-                caractereEscolhido = ' '; // Apenas inicializa para evitar erro de compilação
+                
+                // Apenas inicializa para evitar erro de compilação
+                caractereEscolhido = ' ';
             }
-        } while (!caractereValido); // Continua até que o caractere seja válido
+            
+        // Continua até que o caractere seja válido
+        } while (!caractereValido);
 
         return caractereEscolhido;
     }
-    //Verifica se a jogada do usuário é válida, ou seja, se está presente na lista de posições livres.
-    //@param posicoesLivres = String contendo as posições livres no formato "xy;xy;..."
-    //@param linha = Linha escolhida pelo jogador.
-    //@param coluna = Coluna escolhida pelo jogador.
-    //@return true se a jogada for válida, false caso contrário.
- 
     static boolean jogadaValida(String posicoesLivres, int linha, int coluna) {
-        // Constrói a representação da posição no formato "xy"
-        String posicaoJogada = linha + "" + coluna;
 
-        // Verifica se a posição está contida na string de posições livres
-        return posicoesLivres.contains(posicaoJogada);
+        // Formatar a jogada no formato "linha+coluna" (e.g., "01" para linha 0, coluna 1)
+        String jogada = linha + "" + coluna;
+    
+        // Verificar se a jogada está presente na lista de posições livres
+        return posicoesLivres.contains(jogada);
+    }
+    static int[] obterJogadaUsuario(String posicoesLivres, Scanner teclado) {
+
+        int[] jogada = new int[2]; // Vetor para armazenar linha e coluna
+        boolean jogadaValida = false;
+    
+        while (!jogadaValida) {
+            try {
+                System.out.println("Digite a linha e a coluna que deseja jogar, separados por um espaço (Exemplo: 1 2):");
+                String entrada = teclado.nextLine().trim();
+    
+                // Dividir a entrada em dois valores separados por espaço
+                String[] valores = entrada.split(" ");
+    
+                // Verificar se foram digitados exatamente dois valores
+                if (valores.length != 2) {
+                    System.out.println("Por favor, digite dois números separados por espaço!");
+                    continue;
+                }
+                // Converter os valores para números inteiros
+                int linha = Integer.parseInt(valores[0]);
+                int coluna = Integer.parseInt(valores[1]);
+    
+                // Ajustar os valores para índices (de 1-3 para 0-2)
+                linha -= 1;
+                coluna -= 1;
+    
+                // Verificar se a jogada está dentro dos limites do tabuleiro (3x3)
+                if (linha < 0 || linha > 2 || coluna < 0 || coluna > 2) {
+                    System.out.println("Linha ou coluna fora dos limites! Digite valores entre 1 e 3.");
+                    continue;
+                }
+    
+                // Verificar se a jogada está presente na lista de posições livres
+                String jogadaFormatada = linha + "" + coluna;
+                if (!posicoesLivres.contains(jogadaFormatada)) {
+                    System.out.println("Esta jogada não é permitida, escolha outra posição!");
+                    continue;
+                }
+    
+                // A jogada é válida
+                jogada[0] = linha;
+                jogada[1] = coluna;
+                jogadaValida = true;
+    
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida! Certifique-se de digitar dois números inteiros.");
+            }
+        }
+        return jogada;
     }
     //Obtém a jogada do computador sorteando uma posição livre.
-    //@param posicoesLivres = String com as posições livres no formato "xy;xy;..."
-    //@param teclado = Objeto Scanner (não utilizado, mas incluído na assinatura).
-    //@return Vetor de inteiros contendo [linha, coluna] no formato de índice.
- 
-    static int[] obterJogadaComputador(String posicoesLivres, Scanner teclado) {
+    static int[] obterJogadaComputador(String posicoesLivres) {
 
         // Divide as posições livres em um vetor de strings
         String[] vetorPosicoesLivres = posicoesLivres.split(";");
@@ -133,9 +168,6 @@ public class Completo {
         return converterJogadaStringParaVetorInt(jogadaSorteada);
     }
     //Converte uma jogada no formato "xy" para um vetor de inteiros [x, y].
-    //@param jogada String no formato "xy", onde x representa a linha e y representa a coluna.
-    //@return Vetor de inteiros contendo [linha, coluna].
-
     static int[] converterJogadaStringParaVetorInt(String jogada) {
 
         // Extrai o caractere referente à linha (x) e converte para inteiro
@@ -147,13 +179,8 @@ public class Completo {
         // Retorna o vetor de inteiros [linha, coluna]
         return new int[] { linha, coluna };
     }
-    //Realiza as ações necessárias para processar a vez do usuário jogar.
-    //@param teclado O scanner usado para obter entradas do usuário.
-    //@param tabuleiro O tabuleiro atual do jogo.
-    //@param caractereUsuario O caractere utilizado pelo usuário.
-    //@return O tabuleiro atualizado após a jogada do usuário.
-
     static char[][] processarVezUsuario(Scanner teclado, char[][] tabuleiro, char caractereUsuario) {
+
         // Exibe mensagem indicando que é a vez do usuário
         System.out.println("É a sua vez, usuário! Faça sua jogada.");
 
@@ -178,13 +205,15 @@ public class Completo {
         // Atualizar o tabuleiro com a jogada do computador
         return retornarTabuleiroAtualizado(tabuleiro, jogadaComputador, caractereComputador);
     }
-
     static String retornarPosicoesLivres(char[][] tabuleiro) {
-        StringBuilder posicoesLivres = new StringBuilder();  // Usando StringBuilder para construir a string
+        
+        // Usando StringBuilder para construir a string
+        StringBuilder posicoesLivres = new StringBuilder();
         
         // Percorrer o tabuleiro para encontrar as posições livres
         for (int i = 0; i < tabuleiro.length; i++) {  // Percorre as linhas
             for (int j = 0; j < tabuleiro[i].length; j++) {  // Percorre as colunas
+        
                 // Se a posição estiver livre (caractere ' '), adiciona à lista de posições livres
                 if (tabuleiro[i][j] == ' ') {
                     posicoesLivres.append(i).append(j).append(";");  // Adiciona a posição no formato xy
@@ -221,6 +250,7 @@ public class Completo {
     }
     // Verifica se o jogador ganhou em alguma linha
     static boolean teveGanhadorLinha(char[][] tabuleiro, char caractereJogador) {
+
         // Verifica se todas as células de uma linha estão preenchidas com o caractere do jogador
         for (int i = 0; i < 3; i++) {
             if (tabuleiro[i][0] == caractereJogador && 
@@ -233,6 +263,7 @@ public class Completo {
     }
     // Verifica se o jogador ganhou em alguma coluna
     static boolean teveGanhadorColuna(char[][] tabuleiro, char caractereJogador) {
+
         // Verifica se todas as células de uma coluna estão preenchidas com o caractere do jogador
         for (int j = 0; j < 3; j++) {
             if (tabuleiro[0][j] == caractereJogador && 
@@ -245,6 +276,7 @@ public class Completo {
     }
     // Verifica se o jogador ganhou na diagonal principal
     static boolean teveGanhadorDiagonalPrincipal(char[][] tabuleiro, char caractereJogador) {
+
         // Verifica se a diagonal principal está toda preenchida com o caractere do jogador
         return tabuleiro[0][0] == caractereJogador && 
             tabuleiro[1][1] == caractereJogador && 
@@ -252,12 +284,14 @@ public class Completo {
     }
     // Verifica se o jogador ganhou na diagonal secundária
     static boolean teveGanhadorDiagonalSecundaria(char[][] tabuleiro, char caractereJogador) {
+
         // Verifica se a diagonal secundária está toda preenchida com o caractere do jogador
         return tabuleiro[0][2] == caractereJogador && 
             tabuleiro[1][1] == caractereJogador && 
             tabuleiro[2][0] == caractereJogador;
     }
     static void limparTela() {
+
     // Verifica o sistema operacional para decidir qual comando executar
     String sistemaOperacional = System.getProperty("os.name").toLowerCase();
     
@@ -279,6 +313,7 @@ public class Completo {
         }
     }
     static void exibirTabuleiro(char[][] tabuleiro) {
+
         // Limpa a tela antes de exibir o tabuleiro
         limparTela();
     
@@ -355,6 +390,7 @@ public class Completo {
         for (int i = 0; i < tabuleiro.length; i++) {
             for (int j = 0; j < tabuleiro[i].length; j++) {
                 if (tabuleiro[i][j] == ' ') {
+
                     // Se encontrar algum espaço vazio, significa que o jogo não terminou em empate
                     return false;
                 }
@@ -363,15 +399,13 @@ public class Completo {
         // Se não encontrar espaços vazios, então o jogo terminou em empate
         return true;
     }
-    public class SortearValorBooleano {
+    //Realiza as ações necessárias para processar a vez do usuário jogar.
+    static boolean sortearValorBooleano() {
 
-        static boolean sortearValorBooleano() {
+        // Criar um objeto Random
+        Random random = new Random();
     
-            // Criar um objeto Random
-            Random random = new Random();
-        
-            // Retornar o valor sorteado (true ou false)
-            return random.nextBoolean();
-        }
+        // Retornar o valor sorteado (true ou false)
+        return random.nextBoolean();
     }
 }

@@ -6,9 +6,6 @@ public class ObterCaractereUsuario {
     private static final char[] CARACTERES_IDENTIFICADORES_ACEITOS = {'X', 'O', 'A', 'B', 'C'};
 
     //Solicita ao usuário um caractere para representá-lo no jogo.
-    //@param teclado = Objeto Scanner para entrada de dados pelo teclado.
-    //@return O = caractere escolhido pelo usuário.
-   
     static char obterCaractereUsuario(Scanner teclado) {
         char caractereEscolhido;
         boolean caractereValido = false;

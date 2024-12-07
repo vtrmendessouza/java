@@ -13,7 +13,7 @@ public class ProcessarVezComputador {
         return retornarTabuleiroAtualizado(tabuleiro, jogadaComputador, caractereComputador);
     }
 
-    //EXTRA:
+    //EXTRA********************************************
     private static char[][] retornarTabuleiroAtualizado(char[][] tabuleiro, int[] jogadaComputador,
         char caractereComputador) {
         // TODO Auto-generated method stub

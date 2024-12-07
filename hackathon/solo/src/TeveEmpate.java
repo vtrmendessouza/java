@@ -6,6 +6,7 @@ public class TeveEmpate {
         for (int i = 0; i < tabuleiro.length; i++) {
             for (int j = 0; j < tabuleiro[i].length; j++) {
                 if (tabuleiro[i][j] == ' ') {
+
                     // Se encontrar algum espaço vazio, significa que o jogo não terminou em empate
                     return false;
                 }

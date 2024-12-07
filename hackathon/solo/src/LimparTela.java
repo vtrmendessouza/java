@@ -3,6 +3,7 @@ import java.io.IOException;
 public class LimparTela {
 
     static void limparTela() {
+
     // Verifica o sistema operacional para decidir qual comando executar
     String sistemaOperacional = System.getProperty("os.name").toLowerCase();
     

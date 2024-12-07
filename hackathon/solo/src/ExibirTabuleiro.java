@@ -1,6 +1,7 @@
 public class ExibirTabuleiro {
 
     static void exibirTabuleiro(char[][] tabuleiro) {
+
         // Limpa a tela antes de exibir o tabuleiro
         limparTela();
     
@@ -21,7 +22,7 @@ public class ExibirTabuleiro {
         }
     }
 
-    //EXTRA:
+    //EXTRA***********************
     private static void limparTela() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'limparTela'");

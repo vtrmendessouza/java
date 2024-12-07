@@ -22,7 +22,7 @@ public class TeveGanhador {
             return false;
     }
 
-    //EXTRA:
+    //EXTRA**********************************************
     private static boolean teveGanhadorDiagonalSecundaria(char[][] tabuleiro, char caractereJogador) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'teveGanhadorDiagonalSecundaria'");

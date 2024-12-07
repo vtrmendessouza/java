@@ -1,11 +1,14 @@
 public class RetornarPosicoesLivres {
 
     static String retornarPosicoesLivres(char[][] tabuleiro) {
-        StringBuilder posicoesLivres = new StringBuilder();  // Usando StringBuilder para construir a string
+        
+        // Usando StringBuilder para construir a string
+        StringBuilder posicoesLivres = new StringBuilder();
         
         // Percorrer o tabuleiro para encontrar as posições livres
         for (int i = 0; i < tabuleiro.length; i++) {  // Percorre as linhas
             for (int j = 0; j < tabuleiro[i].length; j++) {  // Percorre as colunas
+        
                 // Se a posição estiver livre (caractere ' '), adiciona à lista de posições livres
                 if (tabuleiro[i][j] == ' ') {
                     posicoesLivres.append(i).append(j).append(";");  // Adiciona a posição no formato xy

@@ -3,12 +3,8 @@ import java.util.Scanner;
 public class ProcessarVezUsuario {
 
     //Realiza as ações necessárias para processar a vez do usuário jogar.
-    //@param teclado O scanner usado para obter entradas do usuário.
-    //@param tabuleiro O tabuleiro atual do jogo.
-    //@param caractereUsuario O caractere utilizado pelo usuário.
-    //@return O tabuleiro atualizado após a jogada do usuário.
-
     static char[][] processarVezUsuario(Scanner teclado, char[][] tabuleiro, char caractereUsuario) {
+
         // Exibe mensagem indicando que é a vez do usuário
         System.out.println("É a sua vez, usuário! Faça sua jogada.");
 
@@ -22,7 +18,7 @@ public class ProcessarVezUsuario {
         return tabuleiro;
     }
 
-    //EXTRA:
+    //EXTRA********************************************
     private static char[][] retornarTabuleiroAtualizado(char[][] tabuleiro, int[] jogada, char caractereUsuario) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'retornarTabuleiroAtualizado'");
