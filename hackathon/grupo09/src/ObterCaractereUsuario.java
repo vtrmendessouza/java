@@ -19,3 +19,11 @@ public class ObterCaractereUsuario {
         return caractere;
     }
 }
+/*
+Descrição: Utilizado para obter no início do jogo qual o caractere que o usuário quer 
+utilizar para representar ele próprio. Este método recebe o teclado para permitir que o
+usuário digite o caractere desejado. Faça a leitura do caractere desejado pelo usuário, 
+através do teclado, realize as validações para não aceitar caracteres que não estejam
+definidos pela constante CARACTERES_IDENTIFICADORES_ACEITOS, e retorne o caractere lido 
+através do return.
+*/

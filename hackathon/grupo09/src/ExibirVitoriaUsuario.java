@@ -20,3 +20,9 @@ public class ExibirVitoriaUsuario {
         \n\n\n""");
     }
 }
+/*
+Descrição: Utilizado para exibir a frase: O usuário venceu!, e uma ART ASCII do usuário
+feliz. Este método é utilizado quando é identificado que o usuário venceu a partida.
+Lembre-se que para imprimir uma contrabara \ é necessário duas contra barras \\
+Nível Complexidade: 2 de 10
+*/

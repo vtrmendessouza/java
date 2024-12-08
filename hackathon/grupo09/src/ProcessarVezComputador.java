@@ -23,3 +23,11 @@ public class ProcessarVezComputador {
         throw new UnsupportedOperationException("Unimplemented method 'obterjogadaComputador'");
     }
 }
+/*
+Descrição: Utilizado para realizar as ações necessárias para processar a vez
+do computador jogar. Este método é encarregado de obter a jogada do
+computador através do método obterJogadaComputador, depois realizar a
+atualização do tabuleiro através do método retornarTabuleiroAtualizado e
+retornar o tabuleiro atualizado
+Nível de complexidade: 4 de 10
+*/

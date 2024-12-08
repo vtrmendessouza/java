@@ -23,3 +23,8 @@ public class LimparTela {
         }
     }
 }
+/*
+Descrição: Utilizado para limpar a console, para que seja exibido apenas o conteúdo
+atual do jogo. Dica: Pesquisa na internet por "Como limpar console no java ProcessBuilder"
+Nível de complexidade: 3 de 10
+*/

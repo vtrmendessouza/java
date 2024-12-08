@@ -38,3 +38,28 @@ public class ObterJogadaUsuario {
         throw new UnsupportedOperationException("Unimplemented method 'jogadaValida'");
     }
 }
+/*
+Descrição: Utilizado para obter do usuário a linha e a coluna que ele deseja
+jogar. Para isto o método deve exibir um mensagem informando que o jogador
+deve digitar a linha e a coluna separados por um espaço. O método deve
+realizar as validações necessárias para os casos do usuário não digitar
+dois valores e também para o caso do usuário não digitar números.
+O método deve garantir que o usuário digite os valores conforme solicitado
+e devolva os valores lidos somente quando estes atenderam as regras.
+Após a leitura dos valores de linha e coluna, o método deve retornar os
+valores já no formato de índice, ou seja, no tabuleiro exibimos para o
+usuário linha 1, linha 2, linha 3, coluna 1, coluna 2 e coluna 3. O
+usuário digita os valores neste formato, no entanto o método ao retonar
+os valores deve ajustar a linha 1 para o índice 0, a linha 2 para o índice
+1 e assim sucessivamente, da mesma forma que as colunas.
+Após a validação e ajuste dos índices, o método deve verificar se a jogada
+do usuário está presente na lista de posicoesLivres que ele recebeu como
+parametro. Para isto, o método faz a chamada ao método jogadaValida()
+para determinar se a jogada é aceita. Se a jogada não for aceita, é exibido
+uma mensagem informando que a jogada não é permitida e reinicia o processo de
+leitura de uma nova jogada. Se a jogada for aceita deve devolver os
+valores no formato de um vetor de inteiro de duas posições. No índice 0 deste
+vetor, deve ser armazenado o valor da linha jogada pelo usuário e no índice 1
+do vetor, deve ser armazenado a coluna jogada pelo usuário.
+Nível de complexidade: 5 de 10
+*/

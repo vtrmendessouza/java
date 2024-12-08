@@ -13,3 +13,10 @@ public class ExibirTabuleiro {
         }
     }
 }
+/*
+Descrição: Utilizado para imprimir o tabuleiro o conteúdo do tabuleiro na tela.
+Recebe o tabuleiro como parametro e imprime o conteúdo de cada posição do tabuleiro
+na tela. Imprimi o conteúdo no formato de uma grade. Para o primeiro nível
+de complexidade considere um tabuleiro apenas de tamanho 3x3, 3 linhas e 3 colunas.
+Nível de complexidade: 4 de 10
+*/

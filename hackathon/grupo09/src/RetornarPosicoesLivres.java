@@ -22,14 +22,12 @@ public class RetornarPosicoesLivres {
     }
 }
 /*
-funciona assim :
-Tabuleiro de entrada:
-Representado por uma matriz 3x3 (char[][]), onde as células livres são identificadas por ' ' (espaço).
-Percorre o tabuleiro:
-Usa dois loops for para percorrer linhas e colunas.
-Quando encontra uma posição livre (' '), adiciona sua coordenada xy ao StringBuilder, seguida de ';'.
-Formatação final:
-Remove o último ';' para evitar separadores extras no final da string.
-Retorno:
-Retorna a string formatada com as posições
+Descrição: Utilizado para identificar a lista de posições livres no tabuleiro. Esta lista
+é uma string no formato xy. Onde x é a linha e y a coluna. Se existir mais de uma posição 
+livre, teremos uma lista de valores xy separados por ; exemplo: 00;01;20; Neste exemplo 
+as posições linha 0 e coluna 0; linha 0 e coluna 1; linha 2 e coluna 0 estão livres. 
+Lembre-se que os índices nas matrizes iniciam em 0. Para o primeiro nível
+de complexidade considere um tabuleiro apenas de tamanho 3x3, 3 linhas e 3 colunas.
+Depois de montar a string retorne a mesma através do comando return
+Nível de complexidade: 4 de 10
 */

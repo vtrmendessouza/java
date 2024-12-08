@@ -21,3 +21,9 @@ public class ExibirVitoriaComputador {
         \n\n""");
     }
 }
+/*
+Descrição: Utilizado para exibir a frase: O computador venceu!, e uma ART ASCII do computador
+feliz. Este método é utilizado quando é identificado que o computador venceu a partida.
+Lembre-se que para imprimir uma contrabara \ é necessário duas contra barras \\
+Nível Complexidade: 2 de 10
+*/
