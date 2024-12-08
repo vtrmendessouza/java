@@ -1,16 +1,13 @@
 public class TeveGanhadorLinha {
 
-    // Verifica se o jogador ganhou em alguma linha
     static boolean teveGanhadorLinha(char[][] tabuleiro, char caractereJogador) {
-
-        // Verifica se todas as células de uma linha estão preenchidas com o caractere do jogador
-        for (int i = 0; i < 3; i++) {
-            if (tabuleiro[i][0] == caractereJogador && 
-                tabuleiro[i][1] == caractereJogador && 
-                tabuleiro[i][2] == caractereJogador) {
-                return true;  // Ganhou na linha
+        
+        // Verifica se toda a linha está preenchida com o caractere do jogador
+        for (int j = 0; j < tabuleiro.length; j++) {
+            if (tabuleiro[0][j] != caractereJogador) {
+                return false;
             }
         }
-        return false;  // Não ganhou em nenhuma linha
+        return true;
     }
 }

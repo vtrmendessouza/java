@@ -1,9 +1,9 @@
+//Miriam Santos
 public class ExibirVitoriaUsuario {
-    static void exibirVitoriaUsuario() {
 
+    static void exibirVitoriaUsuario() {
         System.out.println("usuario Venceu!");
         System.out.println("""
-
         \t\t\t          /////////
         \t\t\t    \\\\|/////////
         \t\t\t     \\/////////

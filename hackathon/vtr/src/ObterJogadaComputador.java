@@ -1,10 +1,8 @@
 import java.util.Random;
-import java.util.Scanner;
 
 public class ObterJogadaComputador {
 
-    //Obtém a jogada do computador sorteando uma posição livre.
-    static int[] obterJogadaComputador(String posicoesLivres, Scanner teclado) {
+    static int[] obterJogadaComputador(String posicoesLivres) {
 
         // Divide as posições livres em um vetor de strings
         String[] vetorPosicoesLivres = posicoesLivres.split(";");
@@ -19,10 +17,8 @@ public class ObterJogadaComputador {
         // Converte a jogada no formato "xy" para um vetor de inteiros [x, y]
         return converterJogadaStringParaVetorInt(jogadaSorteada);
     }
-    
-    //EXTRA***********************************************
+    // TODO Auto-generated method stub
     private static int[] converterJogadaStringParaVetorInt(String jogadaSorteada) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'converterJogadaStringParaVetorInt'");
     }
 }

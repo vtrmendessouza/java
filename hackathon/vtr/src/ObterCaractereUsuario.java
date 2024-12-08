@@ -5,11 +5,10 @@ public class ObterCaractereUsuario {
     // Constante com os caracteres aceitos
     final static String CARACTERES_IDENTIFICADORES_ACEITOS = "XO0UC";
 
-    //Solicita ao usuário um caractere para representá-lo no jogo.
     static char obterCaractereUsuario(Scanner teclado) {
+    
         char caractereEscolhido;
         boolean caractereValido = false;
-
         do {
             // Solicita ao usuário para escolher um caractere
             System.out.print("Escolha um caractere para representar você (X, O, 0, U, C): ");
@@ -27,18 +26,16 @@ public class ObterCaractereUsuario {
                     }
                 }
                 if (!caractereValido) {
-                    System.out.println("Caractere inválido! Escolha um dos caracteres permitidos.");
+                    System.out.println("Caractere inválido.");
                 }
             } else {
-                System.out.println("Entrada inválida! Por favor, digite apenas um caractere.");
+                System.out.println("Entrada inválida.");
                 
                 // Apenas inicializa para evitar erro de compilação
                 caractereEscolhido = ' ';
             }
-        
         // Continua até que o caractere seja válido
         } while (!caractereValido);
-
         return caractereEscolhido;
     }
 }

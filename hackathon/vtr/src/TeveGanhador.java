@@ -1,45 +1,35 @@
 public class TeveGanhador {
 
     static boolean teveGanhador(char[][] tabuleiro, char caractereJogador) {
-
-        // Verifica se o jogador ganhou em alguma linha
+    
         if (teveGanhadorLinha(tabuleiro, caractereJogador)) {
             return true;
         }
-        // Verifica se o jogador ganhou em alguma coluna
         if (teveGanhadorColuna(tabuleiro, caractereJogador)) {
             return true;
         }
-        // Verifica se o jogador ganhou na diagonal principal
         if (teveGanhadorDiagonalPrincipal(tabuleiro, caractereJogador)) {
             return true;
         }
-        // Verifica se o jogador ganhou na diagonal secundária
         if (teveGanhadorDiagonalSecundaria(tabuleiro, caractereJogador)) {
             return true;
         }
-        // Se não encontrou ganhador, retorna false
-            return false;
+        return false;
     }
-
-    //EXTRA**********************************************
+    // TODO Auto-generated method stub
     private static boolean teveGanhadorDiagonalSecundaria(char[][] tabuleiro, char caractereJogador) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'teveGanhadorDiagonalSecundaria'");
     }
-
+    // TODO Auto-generated method stub
     private static boolean teveGanhadorDiagonalPrincipal(char[][] tabuleiro, char caractereJogador) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'teveGanhadorDiagonalPrincipal'");
     }
-
+    // TODO Auto-generated method stub
     private static boolean teveGanhadorColuna(char[][] tabuleiro, char caractereJogador) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'teveGanhadorColuna'");
     }
-
+    // TODO Auto-generated method stub
     private static boolean teveGanhadorLinha(char[][] tabuleiro, char caractereJogador) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'teveGanhadorLinha'");
     }
 }

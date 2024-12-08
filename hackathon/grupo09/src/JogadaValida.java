@@ -1,3 +1,4 @@
+//Maria Eduarda
 public class JogadaValida {
 
     static boolean JogadaValidagadaValida(String posicoesLivres, int linha, int coluna) {

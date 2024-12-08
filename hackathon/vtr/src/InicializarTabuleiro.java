@@ -1,17 +1,13 @@
 public class InicializarTabuleiro {
 
-    //Inicializa o tabuleiro 3x3 com o caractere ' ' (espaço).
     static char[][] inicializarTabuleiro(char[][] tabuleiro) {
-
-        // Percorre todas as linhas e colunas do tabuleiro
+  
+        //Inicializa o tabuleiro com o caractere ' ' (espaço).
         for (int i = 0; i < tabuleiro.length; i++) {
             for (int j = 0; j < tabuleiro[i].length; j++) {
-
-                // Define cada posição com o caractere ' ' (espaço)
                 tabuleiro[i][j] = ' ';
             }
         }
-        // Retorna o tabuleiro inicializado
         return tabuleiro;
     }
 }

@@ -7,9 +7,9 @@ public class ObterCaractereComputador {
 
     //Solicita ao usuário um caractere para representar o computador.
     static char obterCaractereComputador(Scanner teclado, char caractereUsuario) {
+
         char caractereEscolhido;
         boolean caractereValido = false;
-
         do {
             // Solicita ao usuário para escolher um caractere para o computador
             System.out.print("Escolha um caractere para representar o computador (X, O, 0, U, C): ");
@@ -28,21 +28,19 @@ public class ObterCaractereComputador {
                         }
                     }
                     if (!caractereValido) {
-                        System.out.println("Caractere inválido! Escolha um dos caracteres permitidos.");
+                        System.out.println("Caractere inválido.");
                     }
                 } else {
-                    System.out.println("Caractere inválido! O computador não pode usar o mesmo caractere que você.");
+                    System.out.println("Caractere inválido.");
                 }
             } else {
-                System.out.println("Entrada inválida! Por favor, digite apenas um caractere.");
+                System.out.println("Entrada inválida.");
                 
                 // Apenas inicializa para evitar erro de compilação
                 caractereEscolhido = ' ';
             }
-            
         // Continua até que o caractere seja válido
         } while (!caractereValido);
-
         return caractereEscolhido;
     }
 }

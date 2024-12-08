@@ -1,7 +1,7 @@
 public class ExibirVitoriaUsuario {
 
     static void exibirVitoriaUsuario() {
-
+      
         System.out.println("O usuário venceu!");
         System.out.println("""
         \t\t\t          /////////

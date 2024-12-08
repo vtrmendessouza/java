@@ -1,7 +1,7 @@
 public class ExibirVitoriaComputador {
 
     static void exibirVitoriaComputador() {
-
+     
         System.out.println("O computador venceu!");
         System.out.println("""
         \t\t\t    +---------------+
@@ -13,11 +13,11 @@ public class ExibirVitoriaComputador {
         \t\t\t    | |           | |
         \t\t\t    | +-----------+ |
         \t\t\t    +-----+---+-----+
-        \t\t\t    _____|    |_____
+        \t\t\t    ______|   |_____
         \t\t\t   /                \\
         \t\t\t  /  --------------- \\
         \t\t\t /   ---------------  \\
-        \t\t\t +---------------------+
+        \t\t\t +--------------------+
         \n\n""");
     }
 }

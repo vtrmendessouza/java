@@ -1,13 +1,13 @@
+//Maria Eduarda
 import java.util.Scanner;
 
-public class ObterJogada {
+public class ObterJogadaUsuario {
 
-    static int[] obterJogadaerJogadaUsuario(String posicoesLivres, Scanner teclado) {
+    static int[] obterJogadaUsuario(String posicoesLivres, Scanner teclado) {
         int[] jogada = new int[2];
         boolean jogadaAceita = false;
 
         while (!jogadaAceita) {
-
             try {
                 System.out.println("Digite a linha e coluna com espaço entre eles");
                 String entrada = teclado.nextLine();
@@ -32,5 +32,9 @@ public class ObterJogada {
             }
         }
         return jogada;
+    }
+    // TODO Auto-generated method stub
+    private static boolean jogadaValida(String posicoesLivres, int linha, int coluna) {
+        throw new UnsupportedOperationException("Unimplemented method 'jogadaValida'");
     }
 }

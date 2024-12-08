@@ -1,6 +1,7 @@
+//Miriam Santos
 public class ExibirVitoriaComputador {
-    static void exibirVitoriaComputador() {
 
+    static void exibirVitoriaComputador() {
         System.out.println("o computador venceu!");
         System.out.println("""
         \t\t\t    +---------------+
@@ -12,11 +13,11 @@ public class ExibirVitoriaComputador {
         \t\t\t    | |           | |
         \t\t\t    | +-----------+ |
         \t\t\t    +-----+---+-----+
-        \t\t\t    ____|      |____
+        \t\t\t    ______|   |_____
         \t\t\t   /                \\
         \t\t\t  /  --------------- \\
         \t\t\t /   ---------------  \\
-        \t\t\t +---------------------+
+        \t\t\t +--------------------+
         \n\n""");
     }
 }

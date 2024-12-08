@@ -1,38 +1,33 @@
-import java.util.Scanner;
-
 public class ExibirTabuleiro {
     
-    // Tamanho fixo do tabuleiro 3x3
-    private static final int TAMANHO_TABULEIRO = 3;
+    static void exibirTabuleiro(char[][] tabuleiro) {
 
-    public static void exibirTabuleiro(String[] args) {
-        Scanner teclado = new Scanner(System.in);
-
-        // Inicializa o tabuleiro com o tamanho fixo 3x3
-        char[][] tabuleiro = new char[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO];
-        inicializarTabuleiro(tabuleiro);
+    limparTela();
         
-        // Obtém os caracteres para o jogador e computador
-        char caractereUsuario = obterCaractereUsuario(teclado);
-        char caractereComputador = obterCaractereComputador(teclado, caractereUsuario);
-        
-        System.out.println("Caractere do usuário: " + caractereUsuario);
-        System.out.println("Caractere do computador: " + caractereComputador);
+    // Exibe o tabuleiro no formato de grade
+        for (int i = 0; i < tabuleiro.length; i++) {
+            for (int j = 0; j < tabuleiro[i].length; j++) {
+                
+                // Exibe o conteúdo da célula
+                System.out.print(" " + tabuleiro[i][j] + " ");
+                if (j < tabuleiro[i].length - 1) {
+                
+                    // Exibe separador entre colunas
+                    System.out.print("|");
+                }
+            }
+            // Pula para a próxima linha após uma linha completa
+            System.out.println();
+    
+            if (i < tabuleiro.length - 1) {
+                
+                // Exibe separador entre linhas
+                System.out.println("---+---+---");
+            }
+        }
     }
-
-//EXTRA*****************************************
-    private static char obterCaractereComputador(Scanner teclado, char caractereUsuario) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obterCaractereComputador'");
-    }
-
-    private static char obterCaractereUsuario(Scanner teclado) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obterCaractereUsuario'");
-    }
-
-    private static void inicializarTabuleiro(char[][] tabuleiro) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'inicializarTabuleiro'");
+    // TODO Auto-generated method stub
+    private static void limparTela() {
+        throw new UnsupportedOperationException("Unimplemented method 'limparTela'");
     }
 }
