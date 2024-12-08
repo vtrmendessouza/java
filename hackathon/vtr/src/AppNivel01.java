@@ -62,7 +62,6 @@ public class AppNivel01 {
 
         teclado.close();
     }
-//*INICIO*****************************************************
     static char[][] inicializarTabuleiro(char[][] tabuleiro) {
 
         //Inicializa o tabuleiro com o caractere ' ' (espaço).

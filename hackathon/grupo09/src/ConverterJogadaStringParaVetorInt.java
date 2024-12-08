@@ -1,5 +1,5 @@
 //Maria Eduarda
-public class ConverterJogadaStringParaVetor {
+public class ConverterJogadaStringParaVetorInt {
     
     static int[] converterJogadaStringParaVetorInt(String jogada) {
 
