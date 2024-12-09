@@ -1,7 +1,7 @@
 //Maria Eduarda
 public class JogadaValida {
 
-    static boolean JogadaValidagadaValida(String posicoesLivres, int linha, int coluna) {
+    static boolean jogadaValida(String posicoesLivres, int linha, int coluna) {
 
         // Formata a jogada na forma "linha,coluna"
         String jogada = linha + "," + coluna;

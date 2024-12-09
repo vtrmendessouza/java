@@ -7,10 +7,14 @@ public class ProcessarVezUsuario {
     static char[][] processarVezUsuario(Scanner teclado, char[][] tabuleiro, char caractereUsuario) {
 
         System.out.println("Vez do usuário: ");
-        String posicoesLivres = obterPosicoesLivres(tabuleiro);
+        String posicoesLivres = retornarPosicoesLivres(tabuleiro);
         int[] jogada = obterJogadaUsuario(posicoesLivres, teclado);
         tabuleiro = retornarTabuleiroAtualizado(tabuleiro, jogada, caractereUsuario);
         return tabuleiro;
+    }
+    // TODO Auto-generated method stub
+    private static String retornarPosicoesLivres(char[][] tabuleiro) {
+        throw new UnsupportedOperationException("Unimplemented method 'retornarPosicoesLivres'");
     }
     // TODO Auto-generated method stub
     private static char[][] retornarTabuleiroAtualizado(char[][] tabuleiro, int[] jogada, char caractereUsuario) {
@@ -19,10 +23,6 @@ public class ProcessarVezUsuario {
     // TODO Auto-generated method stub
     private static int[] obterJogadaUsuario(String posicoesLivres, Scanner teclado) {
         throw new UnsupportedOperationException("Unimplemented method 'obterJogadaUsuario'");
-    }
-    // TODO Auto-generated method stub
-    private static String obterPosicoesLivres(char[][] tabuleiro) {
-        throw new UnsupportedOperationException("Unimplemented method 'obterPosicoesLivres'");
     }
 }
 /*

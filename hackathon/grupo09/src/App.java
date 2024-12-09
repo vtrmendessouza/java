@@ -13,74 +13,53 @@ public class App {
 
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
-
+    
         char[][] tabuleiro = new char[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO];
-        
-        //TODO: Faça a inicialização do tabuleiro aqui
-
-        // Definimos aqui qual é o caractere que cada jogador irá utilizar no jogo.
-        //TODO: chame as funções obterCaractereUsuario() e obterCaractereComputador
-        //para definir quais caracteres da lista de caracteres aceitos que o jogador
-        //quer configurar para ele e para o computador.
-        char caractereUsuario = ????;
-        char caractereComputador = ????;
-
-        // Esta variavel é utilizada para definir se o usuário começa a jogar ou não.
-        // Valor true, usuario começa jogando, valor false computador começa.
-        //TODO: obtenha o valor booleano sorteado
-        boolean vezUsuarioJogar = ????;
-
+        tabuleiro = inicializarTabuleiro(tabuleiro);
+    
+        // Define caracteres para usuário e computador
+        char caractereUsuario = obterCaractereUsuario(teclado);
+        char caractereComputador = obterCaractereComputador(teclado, caractereUsuario);
+    
+        // Sorteia quem começa jogando
+        boolean vezUsuarioJogar = sortearValorBooleano();
+    
         boolean jogoContinua;
-
+    
         do {
-            // controla se o jogo terminou
+            limparTela();
+            exibirTabuleiro(tabuleiro);
             jogoContinua = true;
-            //TODO: Exiba o tabuleiro aqui
-
-            
-            if ( /*TODO: com base no bloco defina o critério */ ){
-                //TODO: Execute processar vez do usuario
-                tabuleiro = ?????;
-
-                // Verifica se o usuario venceu
-                //TODO: Este if deve executar apenas se teve ganhador 
-                if ( /*TODO: esreva aqui a chamada para teve ganhador*/ ) {
-                    //TODO: Exiba que o usuario ganhou
+    
+            if (vezUsuarioJogar) {
+                tabuleiro = processarVezUsuario(teclado, tabuleiro, caractereUsuario);
+    
+                if (teveGanhador(tabuleiro, caractereUsuario)) {
+                    exibirTabuleiro(tabuleiro);
+                    exibirVitoriaUsuario();
                     jogoContinua = false;
                 }
-
-                //TODO: defina qual o vaor a variavel abaixo deve possuir
-                vezUsuarioJogar = ????;
+                vezUsuarioJogar = false;
             } else {
-
-                //TODO: Execute processar vez do computador
-                tabuleiro = ?????;
-
-                // Verifica se o computador venceu
-                //TODO: Este if deve executar apenas se teve ganhador
-                if ( /*esreva aqui a chamada para teve ganhador*/ ) {
-
-                    //TODO: Exiba que o computador ganhou
+                tabuleiro = processarVezComputador(tabuleiro, caractereComputador);
+    
+                if (teveGanhador(tabuleiro, caractereComputador)) {
+                    exibirTabuleiro(tabuleiro);
+                    exibirVitoriaComputador();
                     jogoContinua = false;
                 }
-
-                //TODO: defina qual o vaor a variavel abaixo deve possuir
-                vezUsuarioJogar = ????;
+                vezUsuarioJogar = true;
             }
-        
-            //TODO: Este if deve executar apenas se o jogo continua E 
-            //ocorreu tempate. Utilize o metodo teveEmpate()
-            if ( /*escreva aqui a condicao conforme o TODO acima*/ ) {
-
-                //TODO: Exiba que ocorreu empate
+    
+            if (jogoContinua && teveEmpate(tabuleiro)) {
+                exibirTabuleiro(tabuleiro);
+                exibirEmpate();
                 jogoContinua = false;
             }
         } while (jogoContinua);
-
+    
         teclado.close();
     }
-//*INICIO*****************************************************
-    
     //Inicializa o tabuleiro com o caractere ' ' (espaço).
     static char[][] inicializarTabuleiro(char[][] tabuleiro) {
         for (int i = 0; i < tabuleiro.length; i++) {
@@ -119,10 +98,10 @@ public class App {
         }
         return caractereComputador;
     }
-    static boolean JogadaValidagadaValida(String posicoesLivres, int linha, int coluna) {
+    static boolean jogadaValida(String posicoesLivres, int linha, int coluna) {
 
         // Formata a jogada na forma "linha,coluna"
-        String jogada = linha + "," + coluna;
+        String jogada = linha + ";" + coluna;
     
         // Verifica se a jogada está presente na string de posições livres
         return posicoesLivres.contains(jogada);
@@ -157,9 +136,9 @@ public class App {
         }
         return jogada;
     }
-    static int[] ObterJogadaComputadoradaComputador(String posicoesLivres, Scanner teclado) {
+    static int[] obterJogadaComputador(String posicoesLivres) {
         
-        String[] vetorPosicoes = posicoesLivres.split(";");
+        String[] vetorPosicoes = posicoesLivres.split(" ");
         Random random = new Random();
         int indiceSorteado = random.nextInt(vetorPosicoes.length);
         String jogadaSorteada = vetorPosicoes[indiceSorteado];
@@ -167,13 +146,9 @@ public class App {
         return converterJogadaStringParaVetorInt(jogadaSorteada);
         //lembrando que precisa da funcao 7 pra executar essa :(converterstringpravetorint), senao nao vai pegar 
     }
-    // TODO Auto-generated method stub
-    private static int[] converterJogadaStringParaVetorInt(String jogadaSorteada) {
-        throw new UnsupportedOperationException("Unimplemented method 'converterJogadaStringParaVetorInt'");
-    }
     static int[] converterJogadaStringParaVetorInt(String jogada) {
 
-        String[] partes = jogada.split(",");
+        String[] partes = jogada.split(";");
         int[] jogadaVetor = new int[2];
 
         jogadaVetor[0] = Integer.parseInt(partes[0]); // Linha
@@ -183,17 +158,16 @@ public class App {
     static char[][] processarVezUsuario(Scanner teclado, char[][] tabuleiro, char caractereUsuario) {
 
         System.out.println("Vez do usuário: ");
-        String posicoesLivres = obterPosicoesLivres(tabuleiro);
+        String posicoesLivres = retornarPosicoesLivres(tabuleiro);
         int[] jogada = obterJogadaUsuario(posicoesLivres, teclado);
         tabuleiro = retornarTabuleiroAtualizado(tabuleiro, jogada, caractereUsuario);
         return tabuleiro;
     }
     static char[][] processarVezComputador(char[][] tabuleiro, char caractereComputador) {
-
-        int[] jogada = obterjogadaComputador();
-        while (tabuleiro[jogada[0]][jogada[1]] != ' ') {
-        jogada = obterJogadaComputador();
-        }
+        
+        String posicoesLivres = retornarPosicoesLivres(tabuleiro);
+        System.out.println("Vez do computador: ");
+        int[] jogada = obterJogadaComputador(posicoesLivres);
         tabuleiro = retornarTabuleiroAtualizado(tabuleiro, jogada, caractereComputador);
         return tabuleiro;
     }
@@ -203,6 +177,7 @@ public class App {
         // Percorre as linhas e colunas do tabuleiro
         for (int i = 0; i < tabuleiro.length; i++) {
             for (int j = 0; j < tabuleiro[i].length; j++) {
+             
                 // Verifica se a posição está livre (representada por um espaço)
                 if (tabuleiro[i][j] == ' ') {
                     // Adiciona a posição no formato "xy" ao resultado
@@ -359,11 +334,8 @@ public class App {
         }
         return true;
     }
-    public class SortearValorBooleano {
-
-        static boolean sortearValorBooleano() {
-            Random random = new Random();
-            return random.nextBoolean();
-        }
+    static boolean sortearValorBooleano() {
+        Random random = new Random();
+        return random.nextBoolean();
     }
 }

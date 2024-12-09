@@ -2,25 +2,24 @@
 public class ProcessarVezComputador {
     
     static char[][] processarVezComputador(char[][] tabuleiro, char caractereComputador) {
-
-        int[] jogada = obterjogadaComputador();
-        while (tabuleiro[jogada[0]][jogada[1]] != ' ') {
-        jogada = obterJogadaComputador();
-        }
+        
+        String posicoesLivres = retornarPosicoesLivres(tabuleiro);
+        System.out.println("Vez do computador: ");
+        int[] jogada = obterJogadaComputador(posicoesLivres);
         tabuleiro = retornarTabuleiroAtualizado(tabuleiro, jogada, caractereComputador);
         return tabuleiro;
     }
     // TODO Auto-generated method stub
     private static char[][] retornarTabuleiroAtualizado(char[][] tabuleiro, int[] jogada, char caractereComputador) {
-        throw new UnsupportedOperationException("Unimplemented method 'retornarTabuleiroAtualizado'");
+    throw new UnsupportedOperationException("Unimplemented method 'retornarTabuleiroAtualizado'");
     }
     // TODO Auto-generated method stub
-    private static int[] obterJogadaComputador() {
-        throw new UnsupportedOperationException("Unimplemented method 'obterJogadaComputador'");
+    private static int[] obterJogadaComputador(String posicoesLivres) {
+    throw new UnsupportedOperationException("Unimplemented method 'obterJogadaComputador'");
     }
     // TODO Auto-generated method stub
-    private static int[] obterjogadaComputador() {
-        throw new UnsupportedOperationException("Unimplemented method 'obterjogadaComputador'");
+    private static String retornarPosicoesLivres(char[][] tabuleiro) {
+    throw new UnsupportedOperationException("Unimplemented method 'retornarPosicoesLivres'");
     }
 }
 /*

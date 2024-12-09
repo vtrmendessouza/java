@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.io.IOException;
 import java.util.Random;
 
-public class AppNivel01 {
+public class App {
 
     // Constante com os caracteres aceitos
     final static String CARACTERES_IDENTIFICADORES_ACEITOS = "XO0UC";

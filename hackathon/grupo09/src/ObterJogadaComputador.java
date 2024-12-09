@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class ObterJogadaComputador {
     
-    static int[] ObterJogadaComputadoradaComputador(String posicoesLivres, Scanner teclado) {
+    static int[] obterJogadaComputador(String posicoesLivres) {
         
         String[] vetorPosicoes = posicoesLivres.split(";");
         Random random = new Random();
