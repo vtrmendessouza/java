@@ -3,7 +3,7 @@ public class ConverterJogadaStringParaVetorInt {
     
     static int[] converterJogadaStringParaVetorInt(String jogada) {
 
-        String[] partes = jogada.split(",");
+        String[] partes = jogada.split(";");
         int[] jogadaVetor = new int[2];
 
         jogadaVetor[0] = Integer.parseInt(partes[0]); // Linha
