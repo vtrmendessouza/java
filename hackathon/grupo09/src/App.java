@@ -83,8 +83,8 @@ public class App {
         return caractere;
     }
     static char obterCaractereComputador(Scanner teclado, char caractereUsuario) {
+        
         char caractereComputador;
-
         while (true) {
             System.out.print("Digite o caractere para o computador (X, O, 0, U, C): ");
             caractereComputador = teclado.next().toUpperCase().charAt(0);
@@ -99,98 +99,119 @@ public class App {
         return caractereComputador;
     }
     static boolean jogadaValida(String posicoesLivres, int linha, int coluna) {
+        // Formata a jogada no formato "linha,coluna"
+        String jogada = linha + "," + coluna;
 
-        // Formata a jogada na forma "linha,coluna"
-        String jogada = linha + ";" + coluna;
-    
         // Verifica se a jogada está presente na string de posições livres
         return posicoesLivres.contains(jogada);
     }
+
     static int[] obterJogadaUsuario(String posicoesLivres, Scanner teclado) {
         int[] jogada = new int[2];
         boolean jogadaAceita = false;
 
         while (!jogadaAceita) {
             try {
-                System.out.println("Digite a linha e coluna com espaço entre eles");
-                String entrada = teclado.nextLine();
-                String[] partes = entrada.trim().split(" ");
+                // Exibe o prompt apenas uma vez por iteração
+                System.out.print("Digite a linha e coluna com espaço entre eles: ");
+                String entrada = teclado.nextLine().trim();
 
-                if (partes.length != 2) {
-                    System.out.println("Entrada invalida! digite dois numeros entre espaço");
+                // Se a entrada for vazia, continue sem exibir mensagens adicionais
+                if (entrada.isEmpty()) {
                     continue;
                 }
+
+                String[] partes = entrada.split(" ");
+
+                // Verifica se foram fornecidos dois números
+                if (partes.length != 2) {
+                    System.out.println("Entrada inválida! Digite dois números separados por espaço.");
+                    continue;
+                }
+
+                // Tenta converter os números
                 int linha = Integer.parseInt(partes[0]);
                 int coluna = Integer.parseInt(partes[1]);
 
-                if (linha > 0 && coluna > 0 && jogadaValida(posicoesLivres, linha, coluna)) {
+                // Valida se a jogada está nas posições livres
+                if (jogadaValida(posicoesLivres, linha, coluna)) {
                     jogada[0] = linha;
                     jogada[1] = coluna;
                     jogadaAceita = true;
                 } else {
-                    System.out.println("Jogada nao existe ou está indisponivel. Tente novameente!");
+                    System.out.println("Jogada não existe ou está indisponível. Tente novamente!");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Entrada nao valida! digite numeros válidos!");
+                System.out.println("Entrada inválida! Certifique-se de digitar números válidos.");
             }
         }
         return jogada;
     }
+
+
+    
+
+
     static int[] obterJogadaComputador(String posicoesLivres) {
-        
-        String[] vetorPosicoes = posicoesLivres.split(" ");
+        String[] vetorPosicoes = posicoesLivres.split(";");
         Random random = new Random();
+
+        // Sorteia uma posição livre
         int indiceSorteado = random.nextInt(vetorPosicoes.length);
-        String jogadaSorteada = vetorPosicoes[indiceSorteado];
-        
-        return converterJogadaStringParaVetorInt(jogadaSorteada);
-        //lembrando que precisa da funcao 7 pra executar essa :(converterstringpravetorint), senao nao vai pegar 
+
+        // Converte a posição sorteada para um vetor de inteiros
+        return converterJogadaStringParaVetorInt(vetorPosicoes[indiceSorteado]);
     }
+
     static int[] converterJogadaStringParaVetorInt(String jogada) {
+        // Divide a string no formato "linha,coluna" usando vírgula como separador
+        String[] partes = jogada.split(",");
 
-        String[] partes = jogada.split(";");
+        // Inicializa o vetor de inteiros para linha e coluna
         int[] jogadaVetor = new int[2];
-
         jogadaVetor[0] = Integer.parseInt(partes[0]); // Linha
         jogadaVetor[1] = Integer.parseInt(partes[1]); // Coluna
+
         return jogadaVetor;
     }
-    static char[][] processarVezUsuario(Scanner teclado, char[][] tabuleiro, char caractereUsuario) {
 
-        System.out.println("Vez do usuário: ");
+    static char[][] processarVezUsuario(Scanner teclado, char[][] tabuleiro, char caractereUsuario) {
+        System.out.println("\nVez do usuário: ");
         String posicoesLivres = retornarPosicoesLivres(tabuleiro);
         int[] jogada = obterJogadaUsuario(posicoesLivres, teclado);
         tabuleiro = retornarTabuleiroAtualizado(tabuleiro, jogada, caractereUsuario);
         return tabuleiro;
     }
+
     static char[][] processarVezComputador(char[][] tabuleiro, char caractereComputador) {
-        
+        System.out.println("\nVez do computador: ");
         String posicoesLivres = retornarPosicoesLivres(tabuleiro);
-        System.out.println("Vez do computador: ");
         int[] jogada = obterJogadaComputador(posicoesLivres);
         tabuleiro = retornarTabuleiroAtualizado(tabuleiro, jogada, caractereComputador);
         return tabuleiro;
     }
+
     static String retornarPosicoesLivres(char[][] tabuleiro) {
         StringBuilder posicoesLivres = new StringBuilder();
 
         // Percorre as linhas e colunas do tabuleiro
         for (int i = 0; i < tabuleiro.length; i++) {
             for (int j = 0; j < tabuleiro[i].length; j++) {
-             
                 // Verifica se a posição está livre (representada por um espaço)
                 if (tabuleiro[i][j] == ' ') {
-                    // Adiciona a posição no formato "xy" ao resultado
-                    posicoesLivres.append(i).append(j).append(";");
+                    // Adiciona a posição no formato "linha,coluna" ao resultado
+                    posicoesLivres.append(i).append(",").append(j).append(";");
                 }
             }
         }
+
         // Remove o último ";" caso exista
         if (posicoesLivres.length() > 0) {
             posicoesLivres.setLength(posicoesLivres.length() - 1);
         }
-    return posicoesLivres.toString();
+        return posicoesLivres.toString();
     }
+
     // Verifica se o jogador ganhou em alguma linha, coluna, diagonal peincipal ou secundária
     static boolean teveGanhador(char[][] tabuleiro, char caractereJogador) {
         if (teveGanhadorLinha(tabuleiro, caractereJogador)) {
@@ -209,22 +230,38 @@ public class App {
     }
     // Verifica se toda a linha está preenchida com o caractere do jogador
     static boolean teveGanhadorLinha(char[][] tabuleiro, char caractereJogador) {
-        for (int j = 0; j < tabuleiro.length; j++) {
-            if (tabuleiro[0][j] != caractereJogador) {
-                return false;
+        for (int i = 0; i < tabuleiro.length; i++) { 
+            boolean venceu = true;
+            for (int j = 0; j < tabuleiro[i].length; j++) { 
+                if (tabuleiro[i][j] != caractereJogador) {
+                    venceu = false;
+                    break;
+                }
+            }
+            if (venceu) {
+                return true; 
             }
         }
-        return true;
+        return false; 
     }
+
     // Verifica se toda a coluna está preenchida com o caractere do jogador
     static boolean teveGanhadorColuna(char[][] tabuleiro, char caractereJogador) {
-        for (int i = 0; i < tabuleiro.length; i++) {
-            if (tabuleiro[i][0] != caractereJogador) {
-                return false;
+        for (int j = 0; j < tabuleiro.length; j++) { // Percorre todas as colunas
+            boolean venceu = true;
+            for (int i = 0; i < tabuleiro.length; i++) { // Verifica cada linha da coluna
+                if (tabuleiro[i][j] != caractereJogador) {
+                    venceu = false;
+                    break;
+                }
+            }
+            if (venceu) {
+                return true; // Retorna true se todas as linhas da coluna forem do jogador
             }
         }
-        return true;
+        return false; 
     }
+
     // Verifica se a diagonal principal está toda preenchida com o caractere do jogador
     static boolean teveGanhadorDiagonalPrincipal(char[][] tabuleiro, char caractereJogador) {
         for (int i = 0; i < tabuleiro.length; i++) {
@@ -281,7 +318,8 @@ public class App {
         return tabuleiro;
     }    
     static void exibirVitoriaComputador() {
-        System.out.println("o computador venceu!");
+
+        System.out.println("\nO computador venceu!");
         System.out.println("""
         \t\t\t    +---------------+
         \t\t\t    | +-----------+ |
@@ -300,7 +338,8 @@ public class App {
         \n\n""");
     }
     static void exibirVitoriaUsuario() {
-        System.out.println("usuario Venceu!");
+      
+        System.out.println("\nO usuário Venceu!");
         System.out.println("""
         \t\t\t          /////////
         \t\t\t    \\\\|/////////
