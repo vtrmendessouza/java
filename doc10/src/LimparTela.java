@@ -1,30 +1,24 @@
-//Alexandro Souza
+import java.io.IOException;
+
 public class LimparTela {
 
-    public static void limparTela() {
-        try {
-     
-            final String os = System.getProperty("os.name").toLowerCase();
+    static void limparTela() {
 
-            // Comando para limpar tela de acordo com o sistema operacional
-            if (os.contains("windows")) {
-                // Para Windows
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                // Para Unix-like (Linux, macOS)
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
+        // Verifica o sistema operacional para decidir qual comando executar
+        String sistemaOperacional = System.getProperty("os.name").toLowerCase();
+        try {
+            // Se o sistema operacional for Windows
+            if (sistemaOperacional.contains("win")) {
+                ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "cls");
+                processBuilder.inheritIO().start().waitFor();
+            } 
+            // Se o sistema operacional for baseado em Unix (Linux, macOS)
+            else {
+                ProcessBuilder processBuilder = new ProcessBuilder("clear");
+                processBuilder.inheritIO().start().waitFor();
             }
-        } catch (Exception e) {
-          
-            for (int i = 0; i < 50; i++) {
-                System.out.println();
-            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
-/*
-Descrição: Utilizado para limpar a console, para que seja exibido apenas o conteúdo
-atual do jogo. Dica: Pesquisa na internet por "Como limpar console no java ProcessBuilder"
-Nível de complexidade: 3 de 10
-*/

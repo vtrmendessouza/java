@@ -1,36 +1,46 @@
-//Eduardo Santos
 import java.util.Scanner;
 
 public class ObterCaractereComputador {
 
-    // Define os caracteres aceitos
+    // Constante com os caracteres aceitos
     final static String CARACTERES_IDENTIFICADORES_ACEITOS = "XO0UC";
 
+    //Solicita ao usuário um caractere para representar o computador.
     static char obterCaractereComputador(Scanner teclado, char caractereUsuario) {
-        char caractereComputador;
 
-        while (true) {
-            System.out.print("Digite o caractere para o computador (X, O, 0, U, C): ");
-            caractereComputador = teclado.next().toUpperCase().charAt(0);
+        char caractereEscolhido;
+        boolean caractereValido = false;
+        do {
+            // Solicita ao usuário para escolher um caractere para o computador
+            System.out.print("Escolha um caractere para representar o computador (X, O, 0, U, C): ");
+            String entrada = teclado.nextLine().toUpperCase();
 
-            // Verifica se o caractere está na lista aceita e é diferente do caractere do usuário
-            if (CARACTERES_IDENTIFICADORES_ACEITOS.indexOf(caractereComputador) != -1 && caractereComputador != caractereUsuario) {
-                break; // Sai do loop se for válido
+            // Verifica se o usuário digitou apenas um caractere
+            if (entrada.length() == 1) {
+                caractereEscolhido = entrada.charAt(0);
+
+                // Verifica se o caractere está na lista de permitidos e não é igual ao do usuário
+                if (caractereEscolhido != caractereUsuario) {
+                    for (int i = 0; i < CARACTERES_IDENTIFICADORES_ACEITOS.length(); i++) {
+                        if (caractereEscolhido == CARACTERES_IDENTIFICADORES_ACEITOS.charAt(i)) {
+                            caractereValido = true;
+                            break;
+                        }
+                    }
+                    if (!caractereValido) {
+                        System.out.println("Caractere inválido.");
+                    }
+                } else {
+                    System.out.println("Caractere inválido.");
+                }
             } else {
-                System.out.println("Caractere inválido ou já escolhido pelo usuário. Tente novamente.");
+                System.out.println("Entrada inválida.");
+                
+                // Apenas inicializa para evitar erro de compilação
+                caractereEscolhido = ' ';
             }
-        }
-        return caractereComputador;
+        // Continua até que o caractere seja válido
+        } while (!caractereValido);
+        return caractereEscolhido;
     }
 }
-/*
-Descrição: Utilizado para obter no início do jogo qual o caractere que o usuário quer
-utilizar para representar o computador. Este método recebe o teclado e recebe o caractere
-que foi configurado para o usuário, pois o usuário e o computador não podem jogar com 
-o mesmo caractere. Por exemplo, se o usuário configurou para ele o caractere X ele não pode
-escolher o X como o caractere também para o computador. Neste método apenas os seguintes 
-caracteres definidos pela constante CARACTERES_IDENTIFICADORES_ACEITOS devem ser aceitos. 
-Lembre-se que o caractere armazenado em caractereUsuario não pode ser aceito.
-Após realizar a leitura do caractere pelo teclado e validá-lo, faça o return deste caractere.
-Nível de complexidade: 3 de 10
-*/

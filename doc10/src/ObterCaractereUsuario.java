@@ -1,29 +1,41 @@
-//Luis Filipe
 import java.util.Scanner;
 
 public class ObterCaractereUsuario {
 
+    // Constante com os caracteres aceitos
     final static String CARACTERES_IDENTIFICADORES_ACEITOS = "XO0UC";
 
     static char obterCaractereUsuario(Scanner teclado) {
-        
-        char caractere;
+    
+        char caractereEscolhido;
+        boolean caractereValido = false;
         do {
-            System.out.print("Digite o caractere que deseja utilizar (X, O, 0, U, C): ");
-            caractere = teclado.next().toUpperCase().charAt(0);
+            // Solicita ao usuário para escolher um caractere
+            System.out.print("Escolha um caractere para representar você (X, O, 0, U, C): ");
+            String entrada = teclado.nextLine().toUpperCase();
 
-            if (CARACTERES_IDENTIFICADORES_ACEITOS.indexOf(caractere) == -1) {
-                System.out.println("Caractere inválido! Escolha apenas entre: " + CARACTERES_IDENTIFICADORES_ACEITOS);
+            // Valida se o usuário digitou apenas um caractere
+            if (entrada.length() == 1) {
+                caractereEscolhido = entrada.charAt(0);
+
+                // Verifica se o caractere está na lista de permitidos
+                for (int i = 0; i < CARACTERES_IDENTIFICADORES_ACEITOS.length(); i++) {
+                    if (caractereEscolhido == CARACTERES_IDENTIFICADORES_ACEITOS.charAt(i)) {
+                        caractereValido = true;
+                        break;
+                    }
+                }
+                if (!caractereValido) {
+                    System.out.println("Caractere inválido.");
+                }
+            } else {
+                System.out.println("Entrada inválida.");
+                
+                // Apenas inicializa para evitar erro de compilação
+                caractereEscolhido = ' ';
             }
-        } while (CARACTERES_IDENTIFICADORES_ACEITOS.indexOf(caractere) == -1);
-        return caractere;
+        // Continua até que o caractere seja válido
+        } while (!caractereValido);
+        return caractereEscolhido;
     }
 }
-/*
-Descrição: Utilizado para obter no início do jogo qual o caractere que o usuário quer 
-utilizar para representar ele próprio. Este método recebe o teclado para permitir que o
-usuário digite o caractere desejado. Faça a leitura do caractere desejado pelo usuário, 
-através do teclado, realize as validações para não aceitar caracteres que não estejam
-definidos pela constante CARACTERES_IDENTIFICADORES_ACEITOS, e retorne o caractere lido 
-através do return.
-*/

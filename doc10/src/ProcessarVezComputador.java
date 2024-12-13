@@ -1,32 +1,29 @@
-//Nathan Vinicius
 public class ProcessarVezComputador {
-    
+
     static char[][] processarVezComputador(char[][] tabuleiro, char caractereComputador) {
+    
+        System.out.println("É a vez do computador:");
         
+        // Obter as posições livres no tabuleiro
         String posicoesLivres = retornarPosicoesLivres(tabuleiro);
-        System.out.println("Vez do computador: ");
-        int[] jogada = obterJogadaComputador(posicoesLivres);
-        tabuleiro = retornarTabuleiroAtualizado(tabuleiro, jogada, caractereComputador);
-        return tabuleiro;
+
+        // Obter a jogada do computador a partir das posições livres
+        int[] jogadaComputador = obterJogadaComputador(posicoesLivres);
+
+        // Atualizar o tabuleiro com a jogada do computador
+        return retornarTabuleiroAtualizado(tabuleiro, jogadaComputador, caractereComputador);
     }
     // TODO Auto-generated method stub
-    private static char[][] retornarTabuleiroAtualizado(char[][] tabuleiro, int[] jogada, char caractereComputador) {
-    throw new UnsupportedOperationException("Unimplemented method 'retornarTabuleiroAtualizado'");
+    private static char[][] retornarTabuleiroAtualizado(char[][] tabuleiro, int[] jogadaComputador,
+        char caractereComputador) {
+        throw new UnsupportedOperationException("Unimplemented method 'retornarTabuleiroAtualizado'");
     }
     // TODO Auto-generated method stub
     private static int[] obterJogadaComputador(String posicoesLivres) {
-    throw new UnsupportedOperationException("Unimplemented method 'obterJogadaComputador'");
+        throw new UnsupportedOperationException("Unimplemented method 'obterJogadaComputador'");
     }
     // TODO Auto-generated method stub
     private static String retornarPosicoesLivres(char[][] tabuleiro) {
-    throw new UnsupportedOperationException("Unimplemented method 'retornarPosicoesLivres'");
+        throw new UnsupportedOperationException("Unimplemented method 'retornarPosicoesLivres'");
     }
 }
-/*
-Descrição: Utilizado para realizar as ações necessárias para processar a vez
-do computador jogar. Este método é encarregado de obter a jogada do
-computador através do método obterJogadaComputador, depois realizar a
-atualização do tabuleiro através do método retornarTabuleiroAtualizado e
-retornar o tabuleiro atualizado
-Nível de complexidade: 4 de 10
-*/
