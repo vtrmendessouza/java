@@ -1,18 +1,21 @@
 //classe Pessoa.java
 
+import org.apache.commons.lang3.StringUtils;
+import java.util.ArrayList;
+
 public class Pessoa {
     public static int contador;
     private int id;
     private String nome;
-    private String telefone;
+    private ArrayList telefones = new ArrayList();
     private String email;
 
     //construtor da classe pessoa
-    public Pessoa(String nome, String telefone, String email) {
+    public Pessoa(String nome,  ArrayList telefones, String email) {
         contador++;
         this.id = contador;
         setNome(nome);
-        setTelefone(telefone);
+        this.telefones = telefones;
         setEmail(email);
     }
 
@@ -30,14 +33,14 @@ public class Pessoa {
         return nome;
     }
 
-    public void setTelefone(String telefone) {
+    public void setTelefone(String ddd, String telefone) {
         //aqui implementariamos as validações necessárias
         //antes de inserir o telefone 
-        this.telefone = telefone;
+        telefones.add(new Telefone(ddd, telefone));
     }
 
-    public String getTelefone() {
-        return telefone;
+    public ArrayList getTelefones() {
+        return telefones;
     }
 
     public void setEmail(String email) {
@@ -55,6 +58,14 @@ public class Pessoa {
     //programa
     @Override
     public String toString() {
-        return "ID: " + id + ", Nome: " + nome + ", Telefone: " + telefone + ", Email: " + email;
+        String strTelefones = "";
+        
+        if (!telefones.isEmpty()) {
+            for (Telefone telefone : telefones) {
+                strTelefones += telefone.toString() + ", ";
+            }
+        }
+
+        return "ID: " + id + ", Nome: " + nome + ", Telefones: " +  StringUtils.removeEnd(strTelefones, ", ") + ", Email: " + email;
     }
 }
