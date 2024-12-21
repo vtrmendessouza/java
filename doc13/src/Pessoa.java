@@ -1,5 +1,3 @@
-//classe Pessoa.java
-
 import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 
