@@ -21,7 +21,6 @@ public class Main {
             processarEscolhaMenu(opcao);
         } while (opcao != 5);
     }
-
     private static void processarEscolhaMenu(int opcao){
         switch (opcao) {
             case 1:
@@ -43,25 +42,20 @@ public class Main {
                 System.out.println("Opção inválida. Tente novamente.");
         }
     }
-
     private static int obterEscolhaMenu(){
         int opcao;
 
         System.out.println("\n--- Menu de Gerenciamento de Contatos ---\n");
-
         System.out.println("1. Incluir Contato");
         System.out.println("2. Alterar Contato");
         System.out.println("3. Consultar Contatos");
         System.out.println("4. Excluir Contato");
         System.out.println("5. Sair");
-
         System.out.print("\nEscolha uma opção: ");
         opcao = teclado.nextInt();
         teclado.nextLine(); // Limpeza buffer
-
         return opcao;
     }
-
     private static void incluirContato() {
         System.out.print("Digite o nome: ");
         String nome = teclado.nextLine();
@@ -76,7 +70,6 @@ public class Main {
         listaContatos.add(novaPessoa);
         System.out.println("Contato incluído com sucesso!");
     }
-
     private static void alterarContato() {
         System.out.print("Digite o ID do contato a ser alterado: ");
         int id = teclado.nextInt();
@@ -86,30 +79,28 @@ public class Main {
         Pessoa pessoa = encontrarContatoPorId(id);
 
         if (pessoa != null) {
-
             System.out.print("Digite o novo nome (ou deixe em branco para manter): ");
             String nome = teclado.nextLine();
+
             //metodo isBlank retorna true se a string estiver vazia
             //é equivalente a fazer nome.equals("");
             if (!nome.isBlank())
                 pessoa.setNome(nome);
-
             System.out.print("Digite o novo telefone (ou deixe em branco para manter): ");
             String telefone = teclado.nextLine();
+
             if (!telefone.isBlank())
                 pessoa.setTelefone(telefone);
-
             System.out.print("Digite o novo email (ou deixe em branco para manter): ");
             String email = teclado.nextLine();
+
             if (!email.isBlank())
                 pessoa.setEmail(email);
-
             System.out.println("Contato alterado com sucesso!");
         } else {
             System.out.println("Contato não encontrado.");
         }
     }
-
     private static void consultarContatos() {
         //metodo isEmpty verifica se a lista esta vazia
         if (listaContatos.isEmpty()) {
@@ -121,7 +112,6 @@ public class Main {
             }
         }
     }
-
     private static void excluirContato() {
         //obtem o id do contato;
         System.out.print("Digite o ID do contato a ser excluído: ");
@@ -139,7 +129,6 @@ public class Main {
             System.out.println("Contato não encontrado.");
         }
     }
-
     private static Pessoa encontrarContatoPorId(int id) {
         //varre o array list para encontrar o id pesquisado
         for (Pessoa pessoa : listaContatos) {

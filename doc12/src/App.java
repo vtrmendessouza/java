@@ -11,7 +11,6 @@ public class App {
     //programa principal
     private static ArrayList listaContatos = new ArrayList();
     private static Scanner teclado = new Scanner(System.in);
-
     public static void main(String[] args) {
         //guarda a opcao selecionada pelo usuario no menu
         int opcao;
@@ -25,7 +24,6 @@ public class App {
             processarEscolhaMenu(opcao);
         } while (opcao != 5);
     }
-
     private static void processarEscolhaMenu(int opcao){
         switch (opcao) {
             case 1:
@@ -49,7 +47,6 @@ public class App {
                 System.out.println("Opção inválida. Tente novamente.");
         }
     }
-
     private static void processarEscolhaMenuAlterarContato(int opcao, Pessoa pessoa){
         switch (opcao) {
             case 1:
@@ -75,7 +72,6 @@ public class App {
                 System.out.println("Opção inválida. Tente novamente.");
         }
     }
-
     private static void alterarDadosBasicosContato(Pessoa pessoa){
         System.out.print("\nDigite o novo nome (ou deixe em branco para manter): ");
             String nome = teclado.nextLine();
@@ -92,43 +88,34 @@ public class App {
 
             System.out.println("Contato alterado com sucesso!");
     }
-
     private static int obterEscolhaMenu(){
         int opcao;
 
         System.out.println("\n--- Menu de Gerenciamento de Contatos ---\n");
-
         System.out.println("1. Incluir Contato");
         System.out.println("2. Alterar Contato");
         System.out.println("3. Consultar Contatos");
         System.out.println("4. Excluir Contato");
         System.out.println("5. Sair");
-
         System.out.print("\nEscolha uma opção: ");
         opcao = teclado.nextInt();
         teclado.nextLine(); // Limpeza buffer
-
         return opcao;
     }
-
     private static int obterEscolhaMenuAlterarContato(){
         int opcao;
 
         System.out.println("\n--- Menu Alteração de Contatos ---\n");
-
         System.out.println("1. Alterar Dados Básicos");
         System.out.println("2. Alterar em Telefone");
         System.out.println("3. Inserir novo Telefone");
         System.out.println("4. Excluir Telefone");
         System.out.println("5. Sair");
-
         System.out.print("\nEscolha uma opção: ");
         opcao = teclado.nextInt();
         teclado.nextLine(); // Limpeza buffer
-
         return opcao;
     }
-
     private static boolean inserirNovoTelefone(ArrayList telefones){
         int resposta;
         System.out.print("Deseja adicionar um contato telefônico [s/n]? ");
@@ -143,58 +130,46 @@ public class App {
             return false;
         }
     }
-
     private static void incluirContato() {
         ArrayList telefones = new ArrayList();
 
         System.out.print("Digite o nome: ");
         String nome = teclado.nextLine();
-
         System.out.print("Digite o email: ");
         String email = teclado.nextLine();
-
         boolean resposta;
-
         do {
            resposta = inserirNovoTelefone(telefones);
         } while (resposta);
         
         Pessoa novaPessoa = new Pessoa(nome, telefones, email);
         listaContatos.add(novaPessoa);
-
         System.out.println("\nContato incluído com sucesso!");
     }
-
     private static Telefone obterTelefone(){
         String ddd, telefone;
 
         System.out.print("Digite o ddd do telefone: ");
         ddd = teclado.nextLine();
-
         System.out.print("Digite o telefone: ");
         telefone = teclado.nextLine();
-
         return new Telefone(ddd, telefone);
-
     }
-
     private static void alterarContato() {
         System.out.print("Digite o ID do contato a ser alterado: ");
         int id = teclado.nextInt();
         teclado.nextLine(); // limpeza buffer
-        
         limparTela();
 
         //busca a pessoa especificada pelo id
         Pessoa pessoa = encontrarContatoPorId(id);
         
         if (pessoa != null) {
-            //imprime os dados do contato
 
+            //imprime os dados do contato
             System.out.println(pessoa);
             //obtem a opcao desejada pelo usuario
             int opcao = obterEscolhaMenuAlterarContato();
-
             //executa a funcionalidade conforme escolhido pelo usuario
             processarEscolhaMenuAlterarContato(opcao, pessoa);
         } else {
@@ -202,7 +177,6 @@ public class App {
             pausa();
         }
     }
-
     private static void consultarContatos() {
         //metodo isEmpty verifica se a lista esta vazia
         if (listaContatos.isEmpty()) {
@@ -213,10 +187,8 @@ public class App {
                 System.out.println(pessoa);
             }
         }
-
         pausa();
     }
-
     private static void excluirContato() {
         //obtem o id do contato;
         System.out.print("Digite o ID do contato a ser excluído: ");
@@ -234,7 +206,6 @@ public class App {
             System.out.println("\nContato não encontrado.");
         }
     }
-
     private static Pessoa encontrarContatoPorId(int id) {
         //varre o array list para encontrar o id pesquisado
         for (Pessoa pessoa : listaContatos) {
@@ -246,21 +217,17 @@ public class App {
         //se chegou até aqui não existe este id
         return null;
     }
-
     private static void excluirTelefone(ArrayList telefones){
         // Verifica se a pessoa tem telefones cadastrados
         if (telefones.isEmpty()) {
             System.out.println("\nNão há telefones cadastrados para esta pessoa.");
             return;
         }
-        
-        int idTelefone;
         System.out.print("Digite o ID do telefone a ser excluído: ");
-        idTelefone = teclado.nextInt();
+        int idTelefone = teclado.nextInt();
         teclado.nextLine(); //limpeza buffer
-
-        
         boolean encontrado = false;
+
         for (int i = 0; i < telefones.size(); i++) {
             Telefone telefone = telefones.get(i);
             
@@ -272,25 +239,21 @@ public class App {
                 break;
             }
         }
-
         // Caso não tenha encontrado o telefone
         if (!encontrado) {
             System.out.println("\nTelefone com ID " + idTelefone + " não encontrado.");
         }
     }
-
     private static void pausa(){
         System.out.println("\nTecle ENTER para continuar.");
         teclado.nextLine();
     }
-
     private static void limparTela(){
         try {
             if (System.getProperty("os.name").contains("Windows"))
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             else
                 new ProcessBuilder("clear").inheritIO().start().waitFor();
-
         } catch (IOException | InterruptedException ex) {}
     }
 }
