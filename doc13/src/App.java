@@ -7,7 +7,7 @@ public class App {
     //pois já estamos utilizando a orientação a objetos para ter uma melhor
     //separação não sendo necessário termos tanta proteção às variaveis do
     //programa principal
-    private static ArrayList listaContatos = new ArrayList();
+    private static ArrayList <Pessoa> listaContatos = new ArrayList();
     private static Scanner teclado = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -245,7 +245,7 @@ public class App {
         return null;
     }
 
-    private static void excluirTelefone(ArrayList telefones){
+    private static void excluirTelefone(ArrayList <Telefone> telefones){
         // Verifica se a pessoa tem telefones cadastrados
         if (telefones.isEmpty()) {
             System.out.println("\nNão há telefones cadastrados para esta pessoa.");

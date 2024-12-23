@@ -1,9 +1,8 @@
-//ou quando a data não está no formato americano yyyy-mm-dd é necessário utilizar a classe DateTimeFormatter.
-
-import java.time.LocalDate;
-
+//ou quando a data não está no formato americano yyyy-mm-dd 
+//é necessário utilizar a classe DateTimeFormatter.
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Exe02 {
     public static void main(String[] args) {

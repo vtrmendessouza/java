@@ -1,6 +1,8 @@
-//Para a realização de comparação entre datas e horas, são utilizados alguns métodos da classe LocalDate e LocalTime.
+//Para a realização de comparação entre datas e horas, 
+//são utilizados alguns métodos da classe LocalDate e LocalTime.
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Exe09 {
     public static void main(String[] args) {

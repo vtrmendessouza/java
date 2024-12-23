@@ -18,6 +18,6 @@ public class Exe08 {
 
         // Adiciona 5 horas
         horaAtual = horaAtual.plusHours(5);  
-        System.out.println("Hora após adicionar 5 horas: " + horaComAdicao);
+        System.out.println("Hora após adicionar 5 horas: " + horaAtual);
     }
 }

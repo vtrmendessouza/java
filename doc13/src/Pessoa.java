@@ -5,7 +5,7 @@ public class Pessoa {
     public static int contador;
     private int id;
     private String nome;
-    private ArrayList telefones = new ArrayList();
+    private ArrayList <Telefone> telefones = new ArrayList();
     private String email;
 
     //construtor da classe pessoa
