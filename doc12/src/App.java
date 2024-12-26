@@ -55,7 +55,7 @@ public class App {
                 pausa();
                 break;
             case 2:
-                alterarUmTelefone(pessoa.getTelefones());
+                alterarTelefone(pessoa.getTelefones());
                 pausa();
                 break;
             case 3:
@@ -72,23 +72,6 @@ public class App {
             default:
                 System.out.println("Opção inválida. Tente novamente.");
         }
-    }
-
-    private static void alterarDadosBasicosContato(Pessoa pessoa){
-        System.out.print("\nDigite o novo nome (ou deixe em branco para manter): ");
-            String nome = teclado.nextLine();
-
-            //metodo isBlank retorna true se a string estiver vazia
-            //é equivalente a fazer nome.equals("");
-            if (!nome.isBlank())
-                pessoa.setNome(nome);
-
-            System.out.print("Digite o novo email (ou deixe em branco para manter): ");
-            String email = teclado.nextLine();
-            if (!email.isBlank())
-                pessoa.setEmail(email);
-
-            System.out.println("Contato alterado com sucesso!");
     }
 
     private static int obterEscolhaMenu(){
@@ -127,21 +110,6 @@ public class App {
         return opcao;
     }
 
-    private static boolean inserirNovoTelefone(ArrayList telefones){
-        int resposta;
-        System.out.print("Deseja adicionar um contato telefônico [s/n]? ");
-        resposta  = teclado.nextLine().toLowerCase().charAt(0);
-
-        if (resposta == 's'){
-            telefones.add(obterTelefone());
-            System.out.println("\nNovo telefone inserido com sucesso.");
-            return true;
-        } else{
-            System.out.println("\nInserção de novo telefone cancelado.");
-            return false;
-        }
-    }
-
     private static void incluirContato() {
         ArrayList telefones = new ArrayList();
 
@@ -163,17 +131,18 @@ public class App {
         System.out.println("\nContato incluído com sucesso!");
     }
 
-    private static Telefone obterTelefone(){
-        String ddd, telefone;
+    private static void consultarContatos() {
+        //metodo isEmpty verifica se a lista esta vazia
+        if (listaContatos.isEmpty()) {
+            System.out.println("\nNenhum contato cadastrado.");
+        } else {
+            System.out.println("\n--- Lista de Contatos ---");
+            for (Pessoa pessoa : listaContatos) {
+                System.out.println(pessoa);
+            }
+        }
 
-        System.out.print("Digite o ddd do telefone: ");
-        ddd = teclado.nextLine();
-
-        System.out.print("Digite o telefone: ");
-        telefone = teclado.nextLine();
-
-        return new Telefone(ddd, telefone);
-
+        pausa();
     }
 
     private static void alterarContato() {
@@ -199,20 +168,6 @@ public class App {
             System.out.println("\nContato não encontrado.");
             pausa();
         }
-    }
-
-    private static void consultarContatos() {
-        //metodo isEmpty verifica se a lista esta vazia
-        if (listaContatos.isEmpty()) {
-            System.out.println("\nNenhum contato cadastrado.");
-        } else {
-            System.out.println("\n--- Lista de Contatos ---");
-            for (Pessoa pessoa : listaContatos) {
-                System.out.println(pessoa);
-            }
-        }
-
-        pausa();
     }
 
     private static void excluirContato() {
@@ -243,6 +198,51 @@ public class App {
         }
         //se chegou até aqui não existe este id
         return null;
+    }
+
+    private static void alterarDadosBasicosContato(Pessoa pessoa){
+        System.out.print("\nDigite o novo nome (ou deixe em branco para manter): ");
+            String nome = teclado.nextLine();
+
+            //metodo isBlank retorna true se a string estiver vazia
+            //é equivalente a fazer nome.equals("");
+            if (!nome.isBlank())
+                pessoa.setNome(nome);
+
+            System.out.print("Digite o novo email (ou deixe em branco para manter): ");
+            String email = teclado.nextLine();
+            if (!email.isBlank())
+                pessoa.setEmail(email);
+
+            System.out.println("Contato alterado com sucesso!");
+    }
+
+    private static Telefone obterTelefone(){
+        String ddd, telefone;
+
+        System.out.print("Digite o ddd do telefone: ");
+        ddd = teclado.nextLine();
+
+        System.out.print("Digite o telefone: ");
+        telefone = teclado.nextLine();
+
+        return new Telefone(ddd, telefone);
+
+    }
+
+    private static boolean inserirNovoTelefone(ArrayList telefones){
+        int resposta;
+        System.out.print("Deseja adicionar um contato telefônico [s/n]? ");
+        resposta  = teclado.nextLine().toLowerCase().charAt(0);
+
+        if (resposta == 's'){
+            telefones.add(obterTelefone());
+            System.out.println("\nNovo telefone inserido com sucesso.");
+            return true;
+        } else{
+            System.out.println("\nInserção de novo telefone cancelado.");
+            return false;
+        }
     }
 
     private static void excluirTelefone(ArrayList <Telefone> telefones){
@@ -276,7 +276,8 @@ public class App {
             System.out.println("\nTelefone com ID " + idTelefone + " não encontrado.");
         }
     }
-    private static void alterarUmTelefone(ArrayList <Telefone> telefones){
+
+    private static void alterarTelefone(ArrayList <Telefone> telefones){
         // Verifica se a pessoa tem telefones cadastrados
         if (telefones.isEmpty()) {
             System.out.println("\nNão há telefones cadastrados para esta pessoa.");
@@ -293,11 +294,9 @@ public class App {
         for (int i = 0; i < telefones.size(); i++) {
             Telefone telefone = telefones.get(i);
             
-            // Se o telefone encontrado tiver o id correspondente, remove-o
+            // Se o telefone encontrado tiver o id correspondente, altere-o
             if (telefone.getId() == idTelefone) {
-                System.out.print("Digite o novo telefone: ");
-                String novoNumero = teclado.nextLine();
-                telefone.set(i, novoNumero);
+                telefones.add(obterTelefone());
                 System.out.println("\nTelefone com ID " + idTelefone + " foi alterado.");
                 encontrado = true;
                 break;
@@ -309,12 +308,7 @@ public class App {
             System.out.println("\nTelefone com ID " + idTelefone + " não encontrado.");
         }
     }
-
-    private static void pausa(){
-        System.out.println("\nTecle ENTER para continuar.");
-        teclado.nextLine();
-    }
-
+    
     private static void limparTela(){
         try {
             if (System.getProperty("os.name").contains("Windows"))
@@ -323,5 +317,10 @@ public class App {
                 new ProcessBuilder("clear").inheritIO().start().waitFor();
 
         } catch (IOException | InterruptedException ex) {}
+    }
+
+    private static void pausa(){
+        System.out.println("\nTecle ENTER para continuar.");
+        teclado.nextLine();
     }
 }
