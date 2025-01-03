@@ -4,12 +4,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MySQLIntegration {
+public class mysqlIntegration {
 
-    // Database URL, username, and password
-    private static final String URL = "jdbc:mysql://localhost:3306/testdb"; // Substitua "testdb" pelo nome do seu banco de dados
-    private static final String USER = "root"; // Substitua "root" pelo seu usuário do MySQL
-    private static final String PASSWORD = "password"; // Substitua "password" pela sua senha do MySQL
+    private static final String URL = "jdbc:mysql://localhost:3306/Livraria";
+    private static final String USER = "root";
+    private static final String PASSWORD = "12345678";
 
     public static void main(String[] args) {
         // Teste de conexão
