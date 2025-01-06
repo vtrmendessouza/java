@@ -1,4 +1,5 @@
 public class Telefone {
+   
     public static int contador;
     int id;
     private String ddd;
