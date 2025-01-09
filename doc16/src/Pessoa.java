@@ -2,18 +2,16 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 
 public class Pessoa {
-    public static int contador;
     private int id;
     private String nome;
+    private String telefone;
     private ArrayList <Telefone> telefones = new ArrayList();
     private String email;
 
-    //construtor da classe pessoa
-    public Pessoa(String nome,  ArrayList telefones, String email) {
-        contador++;
-        this.id = contador;
+    public Pessoa(int id, String nome, String telefone, String email) {
+        setId(id);
         setNome(nome);
-        this.telefones = telefones;
+        setTelefone(telefone);
         setEmail(email);
     }
 
@@ -21,39 +19,42 @@ public class Pessoa {
         return id;
     }
 
-    public void setNome(String nome) {
-        //aqui implementariamos as validações necessárias
-        //antes de inserir o nome  
-        this.nome = nome;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public void setTelefone(String ddd, String telefone) {
-        //aqui implementariamos as validações necessárias
-        //antes de inserir o telefone 
-        telefones.add(new Telefone(ddd, telefone));
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public ArrayList getTelefones() {
         return telefones;
     }
 
-    public void setEmail(String email) {
-        //aqui implementariamos as validações necessárias
-        //antes de inserir o email 
-        this.email = email;
+    public void setTelefones(ArrayList<Telefone> telefones) {
+        this.telefones = telefones;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public String getEmail() {
         return email;
     }
 
-    //cria o método to string utilizado para converter o objeto para string
-    //quando for necessário imprimir os dados do objeto na tela por outra parte do nosso
-    //programa
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         String strTelefones = "";
